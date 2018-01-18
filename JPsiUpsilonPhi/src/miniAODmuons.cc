@@ -14,7 +14,7 @@
 #include <memory>
 
 
-#include "JPsiUpsilonPhi/JPsiKsPAT/src/miniAODmuons.h"
+#include "miniAODmuons.h"
 
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/EDAnalyzer.h"
