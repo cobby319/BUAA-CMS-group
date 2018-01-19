@@ -522,11 +522,11 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
       Track glbTrackM;
       	  
 	  
-	  if(iTrack1->charge() == 1){ glbTrackp = *(iTrack1->bestTrack());}
-	  if(iTrack1->charge() == -1){ glbTrackn = *(iTrack1->bestTrack());}
+	  if(iTrack1->charge() == 1){ glbTrackP = *(iTrack1->bestTrack());}
+	  if(iTrack1->charge() == -1){ glbTrackM = *(iTrack1->bestTrack());}
 	  
-	  if(iTrack2->charge() == 1) { glbTrackp = *(iTrack2->bestTrack());}
-	  if(iTrack2->charge() == -1){ glbTrackn = *(iTrack2->bestTrack());}
+	  if(iTrack2->charge() == 1) { glbTrackP = *(iTrack2->bestTrack());}
+	  if(iTrack2->charge() == -1){ glbTrackM = *(iTrack2->bestTrack());}
 	  
 	  if(!glbTrackP || !glbTrackM )continue;
 
