@@ -517,15 +517,17 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	}
     }
   for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1){
+  	if(!(iTrack1->bestTrack())) continue;
+  	if(iTrack1->pt()<0.8)continue;
   	for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2){
       if(iTrack1==iTrack2) continue;
       if((iTrack1->charge())*(iTrack2->charge())==1) continue;
-      
+      if(iTrack2->pt()<0.8)continue;
 
       Track glbTrackp;
       Track glbTrackn;
       	  
-	  if(!(iTrack1->bestTrack())) continue;
+	  
 	  if(!(iTrack2->bestTrack())) continue;
 	  if(iTrack1->charge() == 1){ glbTrackp = *(iTrack1->bestTrack());}
 	  if(iTrack1->charge() == -1){ glbTrackn = *(iTrack1->bestTrack());}
