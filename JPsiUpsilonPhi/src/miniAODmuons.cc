@@ -520,7 +520,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
   	if(!(iTrack1->bestTrack())) continue;
   	if(iTrack1->pt()<0.8)continue;
   	if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
-  	
+
   	for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2){
       if(iTrack1==iTrack2) continue;
       if((iTrack1->charge())*(iTrack2->charge())==1) continue;
@@ -544,12 +544,13 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 
 	  if(glbTrackp.normalizedChi2()>2) continue;
 	  if(glbTrackn.normalizedChi2()>2) continue;
-      
+      if(glbTrackp.pt()<0.8) continue;
+	  if(glbTrackn.pt()<0.8) continue;
       if(glbTrackp.eta()>2||glbTrackp.eta()<-2) continue;
       if(glbTrackn.eta()>2||glbTrackn.eta()<-2) continue;
 	  if(glbTrackp.numberOfValidHits()<5) continue;
 	  if(glbTrackn.numberOfValidHits()<5) continue;
-
+    
       reco::TransientTrack kaon1TT((*theB).build(glbTrackp));
 	  reco::TransientTrack kaon2TT((*theB).build(glbTrackn));
 
