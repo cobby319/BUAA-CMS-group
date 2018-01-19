@@ -516,7 +516,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
   	for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2){
       if(iTrack1==iTrack2) continue;
       if((iTrack1->charge())*(iTrack2->charge())==1) continue;
-      if(!(iTrack1->hasTrackDetails ()) ||!(iTrack2->hasTrackDetails ()))continue;
+      //if(!(iTrack1->hasTrackDetails ()) ||!(iTrack2->hasTrackDetails ()))continue;
 
       Track glbTrackp;
       Track glbTrackn;
