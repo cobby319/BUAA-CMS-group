@@ -546,6 +546,12 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	      //std::cout << "continue due to no track ref" << endl;
 	      continue;
 	    }
+	  if(glbTrackP->normalizedChi2()>2) continue;
+	  if(glbTrackM->normalizedChi2()>2) continue;
+
+	  if(glbTrackP->numberOfValidHits()<5) continue;
+	  if(glbTrackM->numberOfValidHits()<5) continue;
+	  
       /*if(!trackref1) continue;
   	  if(trackref1->normalizedChi2 () >2) continue;
   	  if(trackref1->pt()<0.5)continue;
