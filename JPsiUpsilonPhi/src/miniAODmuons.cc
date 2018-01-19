@@ -519,6 +519,8 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
   for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1){
   	if(!(iTrack1->bestTrack())) continue;
   	if(iTrack1->pt()<0.8)continue;
+  	if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
+  	
   	for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2){
       if(iTrack1==iTrack2) continue;
       if((iTrack1->charge())*(iTrack2->charge())==1) continue;
@@ -599,7 +601,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	      continue; 
 	    }
 	  //creating the particle fitter
-	  KinematicParticleFitter csFitter;
+	  /*KinematicParticleFitter csFitter;
 
 	  // creating the constraint
       float phi_m_pdg = 1.01946;
@@ -607,7 +609,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  KinematicConstraint * phi_c2 = new MassKinematicConstraint(phi_m_pdg,phi_m_sigma);
 
 	  //the constrained fit:
-	  psiVertexFitTree = csFitter.fit(phi_c2,psiVertexFitTree);
+	  psiVertexFitTree = csFitter.fit(phi_c2,psiVertexFitTree);*/
 	  psiVertexFitTree->movePointerToTheTop();
 	  
 	  RefCountedKinematicParticle upsilon_vFit_noMC = psiVertexFitTree->currentParticle();
