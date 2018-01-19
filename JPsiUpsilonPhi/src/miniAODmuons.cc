@@ -93,6 +93,7 @@ miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
   
   nU(0),
   nJ(0),
+  nPhi(0),
   
  
   B_J_mass(0), B_J_px(0), B_J_py(0), B_J_pz(0),
@@ -112,7 +113,9 @@ miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
 
   B_U_px1(0), B_U_py1(0), B_U_pz1(0),
   B_U_px2(0), B_U_py2(0), B_U_pz2(0), 
-  B_U_charge1(0), B_U_charge2(0)
+  B_U_charge1(0), B_U_charge2(0),
+  phi_mass(0), phi_pt(0),phi_eta(0),phi_phi(0),
+  N_pfcandidate(0),N_pairs(0)
 
 
 {
@@ -190,11 +193,7 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  if(iMuon2->charge() == 1) { glbTrackP = iMuon2->track();}
 	  if(iMuon2->charge() == -1){ glbTrackM = iMuon2->track();}
 	  
-	  if( glbTrackP.isNull() || glbTrackM.isNull() ) 
-	    {
-	      //std::cout << "continue due to no track ref" << endl;
-	      continue;
-	    }
+	  if( !glbTrackP || !glbTrackM ) continue;
 
 	  if(iMuon1->track()->pt()<4.0) continue;
 	  if(iMuon2->track()->pt()<4.0) continue;
@@ -363,11 +362,8 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  if(iMuon4->charge() == 1) { glbTrackP = iMuon4->track();}
 	  if(iMuon4->charge() == -1){ glbTrackM = iMuon4->track();}
 	  
-	  if( glbTrackP.isNull() || glbTrackM.isNull() ) 
-	    {
-	      //std::cout << "continue due to no track ref" << endl;
-	      continue;
-	    }
+	  
+	  if( !glbTrackP || !glbTrackM ) continue;
 
 	  if(iMuon3->track()->pt()<2.5) continue;
 	  if(iMuon4->track()->pt()<2.5) continue;
@@ -514,8 +510,37 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  
 	}
     }
-   
-  if (nJ > 0 && nU>0 ) 
+  N_pfcandidate->push_back(thePATTrackHandle->size());
+
+  for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1){
+  	for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2){
+      if(iTrack1==iTrack2) continue;
+      if((iTrack1->charge())*(iTrack2->charge())==1) continue;
+      
+
+      Track glbTrackP;
+      Track glbTrackM;
+      	  
+	  
+	  if(iTrack1->charge() == 1){ glbTrackP = *(iTrack1->bestTrack());}
+	  if(iTrack1->charge() == -1){ glbTrackM = *(iTrack1->bestTrack());}
+	  
+	  if(iTrack2->charge() == 1) { glbTrackP = *(iTrack2->bestTrack());}
+	  if(iTrack2->charge() == -1){ glbTrackM = *(iTrack2->bestTrack());}
+	  
+	  if(!glbTrackP || !glbTrackM )continue;
+
+	  if(glbTrackP.normalizedChi2()>2) continue;
+	  if(glbTrackM.normalizedChi2()>2) continue;
+      
+      if(glbTrackP.eta()>2||glbTrackP.eta()<-2) continue;
+      if(glbTrackM.eta()>2||glbTrackM.eta()<-2) continue;
+	  if(glbTrackP.numberOfValidHits()<5) continue;
+	  if(glbTrackM.numberOfValidHits()<5) continue;
+    }
+  }    
+
+  if (nJ > 0 && nPhi>0 ) 
     {
 
       //std::cout << "filling tree" << endl;
@@ -524,6 +549,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 
    nU = 0;
    nJ = 0; 
+   nPhi =0;
 
    B_J_mass->clear();  B_J_px->clear();  B_J_py->clear();  B_J_pz->clear();  
    B_J_px1->clear();  B_J_py1->clear();  B_J_pz1->clear(), B_J_charge1->clear();
@@ -550,6 +576,11 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
    U_mu1soft->clear(); U_mu2soft->clear(); U_mu1tight->clear(); U_mu2tight->clear();
    U_mu1PF->clear(); U_mu2PF->clear(); U_mu1loose->clear(); U_mu2loose->clear(); 
    
+   N_pfcandidate->clear();
+   phi_mass->clear();
+   phi_eta ->clear();
+   phi_pt  ->clear();
+   phi_phi ->clear();
 }
 
 
@@ -638,6 +669,12 @@ miniAODmuons::beginJob()
   tree_->Branch("U_mu2PF",&U_mu2PF);
   tree_->Branch("U_mu1loose",&U_mu1loose);
   tree_->Branch("U_mu2loose",&U_mu2loose);
+
+  tree_->Branch("phi_mass",&phi_mass);
+  tree_->Branch("phi_eta",&phi_eta);
+  tree_->Branch("phi_pt",&phi_pt);
+  tree_->Branch("phi_phi",&phi_phi);
+  tree_->Branch("N_pfcandidate",&N_pfcandidate);
 
 }
 
