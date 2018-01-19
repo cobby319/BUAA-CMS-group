@@ -518,25 +518,25 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
       if((iTrack1->charge())*(iTrack2->charge())==1) continue;
       
 
-      const Track *glbTrackp;
-      const Track *glbTrackn;
+      Track glbTrackp;
+      Track glbTrackn;
       	  
 	  
-	  if(iTrack1->charge() == 1){ glbTrackp = iTrack1->bestTrack();}
-	  if(iTrack1->charge() == -1){ glbTrackn = iTrack1->bestTrack();}
+	  if(iTrack1->charge() == 1){ glbTrackp = *(iTrack1->bestTrack());}
+	  if(iTrack1->charge() == -1){ glbTrackn = *(iTrack1->bestTrack());}
 	  
-	  if(iTrack2->charge() == 1) { glbTrackp = iTrack2->bestTrack();}
-	  if(iTrack2->charge() == -1){ glbTrackn = iTrack2->bestTrack();}
+	  if(iTrack2->charge() == 1) { glbTrackp = *(iTrack2->bestTrack());}
+	  if(iTrack2->charge() == -1){ glbTrackn = *(iTrack2->bestTrack());}
 	  
-	  if(!glbTrackp || !glbTrackn )continue;
+	  //if(!glbTrackp || !glbTrackn )continue;
 
-	  if(glbTrackp->normalizedChi2()>2) continue;
-	  if(glbTrackn->normalizedChi2()>2) continue;
+	  if(glbTrackp.normalizedChi2()>2) continue;
+	  if(glbTrackn.normalizedChi2()>2) continue;
       
-      if(glbTrackp->eta()>2||glbTrackp->eta()<-2) continue;
-      if(glbTrackn->eta()>2||glbTrackn->eta()<-2) continue;
-	  if(glbTrackp->numberOfValidHits()<5) continue;
-	  if(glbTrackn->numberOfValidHits()<5) continue;
+      if(glbTrackp.eta()>2||glbTrackp.eta()<-2) continue;
+      if(glbTrackn.eta()>2||glbTrackn.eta()<-2) continue;
+	  if(glbTrackp.numberOfValidHits()<5) continue;
+	  if(glbTrackn.numberOfValidHits()<5) continue;
     }
   }    
 
