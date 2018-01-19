@@ -193,11 +193,7 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  if(iMuon2->charge() == 1) { glbTrackP = iMuon2->track();}
 	  if(iMuon2->charge() == -1){ glbTrackM = iMuon2->track();}
 	  
-	  if( glbTrackP.isNull() || glbTrackM.isNull() ) 
-	    {
-	      //std::cout << "continue due to no track ref" << endl;
-	      continue;
-	    }
+	  if( !glbTrackP || !glbTrackM ) continue;
 
 	  if(iMuon1->track()->pt()<4.0) continue;
 	  if(iMuon2->track()->pt()<4.0) continue;
@@ -366,11 +362,8 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  if(iMuon4->charge() == 1) { glbTrackP = iMuon4->track();}
 	  if(iMuon4->charge() == -1){ glbTrackM = iMuon4->track();}
 	  
-	  if( glbTrackP->isNull() || glbTrackM->isNull() ) 
-	    {
-	      //std::cout << "continue due to no track ref" << endl;
-	      continue;
-	    }
+	  
+	  if( !glbTrackP || !glbTrackM ) continue;
 
 	  if(iMuon3->track()->pt()<2.5) continue;
 	  if(iMuon4->track()->pt()<2.5) continue;
@@ -535,11 +528,11 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  if(iTrack2->charge() == 1) { glbTrackp = *(iTrack2->bestTrack());}
 	  if(iTrack2->charge() == -1){ glbTrackn = *(iTrack2->bestTrack());}
 	  
-	  if(glbTrackp->normalizedChi2()>2) continue;
-	  if(glbTrackn->normalizedChi2()>2) continue;
+	  if(glbTrackp.normalizedChi2()>2) continue;
+	  if(glbTrackn.normalizedChi2()>2) continue;
 
-	  if(glbTrackp->numberOfValidHits()<5) continue;
-	  if(glbTrackn->numberOfValidHits()<5) continue;
+	  if(glbTrackp.numberOfValidHits()<5) continue;
+	  if(glbTrackn.numberOfValidHits()<5) continue;
     }
   }    
 
