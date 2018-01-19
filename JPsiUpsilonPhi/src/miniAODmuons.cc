@@ -614,11 +614,10 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  nPhi++;
 	  kaonParticles.clear();
       
-      
 
     }
   }    
-
+  cout<<"phi number is " << nPhi<<endl;
   if (nJ > 0 && nPhi>0 ) 
     {
 
@@ -749,7 +748,7 @@ miniAODmuons::beginJob()
   tree_->Branch("U_mu1loose",&U_mu1loose);
   tree_->Branch("U_mu2loose",&U_mu2loose);
 
-  tree_->Branch("phi_mass",&phi_mass);
+  //tree_->Branch("phi_mass",&phi_mass);
   //tree_->Branch("phi_eta",&phi_eta);
   //tree_->Branch("phi_pt",&phi_pt);
   //tree_->Branch("phi_phi",&phi_phi);
