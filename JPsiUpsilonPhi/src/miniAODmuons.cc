@@ -49,7 +49,8 @@
 #include "RecoVertex/KinematicFitPrimitives/interface/KinematicParticle.h"
 #include "RecoVertex/KinematicFitPrimitives/interface/RefCountedKinematicParticle.h"
 #include "RecoVertex/KinematicFitPrimitives/interface/TransientTrackKinematicParticle.h"
-
+#include "DataFormats/TrackReco/interface/Track.h"
+#include "DataFormats/TrackReco/interface/TrackFwd.h"
 
 #include "FWCore/Common/interface/TriggerNames.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
@@ -74,7 +75,7 @@
 miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
   :
   dimuon_Label(consumes<edm::View<pat::Muon>>(iConfig.getParameter<edm::InputTag>("dimuons"))),
-  trakCollection_label(consumes<edm::View<pat::PackedCandidate>>(iConfig.getParameter<edm::InputTag>("Trak"))),
+  trakCollection_label(consumes<reco::TrackCollection>(iConfig.getParameter<edm::InputTag>("Trak"))),
   primaryVertices_Label(consumes<reco::VertexCollection>(iConfig.getParameter<edm::InputTag>("primaryVertices"))),
    
   isMC_(iConfig.getParameter<bool>("isMC")),
@@ -93,7 +94,6 @@ miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
   
   nU(0),
   nJ(0),
-  nPhi(0),
   
  
   B_J_mass(0), B_J_px(0), B_J_py(0), B_J_pz(0),
@@ -113,9 +113,7 @@ miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
 
   B_U_px1(0), B_U_py1(0), B_U_pz1(0),
   B_U_px2(0), B_U_py2(0), B_U_pz2(0), 
-  B_U_charge1(0), B_U_charge2(0),
-  phi_mass(0), phi_pt(0),phi_eta(0),phi_phi(0),
-  N_pfcandidate(0)
+  B_U_charge1(0), B_U_charge2(0)
 
 
 {
@@ -149,7 +147,7 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   edm::ESHandle<TransientTrackBuilder> theB; 
   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB); 
 
-  edm::Handle< View<pat::PackedCandidate> > thePATTrackHandle;
+  edm::Handle<reco::TrackCollection> thePATTrackHandle;
   iEvent.getByToken(trakCollection_label,thePATTrackHandle);
 
 
@@ -193,7 +191,11 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  if(iMuon2->charge() == 1) { glbTrackP = iMuon2->track();}
 	  if(iMuon2->charge() == -1){ glbTrackM = iMuon2->track();}
 	  
-	  if( glbTrackP.isNull() || glbTrackM.isNull() ) continue;
+	  if( glbTrackP.isNull() || glbTrackM.isNull() ) 
+	    {
+	      //std::cout << "continue due to no track ref" << endl;
+	      continue;
+	    }
 
 	  if(iMuon1->track()->pt()<4.0) continue;
 	  if(iMuon2->track()->pt()<4.0) continue;
@@ -362,8 +364,11 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  if(iMuon4->charge() == 1) { glbTrackP = iMuon4->track();}
 	  if(iMuon4->charge() == -1){ glbTrackM = iMuon4->track();}
 	  
-	  
-	  if( glbTrackP.isNull() || glbTrackM.isNull() ) continue;
+	  if( glbTrackP.isNull() || glbTrackM.isNull() ) 
+	    {
+	      //std::cout << "continue due to no track ref" << endl;
+	      continue;
+	    }
 
 	  if(iMuon3->track()->pt()<2.5) continue;
 	  if(iMuon4->track()->pt()<2.5) continue;
@@ -510,11 +515,11 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  
 	}
     }
-  N_pfcandidate->push_back(thePATTrackHandle->size());
   
+
+  //for (reco::PackedCandidate::const_iterator iTrack1= thePATTrackHandle->begin();  iTrack1 != thePATTrackHandle->end(); ++iTrack1){
+  	
   
-     
-  //cout<<"phi number is " << nPhi<<endl;
   if (nJ > 0 && nU>0 ) 
     {
 
@@ -524,7 +529,6 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 
    nU = 0;
    nJ = 0; 
-   nPhi =0;
 
    B_J_mass->clear();  B_J_px->clear();  B_J_py->clear();  B_J_pz->clear();  
    B_J_px1->clear();  B_J_py1->clear();  B_J_pz1->clear(), B_J_charge1->clear();
@@ -551,11 +555,6 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
    U_mu1soft->clear(); U_mu2soft->clear(); U_mu1tight->clear(); U_mu2tight->clear();
    U_mu1PF->clear(); U_mu2PF->clear(); U_mu1loose->clear(); U_mu2loose->clear(); 
    
-   N_pfcandidate->clear();
-   phi_mass->clear();
-   phi_eta ->clear();
-   phi_pt  ->clear();
-   phi_phi ->clear();
 }
 
 
@@ -644,12 +643,6 @@ miniAODmuons::beginJob()
   tree_->Branch("U_mu2PF",&U_mu2PF);
   tree_->Branch("U_mu1loose",&U_mu1loose);
   tree_->Branch("U_mu2loose",&U_mu2loose);
-
-  //tree_->Branch("phi_mass",&phi_mass);
-  //tree_->Branch("phi_eta",&phi_eta);
-  //tree_->Branch("phi_pt",&phi_pt);
-  //tree_->Branch("phi_phi",&phi_phi);
-  //tree_->Branch("N_pfcandidate",&N_pfcandidate);
 
 }
 
