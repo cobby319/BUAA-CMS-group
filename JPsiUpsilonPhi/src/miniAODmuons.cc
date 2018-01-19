@@ -93,6 +93,7 @@ miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
   
   nU(0),
   nJ(0),
+  nPhi(0),
   
  
   B_J_mass(0), B_J_px(0), B_J_py(0), B_J_pz(0),
@@ -530,10 +531,11 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
     phi_eta->push_back((iTrack1->p4()+iTrack2->p4()).Eta());
     phi_pt->push_back((iTrack1->p4()+iTrack2->p4()).Pt());
     phi_phi->push_back((iTrack1->p4()+iTrack2->p4()).Phi());
+    nPhi++;
     //cout<<"pdgid " << iTrack1->pdgId()<<endl;
     }
   }
-  if (nJ > 0 && nU>0 ) 
+  if (nJ > 0 && nPhi>0 ) 
     {
 
       //std::cout << "filling tree" << endl;
@@ -542,6 +544,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 
    nU = 0;
    nJ = 0; 
+   nPhi =0;
 
    B_J_mass->clear();  B_J_px->clear();  B_J_py->clear();  B_J_pz->clear();  
    B_J_px1->clear();  B_J_py1->clear();  B_J_pz1->clear(), B_J_charge1->clear();
