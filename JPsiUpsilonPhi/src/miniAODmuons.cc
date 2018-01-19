@@ -366,7 +366,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  if(iMuon4->charge() == 1) { glbTrackP = iMuon4->track();}
 	  if(iMuon4->charge() == -1){ glbTrackM = iMuon4->track();}
 	  
-	  if( glbTrackP.isNull() || glbTrackM.isNull() ) 
+	  if( glbTrackP->isNull() || glbTrackM->isNull() ) 
 	    {
 	      //std::cout << "continue due to no track ref" << endl;
 	      continue;
