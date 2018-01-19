@@ -512,114 +512,10 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
     }
   N_pfcandidate->push_back(thePATTrackHandle->size());
   
-  for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1){
-  	for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2){
-      if(iTrack1==iTrack2) continue;
-      if((iTrack1->charge())*(iTrack2->charge())==1) continue;
-      
-
-      Track glbTrackp;
-      Track glbTrackn;
-      	  
-	  if(!(iTrack1->bestTrack())) continue;
-	  if(!(iTrack2->bestTrack())) continue;
-	  if(iTrack1->charge() == 1){ glbTrackp = *(iTrack1->bestTrack());}
-	  if(iTrack1->charge() == -1){ glbTrackn = *(iTrack1->bestTrack());}
-	  
-	  if(iTrack2->charge() == 1) { glbTrackp = *(iTrack2->bestTrack());}
-	  if(iTrack2->charge() == -1){ glbTrackn = *(iTrack2->bestTrack());}
-	  
-	  //if(!glbTrackp || !glbTrackn )continue;
-
-	  if(!(glbTrackn.quality(reco::TrackBase::highPurity))) continue;
-	  if(!(glbTrackp.quality(reco::TrackBase::highPurity))) continue;	
-
-	  if(glbTrackp.normalizedChi2()>2) continue;
-	  if(glbTrackn.normalizedChi2()>2) continue;
-      
-      if(glbTrackp.eta()>2||glbTrackp.eta()<-2) continue;
-      if(glbTrackn.eta()>2||glbTrackn.eta()<-2) continue;
-	  if(glbTrackp.numberOfValidHits()<5) continue;
-	  if(glbTrackn.numberOfValidHits()<5) continue;
-
-      reco::TransientTrack kaon1TT((*theB).build(glbTrackp));
-	  reco::TransientTrack kaon2TT((*theB).build(glbTrackn));
-
-	  FreeTrajectoryState ka1State = kaon1TT.impactPointTSCP().theState();
-	  FreeTrajectoryState ka2State = kaon2TT.impactPointTSCP().theState();
-
-	  if( !kaon1TT.impactPointTSCP().isValid() || !kaon2TT.impactPointTSCP().isValid() ) continue;
-
-	  // Measure distance between tracks at their closest approach
-	  ClosestApproachInRPhi cApp;
-	  cApp.calculate(ka1State, ka2State);
-	  if( !cApp.status() ) continue;
-	  float dca = fabs( cApp.distance() );	  
-	  if (dca < 0. || dca > 0.5) continue;
-
-	  ParticleMass kaon_mass = 0.493677; //pdg mass
-	  
-	  float kaon_sigma = 0.000016;
-
-	  KinematicParticleFactoryFromTransientTrack pFactory;
-	  
-	  //initial chi2 and ndf before kinematic fits.
-	  float chi = 0.;
-	  float ndf = 0.;
-	  vector<RefCountedKinematicParticle> kaonParticles;
-	  try {
-	    kaonParticles.push_back(pFactory.particle(kaon1TT,kaon_mass,chi,ndf,kaon_sigma));
-	    kaonParticles.push_back(pFactory.particle(kaon2TT,kaon_mass,chi,ndf,kaon_sigma));
-	  }
-	  catch(...) { 
-	    std::cout<<" Exception caught ... continuing 1 "<<std::endl; 
-	    continue;
-	  }
-	  
-	  KinematicParticleVertexFitter fitter;   
-	  
-	  RefCountedKinematicTree psiVertexFitTree;
-	  try {
-	    psiVertexFitTree = fitter.fit(kaonParticles); 
-	  }
-	  catch (...) { 
-	    std::cout<<" Exception caught ... continuing 2 "<<std::endl; 
-	    continue;
-	  }
-	  
-	  if (!psiVertexFitTree->isValid()) 
-	    {
-	      //std::cout << "caught an exception in the psi vertex fit" << std::endl;
-	      continue; 
-	    }
-	  
-	  psiVertexFitTree->movePointerToTheTop();
-	  
-	  RefCountedKinematicParticle upsilon_vFit_noMC = psiVertexFitTree->currentParticle();
-	  RefCountedKinematicVertex upsilon_vFit_vertex_noMC = psiVertexFitTree->currentDecayVertex();
-	  
-	  if( upsilon_vFit_vertex_noMC->chiSquared() < 0 )
-	    {
-	      //std::cout << "negative chisq from psi fit" << endl;
-	      continue;
-	    }
-	  
-	  //some loose cuts go here
-	  
-	  if(upsilon_vFit_vertex_noMC->chiSquared()>30.) continue;
-	  if(upsilon_vFit_noMC->currentState().mass()<1.01946-0.01 || upsilon_vFit_noMC->currentState().mass()>1.01946+0.01) continue;
-	  
-	  //fill variables?iMuon3->track()->pt()
-	  phi_mass->push_back(upsilon_vFit_noMC->currentState().mass());
-	  nPhi++;
-	  kaonParticles.clear();
-      
-
-    }
-  } 
+  
      
   //cout<<"phi number is " << nPhi<<endl;
-  if (nJ > 0 && nPhi>0 ) 
+  if (nJ > 0 && nU>0 ) 
     {
 
       //std::cout << "filling tree" << endl;
@@ -749,7 +645,7 @@ miniAODmuons::beginJob()
   tree_->Branch("U_mu1loose",&U_mu1loose);
   tree_->Branch("U_mu2loose",&U_mu2loose);
 
-  tree_->Branch("phi_mass",&phi_mass);
+  //tree_->Branch("phi_mass",&phi_mass);
   //tree_->Branch("phi_eta",&phi_eta);
   //tree_->Branch("phi_pt",&phi_pt);
   //tree_->Branch("phi_phi",&phi_phi);
