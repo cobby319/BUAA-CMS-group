@@ -115,7 +115,7 @@ miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
   B_U_px2(0), B_U_py2(0), B_U_pz2(0), 
   B_U_charge1(0), B_U_charge2(0),
   phi_mass(0), phi_pt(0),phi_eta(0),phi_phi(0),
-  N_pfcandidate(0)
+  N_pfcandidate(0),N_pairs(0)
 
 
 {

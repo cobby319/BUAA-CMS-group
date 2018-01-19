@@ -127,6 +127,6 @@ private:
   std::vector<float>       *B_U_px2, *B_U_py2, *B_U_pz2;
   std::vector<int>         *B_U_charge1, *B_U_charge2;
   std::vector<float>       *phi_mass, *phi_pt, *phi_eta, *phi_phi;
-  std::vector<int>         *N_pfcandidate;
+  std::vector<int>         *N_pfcandidate, *N_pairs;
 };
 #endif
