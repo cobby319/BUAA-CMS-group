@@ -596,7 +596,16 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	      //std::cout << "caught an exception in the psi vertex fit" << std::endl;
 	      continue; 
 	    }
-	  
+	  //creating the particle fitter
+	  KinematicParticleFitter csFitter;
+
+	  // creating the constraint
+      float phi_m_pdg = 1.01946;
+	  float phi_m_sigma = 0.000016;
+	  KinematicConstraint * phi_c2 = new MassKinematicConstraint(phi_m_pdg,phi_m_sigma);
+
+	  //the constrained fit:
+	  psiVertexFitTree = csFitter.fit(phi_c2,psiVertexFitTree);
 	  psiVertexFitTree->movePointerToTheTop();
 	  
 	  RefCountedKinematicParticle upsilon_vFit_noMC = psiVertexFitTree->currentParticle();
