@@ -521,23 +521,33 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 
   for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1){
   	//if(iTrack1->pdgId() != 321 &&iTrack1->pdgId() != -321)continue;
-  	if(iTrack1->isGlobalMuon()||iTrack1->isElectron())continue;
-  	if(iTrack1->pt()<0.7)continue;
-  	if(iTrack1->numberOfHits()<5)continue;
+  	reco::Track *trackref1= iTrack1->bestTrack();
+  	if(!trackref1) continue;
+  	if(trackref1->normalizedChi2 () >2) continue;
+  	/*if(iTrack1->isGlobalMuon()||iTrack1->isElectron())continue;
+  	if(iTrack1->dz()/iTrack1->dzError()>3)continue;
+  	if(iTrack1->pt()<0.5)continue;
+  	if(iTrack1->numberOfHits()<5)continue;*/
+  
   	for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2){
-    if(iTrack1==iTrack2) continue;
-    if(iTrack2->isGlobalMuon()||iTrack2->isElectron())continue;
-  	if(iTrack2->pt()<0.7)continue;
-  	if(iTrack2->numberOfHits()<5)continue;
-    //if(iTrack2->pdgId() != 321 &&iTrack2->pdgId() != -321)continue;
-    if((iTrack1->charge())*(iTrack2->charge())==1) continue;
-    float mass = (iTrack1->p4()+iTrack2->p4()).M();
-    if (abs(mass-1.01946)>0.3)continue;
-    phi_mass->push_back(mass);
-    phi_eta->push_back((iTrack1->p4()+iTrack2->p4()).Eta());
-    phi_pt->push_back((iTrack1->p4()+iTrack2->p4()).Pt());
-    phi_phi->push_back((iTrack1->p4()+iTrack2->p4()).Phi());
-    nPhi++;
+      if(iTrack1==iTrack2) continue;
+      reco::Track *trackref2= iTrack2->bestTrack();
+      if(!trackref2) continue;
+      if(trackref2->normalizedChi2 () >2) continue;
+      /*if(iTrack2->isGlobalMuon()||iTrack2->isElectron())continue;
+      if(iTrack2->dz()/iTrack2->dzError()>3)continue;
+  	  if(iTrack2->pt()>0.8)continue;
+      if(iTrack2->numberOfHits()<5)continue;*/
+      //if(iTrack2->pdgId() != 321 &&iTrack2->pdgId() != -321)continue;
+      if((iTrack1->charge())*(iTrack2->charge())==1) continue;
+
+      /*float mass = (iTrack1->p4()+iTrack2->p4()).M();
+      if (abs(mass-1.01946)>0.3)continue;*/
+      phi_mass->push_back(mass);
+      phi_eta->push_back((iTrack1->p4()+iTrack2->p4()).Eta());
+      phi_pt->push_back((iTrack1->p4()+iTrack2->p4()).Pt());
+      phi_phi->push_back((iTrack1->p4()+iTrack2->p4()).Phi());
+      nPhi++;
     //cout<<"pdgid " << iTrack1->pdgId()<<endl;
     }
   }
