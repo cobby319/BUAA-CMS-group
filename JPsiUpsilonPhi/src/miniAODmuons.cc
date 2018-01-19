@@ -518,8 +518,8 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
       if((iTrack1->charge())*(iTrack2->charge())==1) continue;
       
 
-      Track *glbTrackp;
-      Track *glbTrackn;
+      const Track *glbTrackp;
+      const Track *glbTrackn;
       	  
 	  
 	  if(iTrack1->charge() == 1){ glbTrackp = iTrack1->bestTrack();}
