@@ -619,11 +619,11 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  
 	  //some loose cuts go here
 	  
-	  if(upsilon_vFit_vertex_noMC->chiSquared()>30.) continue;
+	  if(upsilon_vFit_vertex_noMC->chiSquared()>10.) continue;
 	  if(upsilon_vFit_noMC->currentState().mass()<1.01946-0.01 || upsilon_vFit_noMC->currentState().mass()>1.01946+0.01) continue;
 	  
 	  //fill variables?iMuon3->track()->pt()
-	  cout<<"mass is"<<(upsilon_vFit_noMC->currentState().mass());
+	  //cout<<"mass is"<<(upsilon_vFit_noMC->currentState().mass());
 	  phi_mass->push_back(upsilon_vFit_noMC->currentState().mass());
       nPhi++;
 	  kaonParticles.clear();
