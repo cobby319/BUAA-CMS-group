@@ -519,7 +519,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
     }
   N_pfcandidate->push_back(thePATTrackHandle->size());
 
-  for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1){
+  /*for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1){
   	//if(iTrack1->pdgId() != 321 &&iTrack1->pdgId() != -321)continue;
   	
   	
@@ -528,7 +528,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
   	
   	if(iTrack1->numberOfHits()<5)continue;*/
   
-  	for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2){
+  	/*for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2){
       if(iTrack1==iTrack2) continue;
       if((iTrack1->charge())*(iTrack2->charge())==1) continue;
       const reco::Track *glbTrackp;
@@ -575,10 +575,11 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
       phi_eta->push_back((iTrack1->p4()+iTrack2->p4()).Eta());
       phi_pt->push_back((iTrack1->p4()+iTrack2->p4()).Pt());
       phi_phi->push_back((iTrack1->p4()+iTrack2->p4()).Phi());*/
-      nPhi++;
+      //nPhi++;
     //cout<<"pdgid " << iTrack1->pdgId()<<endl;
-    }
-  }
+    //}
+  //}
+
   if (nJ > 0 && nPhi>0 ) 
     {
 
