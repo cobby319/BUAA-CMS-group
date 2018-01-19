@@ -193,7 +193,7 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  if(iMuon2->charge() == 1) { glbTrackP = iMuon2->track();}
 	  if(iMuon2->charge() == -1){ glbTrackM = iMuon2->track();}
 	  
-	  if( !glbTrackP || !glbTrackM ) continue;
+	  if( glbTrackP.isNull() || glbTrackM.isNull() ) continue;
 
 	  if(iMuon1->track()->pt()<4.0) continue;
 	  if(iMuon2->track()->pt()<4.0) continue;
@@ -363,7 +363,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  if(iMuon4->charge() == -1){ glbTrackM = iMuon4->track();}
 	  
 	  
-	  if( !glbTrackP || !glbTrackM ) continue;
+	  if( glbTrackP.isNull() || glbTrackM.isNull() ) continue;
 
 	  if(iMuon3->track()->pt()<2.5) continue;
 	  if(iMuon4->track()->pt()<2.5) continue;
@@ -513,12 +513,12 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
   N_pfcandidate->push_back(thePATTrackHandle->size());
 
      
-  cout<<"phi number is " << nPhi<<endl;
-  if (nJ > 0 && nPhi>0 ) 
+  //cout<<"phi number is " << nPhi<<endl;
+  if (nJ > 0 && nU>0 ) 
     {
 
       //std::cout << "filling tree" << endl;
-      //tree_->Fill();
+      tree_->Fill();
     }
 
    nU = 0;
