@@ -609,8 +609,8 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  if(upsilon_vFit_noMC->currentState().mass()<1.01946-0.01 || upsilon_vFit_noMC->currentState().mass()>1.01946+0.01) continue;
 	  
 	  //fill variables?iMuon3->track()->pt()
-	  phi_mass->push_back(currentState().mass());
-	 
+	  phi_mass->push_back(upsilon_vFit_noMC->currentState().mass());
+	  nPhi++;
 	  kaonParticles.clear();
       
       
