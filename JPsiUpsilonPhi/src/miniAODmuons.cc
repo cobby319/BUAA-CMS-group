@@ -521,7 +521,8 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
       Track glbTrackp;
       Track glbTrackn;
       	  
-	  
+	  if(!(iTrack1->bestTrack())) continue;
+	  if(!(iTrack2->bestTrack())) continue;
 	  if(iTrack1->charge() == 1){ glbTrackp = *(iTrack1->bestTrack());}
 	  if(iTrack1->charge() == -1){ glbTrackn = *(iTrack1->bestTrack());}
 	  
@@ -749,10 +750,10 @@ miniAODmuons::beginJob()
   tree_->Branch("U_mu2loose",&U_mu2loose);
 
   tree_->Branch("phi_mass",&phi_mass);
-  tree_->Branch("phi_eta",&phi_eta);
-  tree_->Branch("phi_pt",&phi_pt);
-  tree_->Branch("phi_phi",&phi_phi);
-  tree_->Branch("N_pfcandidate",&N_pfcandidate);
+  //tree_->Branch("phi_eta",&phi_eta);
+  //tree_->Branch("phi_pt",&phi_pt);
+  //tree_->Branch("phi_phi",&phi_phi);
+  //tree_->Branch("N_pfcandidate",&N_pfcandidate);
 
 }
 
