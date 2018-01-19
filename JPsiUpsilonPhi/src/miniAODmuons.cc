@@ -519,66 +519,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
     }
   N_pfcandidate->push_back(thePATTrackHandle->size());
 
-  /*for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1){
-  	//if(iTrack1->pdgId() != 321 &&iTrack1->pdgId() != -321)continue;
-  	
-  	
-  	/*if(iTrack1->isGlobalMuon()||iTrack1->isElectron())continue;
-  	if(iTrack1->dz()/iTrack1->dzError()>3)continue;
-  	
-  	if(iTrack1->numberOfHits()<5)continue;*/
   
-  	/*for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2){
-      if(iTrack1==iTrack2) continue;
-      if((iTrack1->charge())*(iTrack2->charge())==1) continue;
-      const reco::Track *glbTrackp;
-      const reco::Track *glbTrackn;
-      	  
-	  
-	  if(iTrack1->charge() == 1){ glbTrackp = iTrack1->bestTrack();}
-	  if(iTrack1->charge() == -1){ glbTrackn = iTrack1->bestTrack();}
-	  
-	  if(iTrack2->charge() == 1) { glbTrackp = iTrack2->bestTrack();}
-	  if(iTrack2->charge() == -1){ glbTrackn = iTrack2->bestTrack();}
-	  
-	  if( ! glbTrackp ||  !glbTrackn)
-	    {
-	      //std::cout << "continue due to no track ref" << endl;
-	      continue;
-	    }
-	  if(glbTrackp->normalizedChi2()>2) continue;
-	  if(glbTrackn->normalizedChi2()>2) continue;
-
-	  if(glbTrackp->numberOfValidHits()<5) continue;
-	  if(glbTrackn->numberOfValidHits()<5) continue;
-
-      /*if(!trackref1) continue;
-  	  if(trackref1->normalizedChi2 () >2) continue;
-  	  if(trackref1->pt()<0.5)continue;
-  	  if(abs(trackref1->eta())>2)continue;
-  	  if(trackref1->numberOfValidHits()<5)continue;
-      if(!trackref2) continue;
-      if(trackref2->normalizedChi2 () >2) continue;
-      if(trackref2->pt()<0.5)continue;
-      if(abs(trackref2->eta())>2)continue;
-      if(trackref2->numberOfValidHits()<5)continue;
-      if(iTrack2->isGlobalMuon()||iTrack2->isElectron())continue;
-      if(iTrack2->dz()/iTrack2->dzError()>3)continue;
-  	  if(iTrack2->pt()>0.8)continue;
-      if(iTrack2->numberOfHits()<5)continue;*/
-      //if(iTrack2->pdgId() != 321 &&iTrack2->pdgId() != -321)continue;
-      
-
-      /*float mass = (iTrack1->p4()+iTrack2->p4()).M();
-      if (abs(mass-1.01946)>0.3)continue;
-      phi_mass->push_back(mass);
-      phi_eta->push_back((iTrack1->p4()+iTrack2->p4()).Eta());
-      phi_pt->push_back((iTrack1->p4()+iTrack2->p4()).Pt());
-      phi_phi->push_back((iTrack1->p4()+iTrack2->p4()).Phi());*/
-      //nPhi++;
-    //cout<<"pdgid " << iTrack1->pdgId()<<endl;
-    //}
-  //}
 
   if (nJ > 0 && nPhi>0 ) 
     {
