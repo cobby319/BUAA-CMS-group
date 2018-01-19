@@ -514,7 +514,13 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  
 	}
     }
-   
+  for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1){
+  	for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2){
+    if(iTrack1==iTrack2) continue;
+    if((iTrack1->charge())*(iTrack2->charge())==1) continue;
+    cout<<"pdgid " << iTrack1->pdgId()<<endl;
+    }
+  }
   if (nJ > 0 && nU>0 ) 
     {
 
