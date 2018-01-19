@@ -147,7 +147,7 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   edm::ESHandle<TransientTrackBuilder> theB; 
   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB); 
 
-  edm::Handle<View<reco::PackedCandidate>> thePATTrackHandle;
+  edm::Handle<View<pat::PackedCandidate>> thePATTrackHandle;
   iEvent.getByToken(trakCollection_label,thePATTrackHandle);
 
 
