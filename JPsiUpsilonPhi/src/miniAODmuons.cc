@@ -112,7 +112,9 @@ miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
 
   B_U_px1(0), B_U_py1(0), B_U_pz1(0),
   B_U_px2(0), B_U_py2(0), B_U_pz2(0), 
-  B_U_charge1(0), B_U_charge2(0)
+  B_U_charge1(0), B_U_charge2(0),
+  phi_mass(0), phi_pt(0),phi_eta(0),phi_phi(0),
+  N_pfcandidate(0)
 
 
 {
@@ -514,11 +516,21 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  
 	}
     }
+  N_pfcandidate->push_back(thePATTrackHandle->size());
+
   for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1){
+  	if(iTrack1->pdgId() != 321 &&iTrack1->pdgId() != -321)continue;
   	for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2){
     if(iTrack1==iTrack2) continue;
+    if(iTrack2->pdgId() != 321 &&iTrack2->pdgId() != -321)continue;
     if((iTrack1->charge())*(iTrack2->charge())==1) continue;
-    cout<<"pdgid " << iTrack1->pdgId()<<endl;
+    float mass = (iTrack1->p4()+iTrack2->p4()).M();
+    if (abs(mass-1.01946)>0.3)continue;
+    phi_mass->push_back(mass);
+    phi_eta->push_back((iTrack1->p4()+iTrack2->p4()).Eta());
+    phi_pt->push_back((iTrack1->p4()+iTrack2->p4()).Pt());
+    phi_phi->push_back((iTrack1->p4()+iTrack2->p4()).Phi());
+    //cout<<"pdgid " << iTrack1->pdgId()<<endl;
     }
   }
   if (nJ > 0 && nU>0 ) 
@@ -556,6 +568,11 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
    U_mu1soft->clear(); U_mu2soft->clear(); U_mu1tight->clear(); U_mu2tight->clear();
    U_mu1PF->clear(); U_mu2PF->clear(); U_mu1loose->clear(); U_mu2loose->clear(); 
    
+   N_pfcandidate->clear();
+   phi_mass->clear();
+   phi_eta ->clear();
+   phi_pt  ->clear();
+   phi_phi ->clear();
 }
 
 
@@ -644,6 +661,12 @@ miniAODmuons::beginJob()
   tree_->Branch("U_mu2PF",&U_mu2PF);
   tree_->Branch("U_mu1loose",&U_mu1loose);
   tree_->Branch("U_mu2loose",&U_mu2loose);
+
+  tree_->Branch("phi_mass",&phi_mass);
+  tree_->Branch("phi_eta",&phi_eta);
+  tree_->Branch("phi_pt",&phi_pt);
+  tree_->Branch("phi_phi",&phi_phi);
+  tree_->Branch("N_pfcandidate",&N_pfcandidate);
 
 }
 
