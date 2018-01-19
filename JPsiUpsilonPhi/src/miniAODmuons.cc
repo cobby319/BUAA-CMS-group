@@ -623,7 +623,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
     {
 
       //std::cout << "filling tree" << endl;
-      tree_->Fill();
+      //tree_->Fill();
     }
 
    nU = 0;
