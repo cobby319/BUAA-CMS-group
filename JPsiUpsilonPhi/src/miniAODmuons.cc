@@ -115,7 +115,7 @@ miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
   B_U_px2(0), B_U_py2(0), B_U_pz2(0), 
   B_U_charge1(0), B_U_charge2(0),
   phi_mass(0), phi_pt(0),phi_eta(0),phi_phi(0),
-  N_pfcandidate(0),N_pairs(0)
+  N_pfcandidate(0)
 
 
 {
@@ -543,6 +543,78 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 
       reco::TransientTrack kaon1TT((*theB).build(glbTrackp));
 	  reco::TransientTrack kaon2TT((*theB).build(glbTrackn));
+
+	  FreeTrajectoryState ka1State = kaon1TT.impactPointTSCP().theState();
+	  FreeTrajectoryState ka2State = kaon2TT.impactPointTSCP().theState();
+
+	  if( !kaon1TT.impactPointTSCP().isValid() || !kaon2TT.impactPointTSCP().isValid() ) continue;
+
+	  // Measure distance between tracks at their closest approach
+	  ClosestApproachInRPhi cApp;
+	  cApp.calculate(ka1State, ka2State);
+	  if( !cApp.status() ) continue;
+	  float dca = fabs( cApp.distance() );	  
+	  if (dca < 0. || dca > 0.5) continue;
+
+	  ParticleMass kaon_mass = 0.493677; //pdg mass
+	  
+	  float kaon_sigma = 0.000016;
+
+	  KinematicParticleFactoryFromTransientTrack pFactory;
+	  
+	  //initial chi2 and ndf before kinematic fits.
+	  float chi = 0.;
+	  float ndf = 0.;
+	  vector<RefCountedKinematicParticle> kaonParticles;
+	  try {
+	    kaonParticles.push_back(pFactory.particle(kaon1TT,kaon_mass,chi,ndf,kaon_sigma));
+	    kaonParticles.push_back(pFactory.particle(kaon2TT,kaon_mass,chi,ndf,kaon_sigma));
+	  }
+	  catch(...) { 
+	    std::cout<<" Exception caught ... continuing 1 "<<std::endl; 
+	    continue;
+	  }
+	  
+	  KinematicParticleVertexFitter fitter;   
+	  
+	  RefCountedKinematicTree psiVertexFitTree;
+	  try {
+	    psiVertexFitTree = fitter.fit(kaonParticles); 
+	  }
+	  catch (...) { 
+	    std::cout<<" Exception caught ... continuing 2 "<<std::endl; 
+	    continue;
+	  }
+	  
+	  if (!psiVertexFitTree->isValid()) 
+	    {
+	      //std::cout << "caught an exception in the psi vertex fit" << std::endl;
+	      continue; 
+	    }
+	  
+	  psiVertexFitTree->movePointerToTheTop();
+	  
+	  RefCountedKinematicParticle upsilon_vFit_noMC = psiVertexFitTree->currentParticle();
+	  RefCountedKinematicVertex upsilon_vFit_vertex_noMC = psiVertexFitTree->currentDecayVertex();
+	  
+	  if( upsilon_vFit_vertex_noMC->chiSquared() < 0 )
+	    {
+	      //std::cout << "negative chisq from psi fit" << endl;
+	      continue;
+	    }
+	  
+	  //some loose cuts go here
+	  
+	  if(upsilon_vFit_vertex_noMC->chiSquared()>30.) continue;
+	  if(upsilon_vFit_noMC->currentState().mass()<1.01946-0.01 || upsilon_vFit_noMC->currentState().mass()>1.01946+0.01) continue;
+	  
+	  //fill variables?iMuon3->track()->pt()
+	  phi_mass->push_back(currentState().mass());
+	 
+	  kaonParticles.clear();
+      
+      
+
     }
   }    
 
