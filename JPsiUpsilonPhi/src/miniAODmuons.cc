@@ -75,7 +75,7 @@
 miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
   :
   dimuon_Label(consumes<edm::View<pat::Muon>>(iConfig.getParameter<edm::InputTag>("dimuons"))),
-  trakCollection_label(consumes<View<pat::PackedCandidate>>(iConfig.getParameter<edm::InputTag>("Trak"))),
+  trakCollection_label(consumes<edm::View<pat::PackedCandidate>>(iConfig.getParameter<edm::InputTag>("Trak"))),
   primaryVertices_Label(consumes<reco::VertexCollection>(iConfig.getParameter<edm::InputTag>("primaryVertices"))),
    
   isMC_(iConfig.getParameter<bool>("isMC")),
