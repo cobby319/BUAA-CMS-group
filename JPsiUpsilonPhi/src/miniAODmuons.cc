@@ -300,7 +300,7 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  //fill variables?iMuon1->track()->pt()
 	  TLorentzVector JPsiKinematics;
       JPsiKinematics.SetPxPyPzE(psi_vFit_noMC->currentState().globalMomentum().x(),psi_vFit_noMC->currentState().globalMomentum().y(),psi_vFit_noMC->currentState().globalMomentum().z(),psi_vFit_noMC->currentState().kinematicParameters().energy()) ;
-	  J_mass->push_back( psi_vFit_noMC->currentState().mass());
+	  J_mass->push_back( JPsiKinematics.M() );
 	  J_px->push_back( JPsiKinematics.Px() );
 	  J_py->push_back( JPsiKinematics.Py());
 	  J_pz->push_back(  JPsiKinematics.Pz());
@@ -480,7 +480,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  
 	  TLorentzVector UpsilonKinematics;
       UpsilonKinematics.SetPxPyPzE(upsilon_vFit_noMC->currentState().globalMomentum().x(),upsilon_vFit_noMC->currentState().globalMomentum().y(),upsilon_vFit_noMC->currentState().globalMomentum().z(),upsilon_vFit_noMC->currentState().kinematicParameters().energy()) ;
-	  U_mass->push_back( upsilon_vFit_noMC->currentState().mass() );
+	  U_mass->push_back( UpsilonKinematics.M() );
 	  U_px->push_back( UpsilonKinematics.Px() );
 	  U_py->push_back( UpsilonKinematics.Py());
 	  U_pz->push_back(  UpsilonKinematics.Pz());
@@ -644,7 +644,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  //cout<<"mass is"<<(upsilon_vFit_noMC->currentState().mass());
 	  TLorentzVector PhiKinematics;
       PhiKinematics.SetPxPyPzE(upsilon_vFit_noMC->currentState().globalMomentum().x(),upsilon_vFit_noMC->currentState().globalMomentum().y(),upsilon_vFit_noMC->currentState().globalMomentum().z(),upsilon_vFit_noMC->currentState().kinematicParameters().energy()) ;
-	  Phi_mass  ->push_back(upsilon_vFit_noMC->currentState().mass());
+	  Phi_mass  ->push_back(PhiKinematics.M() );
 	  Phi_px    ->push_back(PhiKinematics.Px() );
 	  Phi_py    ->push_back(PhiKinematics.Py());
 	  Phi_pz    ->push_back(PhiKinematics.Pz());
