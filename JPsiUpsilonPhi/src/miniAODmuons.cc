@@ -97,11 +97,11 @@ miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
   nPhi(0),
   
  
-  B_J_mass(0), B_J_px(0), B_J_py(0), B_J_pz(0),
+  J_mass(0), J_px(0), J_py(0), J_pz(0),J_energy(0),
 
-  B_J_px1(0), B_J_py1(0), B_J_pz1(0),
-  B_J_px2(0), B_J_py2(0), B_J_pz2(0), 
-  B_J_charge1(0), B_J_charge2(0),
+  J_px1(0), J_py1(0), J_pz1(0),
+  J_px2(0), J_py2(0), J_pz2(0), 
+  J_charge1(0), J_charge2(0),
 
   U_mumC2(0), U_mumNHits(0), U_mumNPHits(0),
   U_mupC2(0), U_mupNHits(0), U_mupNPHits(0),
@@ -110,11 +110,12 @@ miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
 
   U_mu1soft(0), U_mu2soft(0), U_mu1tight(0), U_mu2tight(0), 
   U_mu1PF(0), U_mu2PF(0), U_mu1loose(0), U_mu2loose(0),
-  B_U_mass(0), B_U_px(0), B_U_py(0), B_U_pz(0),
+  U_mass(0), U_px(0), U_py(0), U_pz(0),U_energy(0),
 
-  B_U_px1(0), B_U_py1(0), B_U_pz1(0),
-  B_U_px2(0), B_U_py2(0), B_U_pz2(0), 
-  B_U_charge1(0), B_U_charge2(0),phi_mass(0)
+  U_px1(0), U_py1(0), U_pz1(0),
+  U_px2(0), U_py2(0), U_pz2(0), 
+  U_charge1(0), U_charge2(0),
+  Phi_mass(0),Phi_px(0),Phi_py(0),Phi_pz(0),Phi_energy(0)
 
 
 {
@@ -298,20 +299,20 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  
 	  //fill variables?iMuon1->track()->pt()
 	  
-	  B_J_mass->push_back( psi_vFit_noMC->currentState().mass() );
-	  B_J_px->push_back( psi_vFit_noMC->currentState().globalMomentum().x() );
-	  B_J_py->push_back( psi_vFit_noMC->currentState().globalMomentum().y() );
-	  B_J_pz->push_back( psi_vFit_noMC->currentState().globalMomentum().z() );
+	  J_mass->push_back( psi_vFit_noMC->currentState().mass() );
+	  J_px->push_back( psi_vFit_noMC->currentState().globalMomentum().x() );
+	  J_py->push_back( psi_vFit_noMC->currentState().globalMomentum().y() );
+	  J_pz->push_back( psi_vFit_noMC->currentState().globalMomentum().z() );
 	  
-	  B_J_px1->push_back(iMuon1->track()->px());
-	  B_J_py1->push_back(iMuon1->track()->py());
-	  B_J_pz1->push_back(iMuon1->track()->pz());
-	  B_J_charge1->push_back(iMuon1->charge());
+	  J_px1->push_back(iMuon1->track()->px());
+	  J_py1->push_back(iMuon1->track()->py());
+	  J_pz1->push_back(iMuon1->track()->pz());
+	  J_charge1->push_back(iMuon1->charge());
 	  
-	  B_J_px2->push_back(iMuon2->track()->px());
-	  B_J_py2->push_back(iMuon2->track()->py());
-	  B_J_pz2->push_back(iMuon2->track()->pz());
-	  B_J_charge2->push_back(iMuon2->charge());
+	  J_px2->push_back(iMuon2->track()->px());
+	  J_py2->push_back(iMuon2->track()->py());
+	  J_pz2->push_back(iMuon2->track()->pz());
+	  J_charge2->push_back(iMuon2->charge());
 	  
 	   // ************
 	  
@@ -471,20 +472,20 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  
 	  //fill variables?iMuon3->track()->pt()
 	  
-	  B_U_mass->push_back( upsilon_vFit_noMC->currentState().mass() );
-	  B_U_px->push_back( upsilon_vFit_noMC->currentState().globalMomentum().x() );
-	  B_U_py->push_back( upsilon_vFit_noMC->currentState().globalMomentum().y() );
-	  B_U_pz->push_back( upsilon_vFit_noMC->currentState().globalMomentum().z() );
+	  U_mass->push_back( upsilon_vFit_noMC->currentState().mass() );
+	  U_px->push_back( upsilon_vFit_noMC->currentState().globalMomentum().x() );
+	  U_py->push_back( upsilon_vFit_noMC->currentState().globalMomentum().y() );
+	  U_pz->push_back( upsilon_vFit_noMC->currentState().globalMomentum().z() );
 	  
-	  B_U_px1->push_back(iMuon3->track()->px());
-	  B_U_py1->push_back(iMuon3->track()->py());
-	  B_U_pz1->push_back(iMuon3->track()->pz());
-	  B_U_charge1->push_back(iMuon3->charge());
+	  U_px1->push_back(iMuon3->track()->px());
+	  U_py1->push_back(iMuon3->track()->py());
+	  U_pz1->push_back(iMuon3->track()->pz());
+	  U_charge1->push_back(iMuon3->charge());
 	  
-	  B_U_px2->push_back(iMuon4->track()->px());
-	  B_U_py2->push_back(iMuon4->track()->py());
-	  B_U_pz2->push_back(iMuon4->track()->pz());
-	  B_U_charge2->push_back(iMuon4->charge());
+	  U_px2->push_back(iMuon4->track()->px());
+	  U_py2->push_back(iMuon4->track()->py());
+	  U_pz2->push_back(iMuon4->track()->pz());
+	  U_charge2->push_back(iMuon4->charge());
 	  
 	   // ************
 	  
@@ -629,7 +630,11 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  
 	  //fill variables?iMuon3->track()->pt()
 	  //cout<<"mass is"<<(upsilon_vFit_noMC->currentState().mass());
-	  phi_mass->push_back(upsilon_vFit_noMC->currentState().mass());
+	  Phi_mass->push_back(upsilon_vFit_noMC->currentState().mass());
+	  Phi_px->push_back(upsilon_vFit_noMC->globalMomentum().x());
+      Phi_py->push_back(upsilon_vFit_noMC->globalMomentum().y());
+      Phi_pz->push_back(upsilon_vFit_noMC->globalMomentum().z());
+      Phi_energy->push_back(upsilon_vFit_noMC->kinematicParameters()->energy());
       nPhi++;
 	  kaonParticles.clear();
       
@@ -651,13 +656,13 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
    nJ = 0; 
    nPhi = 0;
 
-   B_J_mass->clear();  B_J_px->clear();  B_J_py->clear();  B_J_pz->clear();  
-   B_J_px1->clear();  B_J_py1->clear();  B_J_pz1->clear(), B_J_charge1->clear();
-   B_J_px2->clear();  B_J_py2->clear();  B_J_pz2->clear(), B_J_charge2->clear();
+   J_mass->clear();  J_px->clear();  J_py->clear();  J_pz->clear();  
+   J_px1->clear();  J_py1->clear();  J_pz1->clear(), J_charge1->clear();
+   J_px2->clear();  J_py2->clear();  J_pz2->clear(), J_charge2->clear();
 
-   B_U_mass->clear();  B_U_px->clear();  B_U_py->clear();  B_U_pz->clear();  
-   B_U_px1->clear();  B_U_py1->clear();  B_U_pz1->clear(), B_U_charge1->clear();
-   B_U_px2->clear();  B_U_py2->clear();  B_U_pz2->clear(), B_U_charge2->clear();
+   U_mass->clear();  U_px->clear();  U_py->clear();  U_pz->clear();  
+   U_px1->clear();  U_py1->clear();  U_pz1->clear(), U_charge1->clear();
+   U_px2->clear();  U_py2->clear();  U_pz2->clear(), U_charge2->clear();
    mumC2->clear();
    mumNHits->clear(); mumNPHits->clear();
    mupC2->clear();
@@ -675,7 +680,11 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 
    U_mu1soft->clear(); U_mu2soft->clear(); U_mu1tight->clear(); U_mu2tight->clear();
    U_mu1PF->clear(); U_mu2PF->clear(); U_mu1loose->clear(); U_mu2loose->clear(); 
-   phi_mass->clear();
+   Phi_mass->clear();
+   Phi_px->clear();
+   Phi_py->clear();
+   Phi_pz->clear();
+   Phi_energy->clear();
 }
 
 
@@ -692,35 +701,35 @@ miniAODmuons::beginJob()
 
   tree_->Branch("nJ",&nJ,"nJ/i");
   tree_->Branch("nU",&nU,"nU/i"); 
-  tree_->Branch("B_J_mass", &B_J_mass);
-  tree_->Branch("B_J_px", &B_J_px);
-  tree_->Branch("B_J_py", &B_J_py);
-  tree_->Branch("B_J_pz", &B_J_pz);
+  tree_->Branch("J_mass", &J_mass);
+  tree_->Branch("J_px", &J_px);
+  tree_->Branch("J_py", &J_py);
+  tree_->Branch("J_pz", &J_pz);
 
-  tree_->Branch("B_J_px1", &B_J_px1);
-  tree_->Branch("B_J_py1", &B_J_py1);
-  tree_->Branch("B_J_pz1", &B_J_pz1);
-  tree_->Branch("B_J_charge1", &B_J_charge1);
+  tree_->Branch("J_px1", &J_px1);
+  tree_->Branch("J_py1", &J_py1);
+  tree_->Branch("J_pz1", &J_pz1);
+  tree_->Branch("J_charge1", &J_charge1);
 
-  tree_->Branch("B_J_px2", &B_J_px2);
-  tree_->Branch("B_J_py2", &B_J_py2);
-  tree_->Branch("B_J_pz2", &B_J_pz2);
-  tree_->Branch("B_J_charge2", &B_J_charge2);
+  tree_->Branch("J_px2", &J_px2);
+  tree_->Branch("J_py2", &J_py2);
+  tree_->Branch("J_pz2", &J_pz2);
+  tree_->Branch("J_charge2", &J_charge2);
 
-  tree_->Branch("B_U_mass", &B_U_mass);
-  tree_->Branch("B_U_px", &B_U_px);
-  tree_->Branch("B_U_py", &B_U_py);
-  tree_->Branch("B_U_pz", &B_U_pz);
+  tree_->Branch("U_mass", &U_mass);
+  tree_->Branch("U_px", &U_px);
+  tree_->Branch("U_py", &U_py);
+  tree_->Branch("U_pz", &U_pz);
 
-  tree_->Branch("B_U_px1", &B_U_px1);
-  tree_->Branch("B_U_py1", &B_U_py1);
-  tree_->Branch("B_U_pz1", &B_U_pz1);
-  tree_->Branch("B_U_charge1", &B_U_charge1);
+  tree_->Branch("U_px1", &U_px1);
+  tree_->Branch("U_py1", &U_py1);
+  tree_->Branch("U_pz1", &U_pz1);
+  tree_->Branch("U_charge1", &U_charge1);
 
-  tree_->Branch("B_U_px2", &B_U_px2);
-  tree_->Branch("B_U_py2", &B_U_py2);
-  tree_->Branch("B_U_pz2", &B_U_pz2);
-  tree_->Branch("B_U_charge2", &B_U_charge2); 
+  tree_->Branch("U_px2", &U_px2);
+  tree_->Branch("U_py2", &U_py2);
+  tree_->Branch("U_pz2", &U_pz2);
+  tree_->Branch("U_charge2", &U_charge2); 
 
  
   tree_->Branch("mumC2",&mumC2);  
@@ -764,7 +773,10 @@ miniAODmuons::beginJob()
   tree_->Branch("U_mu2PF",&U_mu2PF);
   tree_->Branch("U_mu1loose",&U_mu1loose);
   tree_->Branch("U_mu2loose",&U_mu2loose);
-  tree_->Branch("phi_mass",&phi_mass);
+  tree_->Branch("Phi_mass",&Phi_mass);
+  tree_->Branch("Phi_px",&Phi_px);
+  tree_->Branch("Phi_py",&Phi_py);
+  tree_->Branch("Phi_pz",&Phi_pz);
 }
 
 
