@@ -110,7 +110,7 @@ miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
 
   U_mu1soft(0), U_mu2soft(0), U_mu1tight(0), U_mu2tight(0), 
   U_mu1PF(0), U_mu2PF(0), U_mu1loose(0), U_mu2loose(0),
-  U_mass(0), U_px(0), U_py(0), U_pz(0),U_energy(0),U_eta(0),U_phi(0),U_pt(0),
+  U_mass(0), U_px(0), U_py(0), U_pz(0),U_energy(0),U_eta(0),U_phi(0),U_pt(0)
 
   U_px1(0), U_py1(0), U_pz1(0),
   U_px2(0), U_py2(0), U_pz2(0), 
