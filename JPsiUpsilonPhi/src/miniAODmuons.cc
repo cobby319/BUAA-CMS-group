@@ -298,7 +298,7 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue;
 	  
 	  //fill variables?iMuon1->track()->pt()
-	  TLorentzVector JPsiKinematics;
+	  /*TLorentzVector JPsiKinematics;
       JPsiKinematics.SetPxPyPzE(psi_vFit_noMC->currentState().globalMomentum().x(),psi_vFit_noMC->currentState().globalMomentum().y(),psi_vFit_noMC->currentState().globalMomentum().z(),psi_vFit_noMC->currentState().kinematicParameters().energy()) ;
 	  J_mass->push_back( psi_vFit_noMC->currentState().mass());
 	  J_px->push_back( JPsiKinematics.Px() );
@@ -307,7 +307,7 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  J_energy->push_back(JPsiKinematics.E());
 	  J_eta->push_back( JPsiKinematics.Eta() );
 	  J_phi->push_back( JPsiKinematics.Phi());
-	  J_pt->push_back(  JPsiKinematics.Pt());
+	  J_pt->push_back(  JPsiKinematics.Pt());*/
 
 
 	  J_px1->push_back(iMuon1->track()->px());
@@ -478,7 +478,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  
 	  //fill variables?iMuon3->track()->pt()
 	  
-	  TLorentzVector UpsilonKinematics;
+	  /*TLorentzVector UpsilonKinematics;
       UpsilonKinematics.SetPxPyPzE(upsilon_vFit_noMC->currentState().globalMomentum().x(),upsilon_vFit_noMC->currentState().globalMomentum().y(),upsilon_vFit_noMC->currentState().globalMomentum().z(),upsilon_vFit_noMC->currentState().kinematicParameters().energy()) ;
 	  U_mass->push_back( upsilon_vFit_noMC->currentState().mass() );
 	  U_px->push_back( UpsilonKinematics.Px() );
@@ -487,7 +487,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  U_energy->push_back(UpsilonKinematics.E());
 	  U_eta->push_back( UpsilonKinematics.Eta() );
 	  U_phi->push_back( UpsilonKinematics.Phi());
-	  U_pt->push_back(  UpsilonKinematics.Pt());
+	  U_pt->push_back(  UpsilonKinematics.Pt());*/
 	  
 	  U_px1->push_back(iMuon3->track()->px());
 	  U_py1->push_back(iMuon3->track()->py());
@@ -642,7 +642,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  
 	  //fill variables?iMuon3->track()->pt()
 	  //cout<<"mass is"<<(upsilon_vFit_noMC->currentState().mass());
-	  TLorentzVector PhiKinematics;
+	  /*TLorentzVector PhiKinematics;
       PhiKinematics.SetPxPyPzE(upsilon_vFit_noMC->currentState().globalMomentum().x(),upsilon_vFit_noMC->currentState().globalMomentum().y(),upsilon_vFit_noMC->currentState().globalMomentum().z(),upsilon_vFit_noMC->currentState().kinematicParameters().energy()) ;
 	  Phi_mass  ->push_back(upsilon_vFit_noMC->currentState().mass());
 	  Phi_px    ->push_back(PhiKinematics.Px() );
@@ -651,7 +651,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  Phi_energy->push_back(PhiKinematics.E());
 	  Phi_eta   ->push_back(PhiKinematics.Eta() );
 	  Phi_phi   ->push_back(PhiKinematics.Phi());
-	  Phi_pt    ->push_back(PhiKinematics.Pt());
+	  Phi_pt    ->push_back(PhiKinematics.Pt());*/
       nPhi++;
 	  kaonParticles.clear();
       
