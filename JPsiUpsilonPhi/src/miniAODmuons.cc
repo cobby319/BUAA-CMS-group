@@ -634,7 +634,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  Phi_px->push_back(upsilon_vFit_noMC->currentState().globalMomentum().x());
       Phi_py->push_back(upsilon_vFit_noMC->currentState().globalMomentum().y());
       Phi_pz->push_back(upsilon_vFit_noMC->currentState().globalMomentum().z());
-      Phi_energy->push_back(upsilon_vFit_noMC->currentState().kinematicParameters()->energy());
+      Phi_energy->push_back(upsilon_vFit_noMC->currentState().kinematicParameters().energy());
       nPhi++;
 	  kaonParticles.clear();
       
