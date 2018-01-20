@@ -634,7 +634,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  Phi_px->push_back(upsilon_vFit_noMC->globalMomentum().x());
       Phi_py->push_back(upsilon_vFit_noMC->globalMomentum().y());
       Phi_pz->push_back(upsilon_vFit_noMC->globalMomentum().z());
-      Phi_energy->push_back(upsilon_vFit_noMC->kinematicParameters()->energy());
+      Phi_energy->push_back(upsilon_vFit_noMC->kinematicParameters().energy());
       nPhi++;
 	  kaonParticles.clear();
       
@@ -777,6 +777,7 @@ miniAODmuons::beginJob()
   tree_->Branch("Phi_px",&Phi_px);
   tree_->Branch("Phi_py",&Phi_py);
   tree_->Branch("Phi_pz",&Phi_pz);
+  tree_->Branch("Phi_energy",&Phi_energy);
 }
 
 
