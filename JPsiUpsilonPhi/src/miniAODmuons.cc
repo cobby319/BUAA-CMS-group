@@ -430,7 +430,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  //Creating a KinematicParticleFactory
 	  KinematicParticleFactoryFromTransientTrack pFactory;
 	  
-	  //initial chi2 and ndf before kinematic fits.
+	  //initial chi2 and ndf before kinematic fits.11
 	  float chi = 0.;
 	  float ndf = 0.;
 	  vector<RefCountedKinematicParticle> muonParticles;
