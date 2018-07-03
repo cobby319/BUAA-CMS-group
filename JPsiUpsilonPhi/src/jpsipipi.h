@@ -1,5 +1,5 @@
-#ifndef _miniAODmuons_h
-#define _miniAODmuons_h
+#ifndef _jpsipipi_h
+#define _jpsipipi_h
 
 // system include files
 #include <memory>
@@ -70,10 +70,10 @@
 // class decleration
 //
 
-class miniAODmuons : public edm::EDAnalyzer {
+class jpsipipi : public edm::EDAnalyzer {
 public:
-  explicit miniAODmuons(const edm::ParameterSet&);
-  ~miniAODmuons();
+  explicit jpsipipi(const edm::ParameterSet&);
+  ~jpsipipi();
   
 private:
   virtual void beginJob() ;

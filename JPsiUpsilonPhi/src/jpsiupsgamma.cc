@@ -1,7 +1,7 @@
 // -*- C++ -*-
 //
-// Package:    miniAODmuons
-// Class:      miniAODmuons
+// Package:    jpsiupsgamma
+// Class:      jpsiupsgamma
 // 
 
 //=================================================
@@ -16,7 +16,7 @@
 #include <memory>
 
 
-#include "miniAODmuons.h"
+#include "jpsiupsgamma.h"
 
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/EDAnalyzer.h"
@@ -72,7 +72,7 @@
 // constructors and destructor
 //
 
-miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
+jpsiupsgamma::jpsiupsgamma(const edm::ParameterSet& iConfig)
   :
   dimuon_Label(consumes<edm::View<pat::Muon>>(iConfig.getParameter<edm::InputTag>("dimuons"))),
   trakCollection_label(consumes<edm::View<pat::PackedCandidate>>(iConfig.getParameter<edm::InputTag>("Trak"))),
@@ -123,7 +123,7 @@ miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
 }
 
 
-miniAODmuons::~miniAODmuons()
+jpsiupsgamma::~jpsiupsgamma()
 {
 
 }
@@ -134,7 +134,7 @@ miniAODmuons::~miniAODmuons()
 //
 
 // ------------ method called to for each event  ------------
-void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
+void jpsiupsgamma::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
   using std::vector;
   using namespace edm;
@@ -691,7 +691,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 // ------------ method called once each job just before starting event loop  ------------
 
 void 
-miniAODmuons::beginJob()
+jpsiupsgamma::beginJob()
 {
 
   std::cout << "Beginning analyzer job with value of isMC= " << isMC_ << std::endl;
@@ -784,10 +784,10 @@ miniAODmuons::beginJob()
 
 
 // ------------ method called once each job just after ending the event loop  ------------
-void miniAODmuons::endJob() {
+void jpsiupsgamma::endJob() {
   tree_->GetDirectory()->cd();
   tree_->Write();
 }
 
 //define this as a plug-in
-DEFINE_FWK_MODULE(miniAODmuons);
+DEFINE_FWK_MODULE(jpsiupsgamma);

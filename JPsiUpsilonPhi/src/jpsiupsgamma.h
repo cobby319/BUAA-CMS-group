@@ -1,5 +1,5 @@
-#ifndef _miniAODmuons_h
-#define _miniAODmuons_h
+#ifndef _jpsiupsgamma_h
+#define _jpsiupsgamma_h
 
 // system include files
 #include <memory>
@@ -70,10 +70,10 @@
 // class decleration
 //
 
-class miniAODmuons : public edm::EDAnalyzer {
+class jpsiupsgamma : public edm::EDAnalyzer {
 public:
-  explicit miniAODmuons(const edm::ParameterSet&);
-  ~miniAODmuons();
+  explicit jpsiupsgamma(const edm::ParameterSet&);
+  ~jpsiupsgamma();
   
 private:
   virtual void beginJob() ;
