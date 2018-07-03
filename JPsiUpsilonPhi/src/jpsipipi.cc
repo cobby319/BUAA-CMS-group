@@ -337,10 +337,10 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   	
   
   
-    
+   if (nJ > 0 ) tree_->Fill();
 
     //std::cout << "filling tree" << endl;
-   tree_->Fill();
+   
     
 
    
