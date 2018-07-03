@@ -97,14 +97,16 @@ jpsipipi::jpsipipi(const edm::ParameterSet& iConfig)
 
   J_px1(0), J_py1(0), J_pz1(0),
   J_px2(0), J_py2(0), J_pz2(0), 
-  J_charge1(0), J_charge2(0),
+  J_charge1(0), J_charge2(0)
+
+
 
  
 
 
-{
+ {
    //now do what ever initialization is needed
-}
+ }
 
 
 jpsipipi::~jpsipipi()
