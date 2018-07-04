@@ -33,6 +33,7 @@ process.source = cms.Source("PoolSource",
 
 process.rootuple = cms.EDAnalyzer('miniAODmuons',
                           dimuons = cms.InputTag("slimmedMuons"),
+                          gammas = cms.InputTag("slimmedPhotons"),
                           Trak = cms.InputTag("packedPFCandidates"),
                           primaryVertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
                           isMC = cms.bool(False),

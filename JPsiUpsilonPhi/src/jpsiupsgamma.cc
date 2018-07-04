@@ -75,6 +75,7 @@
 jpsiupsgamma::jpsiupsgamma(const edm::ParameterSet& iConfig)
   :
   dimuon_Label(consumes<edm::View<pat::Muon>>(iConfig.getParameter<edm::InputTag>("dimuons"))),
+  photon_Label(consumes<edm::View<pat::Muon>>(iConfig.getParameter<edm::InputTag>("gammas"))),
   trakCollection_label(consumes<edm::View<pat::PackedCandidate>>(iConfig.getParameter<edm::InputTag>("Trak"))),
   primaryVertices_Label(consumes<reco::VertexCollection>(iConfig.getParameter<edm::InputTag>("primaryVertices"))),
    
@@ -156,6 +157,8 @@ void jpsiupsgamma::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   edm::Handle< View<pat::Muon> > thePATMuonHandle;
   iEvent.getByToken(dimuon_Label,thePATMuonHandle);
   
+  edm::Handle< View<pat::Photon> > thePATPhotonHandle;
+  iEvent.getByToken(Photon_Label,thePATPhotonHandle);
  
   //*********************************
   //Now we get the primary vertex 
