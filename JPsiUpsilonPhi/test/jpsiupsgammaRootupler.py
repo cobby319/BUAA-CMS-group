@@ -31,7 +31,7 @@ process.source = cms.Source("PoolSource",
 #process.load("myAnalyzers.JPsiKsPAT.miniAODmuonsRootupler_cfi")
 #process.rootuple.dimuons = cms.InputTag('miniaodPATMuonsWithTrigger') 
 
-process.rootuple = cms.EDAnalyzer('miniAODmuons',
+process.rootuple = cms.EDAnalyzer('jpsiupsgamma',
                           dimuons = cms.InputTag("slimmedMuons"),
                           gammas = cms.InputTag("slimmedPhotons"),
                           Trak = cms.InputTag("packedPFCandidates"),
