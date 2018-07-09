@@ -159,7 +159,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //Let's begin by looking for J/psi
 
   //unsigned int nMu_tmp = thePATMuonHandle->size();
- std::vector<FreeTrajectoryState> Jpsi_Trajectory;
+ std::vector<KinematicParticle> Jpsi_KP;
 
  for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) 
  {  
@@ -290,7 +290,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if (J_dxy/J_dxyerr<5.0) continue;
 	  
 	  //fill variables?iMuon1->track()->pt()
-	  Jpsi_Trajectory->push_back(psi_vFit_noMC->currentState().freeTrajectoryState());
+	  Jpsi_KP.push_back(psi_vFit_noMC);
 
 	  J_mass->push_back( psi_vFit_noMC->currentState().mass() );
 	  J_px->push_back( psi_vFit_noMC->currentState().globalMomentum().x() );
@@ -339,9 +339,11 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 }
 
 
-for(std::vector<FreeTrajectoryState>::iterator itr = Jpsi_Trajectory.begin();itr != Jpsi_Trajectory.end(); ++itr)
+for(i=0; i<Jpsi_KP.size(); i++)
 {
-	reco::TransientTrack JpsiTT((*theB).build(itr));
+	KinematicParticle Jpsi_selected = Jpsi_KP.at(i);
+	FreeTrajectoryState JpsiFTS = Jpsi_selected.currentState().freeTrajectoryState()
+	reco::TransientTrack JpsiTT((*theB).build(JpsiFTS));
 	for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1)
 	{
 		
@@ -350,14 +352,15 @@ for(std::vector<FreeTrajectoryState>::iterator itr = Jpsi_Trajectory.begin();itr
   	    if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
   	    if(iTrack1->charge() == 0) continue; //NO neutral objects
   	    if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
-  	    if(iTrack1->vertaxChi2()>10) continue;
-  	    if(!(iTrack1->trackHighPurity())) continue;
   	    if(!(iTrack1->bestTrack())) continue;
+  	    if(iTrack1->bestTrack()->vertaxChi2()>10) continue;
+  	    if(!(iTrack1->trackHighPurity())) continue;
+  	    
   	    reco::TransientTrack track1TT((*theB).build(iTrack1->bestTrack()));
   	    ClosestApproachInRPhi JpsiPi;
 
   	    FreeTrajectoryState pi_trajectory = track1TT.impactPointTSCP().theState();
-  	    JpsiPi.calculate(itr, pi_trajectory);
+  	    JpsiPi.calculate(JpsiFTS, pi_trajectory);
   	    if( !JpsiPi.status() ) continue;
 	    float djp = fabs( JpsiPi.distance() );	  
 	    if (djp < 0. || djp > 0.5) continue;
@@ -365,7 +368,7 @@ for(std::vector<FreeTrajectoryState>::iterator itr = Jpsi_Trajectory.begin();itr
 	    {
             if(!( (iTrack2->charge() )*( iTrack2->charge() )>0)) continue;
             if(iTrack2->pt()<0.8)continue;
-  	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;n 
+  	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;
   	        
   	        if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
