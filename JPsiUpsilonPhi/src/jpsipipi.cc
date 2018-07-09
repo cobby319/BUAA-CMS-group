@@ -159,7 +159,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //Let's begin by looking for J/psi
 
   //unsigned int nMu_tmp = thePATMuonHandle->size();
- std::vector<KinematicParticle> Jpsi_KP;
+ std::vector<RefCountedKinematicParticle> Jpsi_KP;
 
  for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) 
  {  
@@ -339,10 +339,10 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 }
 
 
-for(i=0; i<Jpsi_KP.size(); i++)
+for(int i=0; i<Jpsi_KP.size(); i++)
 {
-	KinematicParticle Jpsi_selected = Jpsi_KP.at(i);
-	FreeTrajectoryState JpsiFTS = Jpsi_selected.currentState().freeTrajectoryState()
+	RefCountedKinematicParticle Jpsi_selected = Jpsi_KP.at(i);
+	FreeTrajectoryState JpsiFTS = Jpsi_selected.currentState().freeTrajectoryState();
 	reco::TransientTrack JpsiTT((*theB).build(JpsiFTS));
 	for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1)
 	{
@@ -353,7 +353,7 @@ for(i=0; i<Jpsi_KP.size(); i++)
   	    if(iTrack1->charge() == 0) continue; //NO neutral objects
   	    if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	    if(!(iTrack1->bestTrack())) continue;
-  	    if(iTrack1->bestTrack()->vertaxChi2()>10) continue;
+  	    if(iTrack1->vertexChi2()>10) continue;
   	    if(!(iTrack1->trackHighPurity())) continue;
   	    
   	    reco::TransientTrack track1TT((*theB).build(iTrack1->bestTrack()));
