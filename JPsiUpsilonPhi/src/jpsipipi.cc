@@ -159,7 +159,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //Let's begin by looking for J/psi
 
   //unsigned int nMu_tmp = thePATMuonHandle->size();
- std::vector<RefCountedKinematicParticle> Jpsi_KP;
+ std::vector<FreeTrajectoryState> JpsiFTS;
 
  for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) 
  {  
@@ -290,7 +290,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if (J_dxy/J_dxyerr<5.0) continue;
 	  
 	  //fill variables?iMuon1->track()->pt()
-	  Jpsi_KP.push_back(psi_vFit_noMC);
+	  JpsiFTS.push_back(psi_vFit_noMC->currentState().freeTrajectoryState());
 
 	  J_mass->push_back( psi_vFit_noMC->currentState().mass() );
 	  J_px->push_back( psi_vFit_noMC->currentState().globalMomentum().x() );
@@ -339,11 +339,9 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 }
 
 
-for(int i=0; i<Jpsi_KP.size(); i++)
+for(unsigned int i=0; i<JpsiFTS.size(); i++)
 {
-	RefCountedKinematicParticle Jpsi_selected = Jpsi_KP.at(i);
-	FreeTrajectoryState JpsiFTS = Jpsi_selected.currentState().freeTrajectoryState();
-	reco::TransientTrack JpsiTT((*theB).build(JpsiFTS));
+	reco::TransientTrack JpsiTT((*theB).build(JpsiFTS.at(i)));
 	for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1)
 	{
 		
@@ -360,7 +358,7 @@ for(int i=0; i<Jpsi_KP.size(); i++)
   	    ClosestApproachInRPhi JpsiPi;
 
   	    FreeTrajectoryState pi_trajectory = track1TT.impactPointTSCP().theState();
-  	    JpsiPi.calculate(JpsiFTS, pi_trajectory);
+  	    JpsiPi.calculate(JpsiFTS.at(i), pi_trajectory);
   	    if( !JpsiPi.status() ) continue;
 	    float djp = fabs( JpsiPi.distance() );	  
 	    if (djp < 0. || djp > 0.5) continue;
