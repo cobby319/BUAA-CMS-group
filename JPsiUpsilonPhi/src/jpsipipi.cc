@@ -18,6 +18,7 @@
 
 #include "jpsipipi.h"
 
+
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/EDAnalyzer.h"
 #include "FWCore/Framework/interface/Event.h"
@@ -57,7 +58,6 @@
 #include "TLorentzVector.h"
 #include "TTree.h"
 #include "TH2F.h"
-
 //
 // constants, enums and typedefs
 //
@@ -159,17 +159,20 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //Let's begin by looking for J/psi
 
   //unsigned int nMu_tmp = thePATMuonHandle->size();
- 
- for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) 
-    {
-      
-      for(View<pat::Muon>::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) 
-	{
-	  if(iMuon1==iMuon2) continue;
-	  
-	  //opposite charge 
-	  if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue;
+ std::vector<FreeTrajectoryState> Jpsi_Trajectory;
 
+ for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) 
+ {  
+    if(!(iMuon1->isGlobalMuon())) continue;
+    if(iMuon1->pt()<1.5) continue;
+    if(!(iMuon1->track())) continue;
+
+    for(View<pat::Muon>::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) 
+	{
+	  //opposite charge 
+	  if( (iMuon1->charge())*(iMuon2->charge()) <0) continue;
+      if(iMuon2->pt()<1.5) continue;
+      if(!(iMuon2->track())) continue;
 	  TrackRef glbTrackP;	  
 	  TrackRef glbTrackM;	  
 	  
@@ -208,11 +211,11 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if (dca < 0. || dca > 0.5) continue;
 	  //cout<<" closest approach  "<<dca<<endl;
 
-
 	  // ******  Methods to check to which category of muon candidates a given pat::Muon object belongs ****
 
 	  /*
-	  //if (iMuon1->isTrackerMuon() || iMuon2->isTrackerMuon())
+	 
+ //if (iMuon1->isTrackerMuon() || iMuon2->isTrackerMuon())
 	  //if (muon::isHighPtMuon(*iMuon1,bestVtx) || muon::isHighPtMuon(*iMuon2,bestVtx))
 	  if (muon::isGoodMuon(*iMuon1,muon::TMLastStationAngTight) || muon::isGoodMuon(*iMuon2,muon::TMLastStationAngTight))
 	    {
@@ -262,10 +265,10 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  }
 	  
 	  if (!psiVertexFitTree->isValid()) 
-	    {
+	  {
 	      //std::cout << "caught an exception in the psi vertex fit" << std::endl;
 	      continue; 
-	    }
+	  }
 	  
 	  psiVertexFitTree->movePointerToTheTop();
 	  
@@ -281,10 +284,14 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  //some loose cuts go here
 	  
 	  if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
-	  if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue;
+	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
+	  double J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
+	  double J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
+	  if (J_dxy/J_dxyerr<5.0) continue;
 	  
 	  //fill variables?iMuon1->track()->pt()
-	  
+	  Jpsi_Trajectory->push_back(psi_vFit_noMC->currentState().freeTrajectoryState());
+
 	  J_mass->push_back( psi_vFit_noMC->currentState().mass() );
 	  J_px->push_back( psi_vFit_noMC->currentState().globalMomentum().x() );
 	  J_py->push_back( psi_vFit_noMC->currentState().globalMomentum().y() );
@@ -329,8 +336,45 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  muonParticles.clear();
 	  
 	}
-    }
+}
 
+
+for(std::vector<FreeTrajectoryState>::iterator itr = Jpsi_Trajectory.begin();itr != Jpsi_Trajectory.end(); ++itr)
+{
+	reco::TransientTrack JpsiTT((*theB).build(itr));
+	for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1)
+	{
+		
+		
+  	    if(iTrack1->pt()<1)continue;
+  	    if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
+  	    if(iTrack1->charge() == 0) continue; //NO neutral objects
+  	    if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+  	    if(iTrack1->vertaxChi2()>10) continue;
+  	    if(!(iTrack1->trackHighPurity())) continue;
+  	    if(!(iTrack1->bestTrack())) continue;
+  	    reco::TransientTrack track1TT((*theB).build(iTrack1->bestTrack()));
+  	    ClosestApproachInRPhi JpsiPi;
+
+  	    FreeTrajectoryState pi_trajectory = track1TT.impactPointTSCP().theState();
+  	    JpsiPi.calculate(itr, pi_trajectory);
+  	    if( !JpsiPi.status() ) continue;
+	    float djp = fabs( JpsiPi.distance() );	  
+	    if (djp < 0. || djp > 0.5) continue;
+	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
+	    {
+            if(!( (iTrack2->charge() )*( iTrack2->charge() )>0)) continue;
+            if(iTrack2->pt()<0.8)continue;
+  	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;n 
+  	        
+  	        if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+  	        if(!(iTrack2->trackHighPurity())) continue;
+  	        if(!(iTrack2->bestTrack())) continue;
+	        
+
+	    }
+	}
+}
 
 
   //for (reco::PackedCandidate::const_iterator iTrack1= thePATTrackHandle->begin();  iTrack1 != thePATTrackHandle->end(); ++iTrack1){
