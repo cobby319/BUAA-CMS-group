@@ -340,7 +340,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 }
 
 
-for(unsigned int i=0; i<JpsiFTS.size(); i++)
+/*for(unsigned int i=0; i<JpsiFTS.size(); i++)
 {
 	reco::TransientTrack JpsiTT((*theB).build(JpsiFTS.at(i)));
 	for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1)
@@ -376,7 +376,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 
 	    }
 	}
-}
+}*/
 
 
   //for (reco::PackedCandidate::const_iterator iTrack1= thePATTrackHandle->begin();  iTrack1 != thePATTrackHandle->end(); ++iTrack1){
