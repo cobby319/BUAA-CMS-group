@@ -18,6 +18,7 @@
 
 #include "miniAODmuons.h"
 
+
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/EDAnalyzer.h"
 #include "FWCore/Framework/interface/Event.h"
@@ -57,7 +58,6 @@
 #include "TLorentzVector.h"
 #include "TTree.h"
 #include "TH2F.h"
-
 //
 // constants, enums and typedefs
 //
@@ -91,36 +91,22 @@ miniAODmuons::miniAODmuons(const edm::ParameterSet& iConfig)
   mu1soft(0), mu2soft(0), mu1tight(0), mu2tight(0), 
   mu1PF(0), mu2PF(0), mu1loose(0), mu2loose(0),
  
-  
-  nU(0),
   nJ(0),
-  nPhi(0),
-  
- 
+
   J_mass(0), J_px(0), J_py(0), J_pz(0),J_energy(0),
 
   J_px1(0), J_py1(0), J_pz1(0),
   J_px2(0), J_py2(0), J_pz2(0), 
-  J_charge1(0), J_charge2(0),
-
-  U_mumC2(0), U_mumNHits(0), U_mumNPHits(0),
-  U_mupC2(0), U_mupNHits(0), U_mupNPHits(0),
-  U_mumdxy(0), U_mupdxy(0), U_mumdz(0), U_mupdz(0),
-  U_muon_dca(0),
-
-  U_mu1soft(0), U_mu2soft(0), U_mu1tight(0), U_mu2tight(0), 
-  U_mu1PF(0), U_mu2PF(0), U_mu1loose(0), U_mu2loose(0),
-  U_mass(0), U_px(0), U_py(0), U_pz(0),U_energy(0),
-
-  U_px1(0), U_py1(0), U_pz1(0),
-  U_px2(0), U_py2(0), U_pz2(0), 
-  U_charge1(0), U_charge2(0),
-  Phi_mass(0),Phi_px(0),Phi_py(0),Phi_pz(0),Phi_energy(0)
+  J_charge1(0), J_charge2(0)
 
 
-{
+
+ 
+
+
+ {
    //now do what ever initialization is needed
-}
+ }
 
 
 miniAODmuons::~miniAODmuons()
@@ -173,17 +159,20 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //Let's begin by looking for J/psi
 
   //unsigned int nMu_tmp = thePATMuonHandle->size();
- 
- for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) 
-    {
-      
-      for(View<pat::Muon>::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) 
-	{
-	  if(iMuon1==iMuon2) continue;
-	  
-	  //opposite charge 
-	  if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue;
+ std::vector<FreeTrajectoryState> JpsiFTS;
 
+ for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) 
+ {  
+    //if(!(iMuon1->isGlobalMuon())) continue;
+    if(iMuon1->pt()<1.5) continue;
+    //if(!(iMuon1->track())) continue;
+
+    for(View<pat::Muon>::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) 
+	{
+	  //opposite charge 
+	  if( (iMuon1->charge())*(iMuon2->charge()) <0) continue;
+      if(iMuon2->pt()<1.5) continue;
+      //if(!(iMuon2->track())) continue;
 	  TrackRef glbTrackP;	  
 	  TrackRef glbTrackM;	  
 	  
@@ -222,11 +211,11 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  if (dca < 0. || dca > 0.5) continue;
 	  //cout<<" closest approach  "<<dca<<endl;
 
-
 	  // ******  Methods to check to which category of muon candidates a given pat::Muon object belongs ****
 
 	  /*
-	  //if (iMuon1->isTrackerMuon() || iMuon2->isTrackerMuon())
+	 
+ //if (iMuon1->isTrackerMuon() || iMuon2->isTrackerMuon())
 	  //if (muon::isHighPtMuon(*iMuon1,bestVtx) || muon::isHighPtMuon(*iMuon2,bestVtx))
 	  if (muon::isGoodMuon(*iMuon1,muon::TMLastStationAngTight) || muon::isGoodMuon(*iMuon2,muon::TMLastStationAngTight))
 	    {
@@ -276,10 +265,10 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  }
 	  
 	  if (!psiVertexFitTree->isValid()) 
-	    {
+	  {
 	      //std::cout << "caught an exception in the psi vertex fit" << std::endl;
 	      continue; 
-	    }
+	  }
 	  
 	  psiVertexFitTree->movePointerToTheTop();
 	  
@@ -295,10 +284,14 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  //some loose cuts go here
 	  
 	  if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
-	  if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue;
+	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
+	  double J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
+	  double J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
+	  if (J_dxy/J_dxyerr<5.0) continue;
 	  
 	  //fill variables?iMuon1->track()->pt()
-	  
+	  JpsiFTS.push_back(psi_vFit_noMC->currentState().freeTrajectoryState());
+
 	  J_mass->push_back( psi_vFit_noMC->currentState().mass() );
 	  J_px->push_back( psi_vFit_noMC->currentState().globalMomentum().x() );
 	  J_py->push_back( psi_vFit_noMC->currentState().globalMomentum().y() );
@@ -343,348 +336,75 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  muonParticles.clear();
 	  
 	}
-    }
+}
 
-for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 != thePATMuonHandle->end(); ++iMuon3) 
-    { 
-      //if(iMuon3==jpsiMuon1->at(0)||iMuon3==jpsiMuon2->at(0))continue;
-      
-      for(View<pat::Muon>::const_iterator iMuon4 = iMuon3+1; iMuon4 != thePATMuonHandle->end(); ++iMuon4) 
+
+for(unsigned int i=0; i<JpsiFTS.size(); i++)
+{
+	reco::TransientTrack JpsiTT((*theB).build(JpsiFTS.at(i)));
+	for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1)
 	{
-	  //if(iMuon4==jpsiMuon1->at(0)||iMuon4==jpsiMuon2->at(0))continue;
-	  if(iMuon3==iMuon4) continue;
-	  
-	  //opposite charge 
-	  if( (iMuon3->charge())*(iMuon4->charge()) == 1) continue;
+		
+		
+  	    if(iTrack1->pt()<1)continue;
+  	    if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
+  	    if(iTrack1->charge() == 0) continue; //NO neutral objects
+  	    if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+  	    if(!(iTrack1->bestTrack())) continue;
+  	    if(iTrack1->vertexChi2()>10) continue;
+  	    if(!(iTrack1->trackHighPurity())) continue;
+  	    
+  	    reco::TransientTrack track1TT((*theB).build(iTrack1->bestTrack()));
+  	    ClosestApproachInRPhi JpsiPi;
 
-	  TrackRef glbTrackP;	  
-	  TrackRef glbTrackM;	  
-	  
-	  if(iMuon3->charge() == 1){ glbTrackP = iMuon3->track();}
-	  if(iMuon3->charge() == -1){ glbTrackM = iMuon3->track();}
-	  
-	  if(iMuon4->charge() == 1) { glbTrackP = iMuon4->track();}
-	  if(iMuon4->charge() == -1){ glbTrackM = iMuon4->track();}
-	  
-	  if( glbTrackP.isNull() || glbTrackM.isNull() ) 
+  	    FreeTrajectoryState pi_trajectory = track1TT.impactPointTSCP().theState();
+  	    JpsiPi.calculate(JpsiFTS.at(i), pi_trajectory);
+  	    if( !JpsiPi.status() ) continue;
+	    float djp = fabs( JpsiPi.distance() );	  
+	    if (djp < 0. || djp > 0.5) continue;
+	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
-	      //std::cout << "continue due to no track ref" << endl;
-	      continue;
+            if(!( (iTrack2->charge() )*( iTrack2->charge() )>0)) continue;
+            if(iTrack2->pt()<0.8)continue;
+  	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;
+  	        
+  	        if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+  	        if(!(iTrack2->trackHighPurity())) continue;
+  	        if(!(iTrack2->bestTrack())) continue;
+	        
+
 	    }
-
-	  if(iMuon3->track()->pt()<2.5) continue;
-	  if(iMuon4->track()->pt()<2.5) continue;
-
-	  if(!(glbTrackM->quality(reco::TrackBase::highPurity))) continue;
-	  if(!(glbTrackP->quality(reco::TrackBase::highPurity))) continue;	 
-	  
-	  reco::TransientTrack muon1TT((*theB).build(glbTrackP));
-	  reco::TransientTrack muon2TT((*theB).build(glbTrackM));
-
-	 // *****  Trajectory states to calculate DCA for the 2 muons *********************
-	  FreeTrajectoryState mu1State = muon1TT.impactPointTSCP().theState();
-	  FreeTrajectoryState mu2State = muon2TT.impactPointTSCP().theState();
-
-	  if( !muon1TT.impactPointTSCP().isValid() || !muon2TT.impactPointTSCP().isValid() ) continue;
-
-	  // Measure distance between tracks at their closest approach
-	  ClosestApproachInRPhi cApp;
-	  cApp.calculate(mu1State, mu2State);
-	  if( !cApp.status() ) continue;
-	  float dca = fabs( cApp.distance() );	  
-	  if (dca < 0. || dca > 0.5) continue;
-	  //cout<<" closest approach  "<<dca<<endl;
-
-
-	  // ******  Methods to check to which category of muon candidates a given pat::Muon object belongs ****
-
-	  /*
-	  //if (iMuon3->isTrackerMuon() || iMuon4->isTrackerMuon())
-	  //if (muon::isHighPtMuon(*iMuon3,bestVtx) || muon::isHighPtMuon(*iMuon4,bestVtx))
-	  if (muon::isGoodMuon(*iMuon3,muon::TMLastStationAngTight) || muon::isGoodMuon(*iMuon4,muon::TMLastStationAngTight))
-	    {
-	      cout<<" is category muon  "<<endl;
-	    }
-	  else
-	    {
-	      cout<<" it is not category muon  "<<endl;
-	    }
-	  */
-	  
-	  // ******   Let's check the vertex and mass ****
-
-	  
-	  //The mass of a muon and the insignificant mass sigma 
-	  //to avoid singularities in the covariance matrix.
-	  ParticleMass muon_mass = 0.10565837; //pdg mass
-	  //ParticleMass psi_mass = 3.096916;
-	  float muon_sigma = muon_mass*1.e-6;
-	  //float psi_sigma = psi_mass*1.e-6;
-	  
-	  //Creating a KinematicParticleFactory
-	  KinematicParticleFactoryFromTransientTrack pFactory;
-	  
-	  //initial chi2 and ndf before kinematic fits.
-	  float chi = 0.;
-	  float ndf = 0.;
-	  vector<RefCountedKinematicParticle> muonParticles;
-	  try {
-	    muonParticles.push_back(pFactory.particle(muon1TT,muon_mass,chi,ndf,muon_sigma));
-	    muonParticles.push_back(pFactory.particle(muon2TT,muon_mass,chi,ndf,muon_sigma));
-	  }
-	  catch(...) { 
-	    std::cout<<" Exception caught ... continuing 1 "<<std::endl; 
-	    continue;
-	  }
-	  
-	  KinematicParticleVertexFitter fitter;   
-	  
-	  RefCountedKinematicTree psiVertexFitTree;
-	  try {
-	    psiVertexFitTree = fitter.fit(muonParticles); 
-	  }
-	  catch (...) { 
-	    std::cout<<" Exception caught ... continuing 2 "<<std::endl; 
-	    continue;
-	  }
-	  
-	  if (!psiVertexFitTree->isValid()) 
-	    {
-	      //std::cout << "caught an exception in the psi vertex fit" << std::endl;
-	      continue; 
-	    }
-	  
-	  psiVertexFitTree->movePointerToTheTop();
-	  
-	  RefCountedKinematicParticle upsilon_vFit_noMC = psiVertexFitTree->currentParticle();
-	  RefCountedKinematicVertex upsilon_vFit_vertex_noMC = psiVertexFitTree->currentDecayVertex();
-	  
-	  if( upsilon_vFit_vertex_noMC->chiSquared() < 0 )
-	    {
-	      //std::cout << "negative chisq from psi fit" << endl;
-	      continue;
-	    }
-	  
-	  //some loose cuts go here
-	  
-	  if(upsilon_vFit_vertex_noMC->chiSquared()>50.) continue;
-	  if(upsilon_vFit_noMC->currentState().mass()<9.4603-0.3 || upsilon_vFit_noMC->currentState().mass()>9.4603+0.3) continue;
-	  
-	  //fill variables?iMuon3->track()->pt()
-	  
-	  U_mass->push_back( upsilon_vFit_noMC->currentState().mass() );
-	  U_px->push_back( upsilon_vFit_noMC->currentState().globalMomentum().x() );
-	  U_py->push_back( upsilon_vFit_noMC->currentState().globalMomentum().y() );
-	  U_pz->push_back( upsilon_vFit_noMC->currentState().globalMomentum().z() );
-	  
-	  U_px1->push_back(iMuon3->track()->px());
-	  U_py1->push_back(iMuon3->track()->py());
-	  U_pz1->push_back(iMuon3->track()->pz());
-	  U_charge1->push_back(iMuon3->charge());
-	  
-	  U_px2->push_back(iMuon4->track()->px());
-	  U_py2->push_back(iMuon4->track()->py());
-	  U_pz2->push_back(iMuon4->track()->pz());
-	  U_charge2->push_back(iMuon4->charge());
-	  
-	   // ************
-	  
-	  U_mu1soft->push_back(iMuon3->isSoftMuon(bestVtx) );
-	  U_mu2soft->push_back(iMuon4->isSoftMuon(bestVtx) );
-	  U_mu1tight->push_back(iMuon3->isTightMuon(bestVtx) );
-	  U_mu2tight->push_back(iMuon4->isTightMuon(bestVtx) );
-	  U_mu1PF->push_back(iMuon3->isPFMuon());
-	  U_mu2PF->push_back(iMuon4->isPFMuon());
-	  U_mu1loose->push_back(muon::isLooseMuon(*iMuon3));
-	  U_mu2loose->push_back(muon::isLooseMuon(*iMuon4));
-	  
-	  U_mumC2->push_back( glbTrackP->normalizedChi2() );
-	  //mumAngT->push_back( muon::isGoodMuon(*iMuon3,muon::TMLastStationAngTight) ); // 
-	  U_mumNHits->push_back( glbTrackP->numberOfValidHits() );
-	  U_mumNPHits->push_back( glbTrackP->hitPattern().numberOfValidPixelHits() );	       
-	  U_mupC2->push_back( glbTrackM->normalizedChi2() );
-	  //mupAngT->push_back( muon::isGoodMuon(*iMuon4,muon::TMLastStationAngTight) );  // 
-	  U_mupNHits->push_back( glbTrackM->numberOfValidHits() );
-	  U_mupNPHits->push_back( glbTrackM->hitPattern().numberOfValidPixelHits() );
-	  U_mumdxy->push_back(glbTrackP->dxy(bestVtx.position()) );
-	  U_mupdxy->push_back(glbTrackM->dxy(bestVtx.position()) );
-	  U_mumdz->push_back(glbTrackP->dz(bestVtx.position()) );
-	  U_mupdz->push_back(glbTrackM->dz(bestVtx.position()) );
-	  U_muon_dca->push_back(dca);          	  
-	  
-	  nU++;	       
-	  muonParticles.clear();
-	  
 	}
-    }
-  for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1){
-  	if(!(iTrack1->bestTrack())) continue;
-  	if(iTrack1->pt()<0.8)continue;
-  	if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
+}
 
-  	for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2){
-      if(iTrack1==iTrack2) continue;
-      if((iTrack1->charge())*(iTrack2->charge())==1) continue;
-      if(iTrack2->pt()<0.8)continue;
-
-      Track glbTrackp;
-      Track glbTrackn;
-      	  
-	  
-	  if(!(iTrack2->bestTrack())) continue;
-	  if(iTrack1->charge() == 1){ glbTrackp = *(iTrack1->bestTrack());}
-	  if(iTrack1->charge() == -1){ glbTrackn = *(iTrack1->bestTrack());}
-	  
-	  if(iTrack2->charge() == 1) { glbTrackp = *(iTrack2->bestTrack());}
-	  if(iTrack2->charge() == -1){ glbTrackn = *(iTrack2->bestTrack());}
-	  
-	  //if(!glbTrackp || !glbTrackn )continue;
-
-	  if(!(glbTrackn.quality(reco::TrackBase::highPurity))) continue;
-	  if(!(glbTrackp.quality(reco::TrackBase::highPurity))) continue;	
-
-	  if(glbTrackp.normalizedChi2()>2) continue;
-	  if(glbTrackn.normalizedChi2()>2) continue;
-      if(glbTrackp.pt()<0.8) continue;
-	  if(glbTrackn.pt()<0.8) continue;
-      if(glbTrackp.eta()>2||glbTrackp.eta()<-2) continue;
-      if(glbTrackn.eta()>2||glbTrackn.eta()<-2) continue;
-	  if(glbTrackp.numberOfValidHits()<5) continue;
-	  if(glbTrackn.numberOfValidHits()<5) continue;
-    
-      reco::TransientTrack kaon1TT((*theB).build(glbTrackp));
-	  reco::TransientTrack kaon2TT((*theB).build(glbTrackn));
-
-	  FreeTrajectoryState ka1State = kaon1TT.impactPointTSCP().theState();
-	  FreeTrajectoryState ka2State = kaon2TT.impactPointTSCP().theState();
-
-	  if( !kaon1TT.impactPointTSCP().isValid() || !kaon2TT.impactPointTSCP().isValid() ) continue;
-
-	  // Measure distance between tracks at their closest approach
-	  ClosestApproachInRPhi cApp;
-	  cApp.calculate(ka1State, ka2State);
-	  if( !cApp.status() ) continue;
-	  float dca = fabs( cApp.distance() );	  
-	  if (dca < 0. || dca > 0.5) continue;
-
-	  ParticleMass kaon_mass = 0.493677; //pdg mass
-	  
-	  float kaon_sigma = 0.000016;
-
-	  KinematicParticleFactoryFromTransientTrack pFactory;
-	  
-	  //initial chi2 and ndf before kinematic fits.
-	  float chi = 0.;
-	  float ndf = 0.;
-	  vector<RefCountedKinematicParticle> kaonParticles;
-	  try {
-	    kaonParticles.push_back(pFactory.particle(kaon1TT,kaon_mass,chi,ndf,kaon_sigma));
-	    kaonParticles.push_back(pFactory.particle(kaon2TT,kaon_mass,chi,ndf,kaon_sigma));
-	  }
-	  catch(...) { 
-	    std::cout<<" Exception caught ... continuing 1 "<<std::endl; 
-	    continue;
-	  }
-	  
-	  KinematicParticleVertexFitter fitter;   
-	  
-	  RefCountedKinematicTree psiVertexFitTree;
-	  try {
-	    psiVertexFitTree = fitter.fit(kaonParticles); 
-	  }
-	  catch (...) { 
-	    std::cout<<" Exception caught ... continuing 2 "<<std::endl; 
-	    continue;
-	  }
-	  
-	  if (!psiVertexFitTree->isValid()) 
-	    {
-	      //std::cout << "caught an exception in the psi vertex fit" << std::endl;
-	      continue; 
-	    }
-	  //creating the particle fitter
-	  /*KinematicParticleFitter csFitter;
-
-	  // creating the constraint
-      float phi_m_pdg = 1.01946;
-	  float phi_m_sigma = 0.000016;
-	  KinematicConstraint * phi_c2 = new MassKinematicConstraint(phi_m_pdg,phi_m_sigma);
-
-	  //the constrained fit:
-	  psiVertexFitTree = csFitter.fit(phi_c2,psiVertexFitTree);*/
-	  psiVertexFitTree->movePointerToTheTop();
-	  
-	  RefCountedKinematicParticle upsilon_vFit_noMC = psiVertexFitTree->currentParticle();
-	  RefCountedKinematicVertex upsilon_vFit_vertex_noMC = psiVertexFitTree->currentDecayVertex();
-	  
-	  if( upsilon_vFit_vertex_noMC->chiSquared() < 0 )
-	    {
-	      //std::cout << "negative chisq from psi fit" << endl;
-	      continue;
-	    }
-	  
-	  //some loose cuts go here
-	  
-	  if(upsilon_vFit_vertex_noMC->chiSquared()>10.) continue;
-	  if(upsilon_vFit_noMC->currentState().mass()<1.01946-0.01 || upsilon_vFit_noMC->currentState().mass()>1.01946+0.01) continue;
-	  
-	  //fill variables?iMuon3->track()->pt()
-	  //cout<<"mass is"<<(upsilon_vFit_noMC->currentState().mass());
-	  Phi_mass->push_back(upsilon_vFit_noMC->currentState().mass());
-	  Phi_px->push_back(upsilon_vFit_noMC->currentState().globalMomentum().x());
-      Phi_py->push_back(upsilon_vFit_noMC->currentState().globalMomentum().y());
-      Phi_pz->push_back(upsilon_vFit_noMC->currentState().globalMomentum().z());
-      Phi_energy->push_back(upsilon_vFit_noMC->currentState().kinematicParameters().energy());
-      nPhi++;
-	  kaonParticles.clear();
-      
-
-    }
-  } 
 
   //for (reco::PackedCandidate::const_iterator iTrack1= thePATTrackHandle->begin();  iTrack1 != thePATTrackHandle->end(); ++iTrack1){
   	
   
-  if (nJ > 0 && nPhi>0 ) 
-    {
+  
+   if (nJ > 0 ) tree_->Fill();
 
-      //std::cout << "filling tree" << endl;
-      tree_->Fill();
-    }
+    //std::cout << "filling tree" << endl;
+   
+    
 
-   nU = 0;
+   
    nJ = 0; 
-   nPhi = 0;
+   
 
-   J_mass->clear();  J_px->clear();  J_py->clear();  J_pz->clear();  
+   J_mass->clear(); J_px->clear();   J_py->clear();  J_pz->clear();  
    J_px1->clear();  J_py1->clear();  J_pz1->clear(), J_charge1->clear();
    J_px2->clear();  J_py2->clear();  J_pz2->clear(), J_charge2->clear();
 
-   U_mass->clear();  U_px->clear();  U_py->clear();  U_pz->clear();  
-   U_px1->clear();  U_py1->clear();  U_pz1->clear(), U_charge1->clear();
-   U_px2->clear();  U_py2->clear();  U_pz2->clear(), U_charge2->clear();
-   mumC2->clear();
-   mumNHits->clear(); mumNPHits->clear();
+   
    mupC2->clear();
    mupNHits->clear(); mupNPHits->clear();
    mumdxy->clear(); mupdxy->clear(); mumdz->clear(); mupdz->clear(); muon_dca->clear();
 
    mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
+   JpsiFTS.clear();
 
-   U_mumC2->clear();
-   U_mumNHits->clear(); U_mumNPHits->clear();
-   U_mupC2->clear();
-   U_mupNHits->clear(); U_mupNPHits->clear();
-   U_mumdxy->clear(); U_mupdxy->clear(); U_mumdz->clear(); U_mupdz->clear(); U_muon_dca->clear();
-
-   U_mu1soft->clear(); U_mu2soft->clear(); U_mu1tight->clear(); U_mu2tight->clear();
-   U_mu1PF->clear(); U_mu2PF->clear(); U_mu1loose->clear(); U_mu2loose->clear(); 
-   Phi_mass->clear();
-   Phi_px->clear();
-   Phi_py->clear();
-   Phi_pz->clear();
-   Phi_energy->clear();
 }
 
 
@@ -699,8 +419,7 @@ miniAODmuons::beginJob()
   edm::Service<TFileService> fs;
   tree_ = fs->make<TTree>("ntuple"," J/psi ntuple");
 
-  tree_->Branch("nJ",&nJ,"nJ/i");
-  tree_->Branch("nU",&nU,"nU/i"); 
+  tree_->Branch("nJ",&nJ,"nJ/i"); 
   tree_->Branch("J_mass", &J_mass);
   tree_->Branch("J_px", &J_px);
   tree_->Branch("J_py", &J_py);
@@ -715,21 +434,6 @@ miniAODmuons::beginJob()
   tree_->Branch("J_py2", &J_py2);
   tree_->Branch("J_pz2", &J_pz2);
   tree_->Branch("J_charge2", &J_charge2);
-
-  tree_->Branch("U_mass", &U_mass);
-  tree_->Branch("U_px", &U_px);
-  tree_->Branch("U_py", &U_py);
-  tree_->Branch("U_pz", &U_pz);
-
-  tree_->Branch("U_px1", &U_px1);
-  tree_->Branch("U_py1", &U_py1);
-  tree_->Branch("U_pz1", &U_pz1);
-  tree_->Branch("U_charge1", &U_charge1);
-
-  tree_->Branch("U_px2", &U_px2);
-  tree_->Branch("U_py2", &U_py2);
-  tree_->Branch("U_pz2", &U_pz2);
-  tree_->Branch("U_charge2", &U_charge2); 
 
  
   tree_->Branch("mumC2",&mumC2);  
@@ -753,31 +457,7 @@ miniAODmuons::beginJob()
   tree_->Branch("mu1loose",&mu1loose);
   tree_->Branch("mu2loose",&mu2loose);
 
-  tree_->Branch("U_mumC2",&U_mumC2);  
-  tree_->Branch("U_mumNHits",&U_mumNHits);
-  tree_->Branch("U_mumNPHits",&U_mumNPHits);
-  tree_->Branch("U_mupC2",&U_mupC2);  
-  tree_->Branch("U_mupNHits",&U_mupNHits);
-  tree_->Branch("U_mupNPHits",&U_mupNPHits);
-  tree_->Branch("U_mumdxy",&U_mumdxy);
-  tree_->Branch("U_mupdxy",&U_mupdxy);
-  tree_->Branch("U_mumdz",&U_mumdz);
-  tree_->Branch("U_mupdz",&U_mupdz);
-  tree_->Branch("U_muon_dca",&U_muon_dca);
 
-  tree_->Branch("U_mu1soft",&U_mu1soft);
-  tree_->Branch("U_mu2soft",&U_mu2soft);
-  tree_->Branch("U_mu1tight",&U_mu1tight);
-  tree_->Branch("U_mu2tight",&U_mu2tight);
-  tree_->Branch("U_mu1PF",&U_mu1PF);
-  tree_->Branch("U_mu2PF",&U_mu2PF);
-  tree_->Branch("U_mu1loose",&U_mu1loose);
-  tree_->Branch("U_mu2loose",&U_mu2loose);
-  tree_->Branch("Phi_mass",&Phi_mass);
-  tree_->Branch("Phi_px",&Phi_px);
-  tree_->Branch("Phi_py",&Phi_py);
-  tree_->Branch("Phi_pz",&Phi_pz);
-  tree_->Branch("Phi_energy",&Phi_energy);
 }
 
 

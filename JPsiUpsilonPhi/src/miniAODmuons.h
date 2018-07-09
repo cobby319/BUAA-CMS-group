@@ -103,7 +103,9 @@ private:
   std::vector<bool>        *mu1soft, *mu2soft, *mu1tight, *mu2tight;  
   std::vector<bool>        *mu1PF, *mu2PF, *mu1loose, *mu2loose;  
  
-  unsigned int             nU, nJ,nPhi;
+  //unsigned int             nU, 
+  unsigned int             nJ
+  //,nPhi;
     
   std::vector<float>       *J_mass, *J_px, *J_py, *J_pz, *J_energy;
 
@@ -112,7 +114,7 @@ private:
   std::vector<int>         *J_charge1, *J_charge2;
 
   
-  std::vector<float>       *U_mumC2;
+  /*std::vector<float>       *U_mumC2;
   std::vector<int>         *U_mumNHits, *U_mumNPHits;
   std::vector<float>       *U_mupC2;
   std::vector<int>         *U_mupNHits, *U_mupNPHits;
@@ -126,7 +128,6 @@ private:
   std::vector<float>       *U_px1, *U_py1, *U_pz1;
   std::vector<float>       *U_px2, *U_py2, *U_pz2;
   std::vector<int>         *U_charge1, *U_charge2;
-  std::vector<float>       *Phi_mass, *Phi_px, *Phi_py, *Phi_pz, *Phi_energy;
-  //std::vector<int>         *N_pfcandidate;
+  std::vector<float>       *Phi_mass, *Phi_px, *Phi_py, *Phi_pz, *Phi_energy; */
 };
 #endif
