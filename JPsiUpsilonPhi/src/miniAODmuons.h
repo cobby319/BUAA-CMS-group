@@ -104,7 +104,7 @@ private:
   std::vector<bool>        *mu1PF, *mu2PF, *mu1loose, *mu2loose;  
  
   //unsigned int             nU, 
-  unsigned int             nJ
+  unsigned int             nJ;
   //,nPhi;
     
   std::vector<float>       *J_mass, *J_px, *J_py, *J_pz, *J_energy;
