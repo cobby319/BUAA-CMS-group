@@ -164,15 +164,16 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
  for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) 
  {  
     //if(!(iMuon1->isGlobalMuon())) continue;
-    if(iMuon1->pt()<1.5) continue;
+    //if(iMuon1->pt()<1.5) continue;
     //if(!(iMuon1->track())) continue;
 
     for(View<pat::Muon>::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) 
 	{
+	  if(iMuon1==iMuon2) continue;
+	  
 	  //opposite charge 
-	  if( (iMuon1->charge())*(iMuon2->charge()) <0) continue;
-      if(iMuon2->pt()<1.5) continue;
-      //if(!(iMuon2->track())) continue;
+	  if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue;
+
 	  TrackRef glbTrackP;	  
 	  TrackRef glbTrackM;	  
 	  
@@ -287,7 +288,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  double J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	  double J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
-	  if (J_dxy/J_dxyerr<5.0) continue;
+	  //if (J_dxy/J_dxyerr<5.0) continue;
 	  
 	  //fill variables?iMuon1->track()->pt()
 	  JpsiFTS.push_back(psi_vFit_noMC->currentState().freeTrajectoryState());
@@ -382,7 +383,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	
   
   
-   if (nJ > 0 ) tree_->Fill();
+   if (nJ > 0) tree_->Fill();
 
     //std::cout << "filling tree" << endl;
    
