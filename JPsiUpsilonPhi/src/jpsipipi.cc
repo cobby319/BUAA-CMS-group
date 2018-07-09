@@ -288,7 +288,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  double J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	  double J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
-	  //if (J_dxy/J_dxyerr<5.0) continue;
+	  if (J_dxy/J_dxyerr<3.0) continue;
 	  
 	  //fill variables?iMuon1->track()->pt()
 	  JpsiFTS.push_back(psi_vFit_noMC->currentState().freeTrajectoryState());
@@ -340,7 +340,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 }
 
 
-/*for(unsigned int i=0; i<JpsiFTS.size(); i++)
+for(unsigned int i=0; i<JpsiFTS.size(); i++)
 {
 	reco::TransientTrack JpsiTT((*theB).build(JpsiFTS.at(i)));
 	for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1)
@@ -376,7 +376,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
 	    }
 	}
-}*/
+}
 
 
   //for (reco::PackedCandidate::const_iterator iTrack1= thePATTrackHandle->begin();  iTrack1 != thePATTrackHandle->end(); ++iTrack1){
