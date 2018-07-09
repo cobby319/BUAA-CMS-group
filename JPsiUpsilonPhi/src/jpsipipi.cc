@@ -163,16 +163,16 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
  for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) 
  {  
-    if(!(iMuon1->isGlobalMuon())) continue;
+    //if(!(iMuon1->isGlobalMuon())) continue;
     if(iMuon1->pt()<1.5) continue;
-    if(!(iMuon1->track())) continue;
+    //if(!(iMuon1->track())) continue;
 
     for(View<pat::Muon>::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) 
 	{
 	  //opposite charge 
 	  if( (iMuon1->charge())*(iMuon2->charge()) <0) continue;
       if(iMuon2->pt()<1.5) continue;
-      if(!(iMuon2->track())) continue;
+      //if(!(iMuon2->track())) continue;
 	  TrackRef glbTrackP;	  
 	  TrackRef glbTrackM;	  
 	  
@@ -403,7 +403,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 
    mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
-
+   JpsiFTS.clear()
 
 }
 
