@@ -403,7 +403,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 
    mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
-   JpsiFTS.clear()
+   JpsiFTS.clear();
 
 }
 
