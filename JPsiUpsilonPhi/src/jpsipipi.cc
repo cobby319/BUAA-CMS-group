@@ -526,16 +526,12 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	
   
   
-   if (nJ > 0 &&nPiPair>0) 
-   {
-   	tree_->Fill();
+   if (nJ > 0 &&nPiPair>0) tree_->Fill();
 
-    std::cout << "filling tree" << endl;
-   }
+    //std::cout << "filling tree" << endl;
    
-   if( nJ==0 && nPiPair==0) std::cout << "no jpsi or pi" << endl;
-   if( nJ==0 && nPiPair!=0) std::cout << "no jpsi" << endl;
-   if( nJ!=0 && nPiPair==0) std::cout << "no pi" << endl;
+    
+
    
    nJ = 0; 
    nPiPair =0;
