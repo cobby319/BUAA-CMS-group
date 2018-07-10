@@ -310,9 +310,9 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  float J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
-	  float J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(bestVtx.position());
+	  float J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->initialState().globalPosition());
       
-	  if (J_dxy/J_dxyerr<3.0) continue;
+	  if (J_dxy<0.08) continue;
 	  J_lxy->push_back(J_dxy);
 	  J_lxyErr->push_back(J_dxyerr);
 	  //fill variables?iMuon1->track()->pt()
@@ -443,8 +443,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	      }
 	    if(psi_vFit_vertex_noMC->chiSquared()>6.) continue;
 	    float JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
-	    float JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(bestVtx.position());
-	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
+	    float JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->initialState().globalPosition());
+	    if (JpsiPi_dxy<0.08) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
             if((iTrack1->charge())*(iTrack2->charge())==1) continue;
@@ -510,8 +510,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	          }
 	        if(psi_vFit_vertex_noMC2->chiSquared()>10.) continue;
 	        float JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
-	        float JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(bestVtx.position());
-	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2.0) continue;
+	        float JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC2->initialState().globalPosition());
+	        if (JpsiPiPi_dxy<0.08) continue;
 	        Pi_nhits1->push_back(iTrack1->numberOfHits());
             Pi_npixelhits1->push_back(iTrack2->numberOfPixelHits());
             Pi_nhits2->push_back(iTrack2->numberOfHits());
