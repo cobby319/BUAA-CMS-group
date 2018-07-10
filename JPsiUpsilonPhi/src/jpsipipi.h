@@ -110,6 +110,25 @@ private:
   std::vector<float>       *J_px1, *J_py1, *J_pz1;
   std::vector<float>       *J_px2, *J_py2, *J_pz2;
   std::vector<int>         *J_charge1, *J_charge2;
+  std::vector<int>         *Pi_nhits1;
+  std::vector<int>         *Pi_npixelhits1;
+  std::vector<int>         *Pi_nhits2;
+  std::vector<int>         *Pi_npixelhits2;
+  std::vector<float>       *Pi_eta1;
+  std::vector<float>       *Pi_eta2;
+  std::vector<float>       *Pi_phi1;
+  std::vector<float>       *Pi_phi2;
+  std::vector<float>       *Pi_pt1;
+  std::vector<float>       *Pi_pt2;
+  std::vector<float>       *Pi_e1;
+  std::vector<float>       *Pi_e2;
+  std::vector<int>         *Pi_charge1;
+  std::vector<int>         *Pi_charge2;
+  std::vector<float>       *Pi_dxy1;
+  std::vector<float>       *Pi_dxy2;
+  std::vector<float>       *Pi_dxyerr1;
+  std::vector<float>       *Pi_dxyerr2;
+
 
 };
 #endif
