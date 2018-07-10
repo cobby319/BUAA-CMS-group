@@ -183,7 +183,12 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
   //unsigned int nMu_tmp = thePATMuonHandle->size();
  std::vector<FreeTrajectoryState> JpsiFTS;
+ std::vector<reco::TransientTrack> muontt1;
+ std::vector<reco::TransientTrack> muontt2;
 
+ ParticleMass muon_mass = 0.10565837; //pdg mass
+//ParticleMass psi_mass = 3.096916;
+ float muon_sigma = muon_mass*1.e-6;
  for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) 
  {  
     //if(!(iMuon1->isGlobalMuon())) continue;
@@ -256,9 +261,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  
 	  //The mass of a muon and the insignificant mass sigma 
 	  //to avoid singularities in the covariance matrix.
-	  ParticleMass muon_mass = 0.10565837; //pdg mass
-	  //ParticleMass psi_mass = 3.096916;
-	  float muon_sigma = muon_mass*1.e-6;
+	  
 	  //float psi_sigma = psi_mass*1.e-6;
 	  
 	  //Creating a KinematicParticleFactory
@@ -313,6 +316,8 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  float J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->initialState().globalPosition());
       
 	  if (J_dxy<0.08) continue;
+	  muontt1->push_back(muon1TT);
+	  muontt2->push_back(muon2TT);
 	  J_lxy->push_back(J_dxy);
 	  J_lxyErr->push_back(J_dxyerr);
 	  //fill variables?iMuon1->track()->pt()
@@ -392,12 +397,13 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    //if (djp < 0. || djp > 0.03) continue;
 	   
 	    //begin vertex fit of Jpsi and pi1
-        ParticleMass Jpsi_mass = 3.0969;
+       //ParticleMass Jpsi_mass = 3.0969;
         ParticleMass Pion_mass = 0.13957061;
-	    float Jpsi_sigma = 0.000006 ;
+	    //float Jpsi_sigma = 0.000006 ;
 	    float Pion_sigma = 0.00000024;
 	    //float psi_sigma = psi_mass*1.e-6;
-	    
+	    float chi = 0.;
+	    float ndf = 0.;
 	    //Creating a KinematicParticleFactory
 	    KinematicParticleFactoryFromTransientTrack pFactory;
 	    
@@ -406,7 +412,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    try {
 	      //JpsiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,J_vertexFitChi2->at(i),J_vertexFitNdf->at(i),Jpsi_sigma));
 	     // JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
-	      JpsiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,0,0,Jpsi_sigma,JpsiFTS.at(i)));
+	      JpsiPi_fit.push_back(pFactory.particle(muontt1,muon_mass,chi,ndf,muon_sigma));
+	      JpsiPi_fit.push_back(pFactory.particle(muontt2,muon_mass,chi,ndf,muon_sigma));
 	      JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
 	    }
 	    catch(...) { 
@@ -472,7 +479,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        try {
 	          //JpsiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,J_vertexFitChi2->at(i),J_vertexFitNdf->at(i),Jpsi_sigma));
 	         // JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
-	          JpsiPiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,0,0,Jpsi_sigma,JpsiFTS.at(i)));
+	          JpsiPi_fit.push_back(pFactory.particle(muontt1,muon_mass,chi,ndf,muon_sigma));
+	          JpsiPi_fit.push_back(pFactory.particle(muontt2,muon_mass,chi,ndf,muon_sigma));
 	          JpsiPiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
 	          JpsiPiPi_fit.push_back(pFactory.particle(track2TT,Pion_mass,iTrack2->vertexChi2(),iTrack2->vertexNdof(),Pion_sigma));
 	        }
@@ -573,6 +581,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
    mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
    JpsiFTS.clear();
+   muontt1->clear();
+   muontt2->clear();
    J_lxy->clear();
    J_lxyErr->clear();
    Pi_dJP->clear();
