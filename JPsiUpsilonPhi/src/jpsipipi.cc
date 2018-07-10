@@ -284,7 +284,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  
 	  //some loose cuts go here
 	  
-	  if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
+	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  double J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	  double J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
@@ -347,7 +347,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	{
 		
 		
-  	    if(iTrack1->pt()<1)continue;
+  	    if(iTrack1->pt()<3)continue;
   	    if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
   	    if(iTrack1->charge() == 0) continue; //NO neutral objects
   	    if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
@@ -414,19 +414,75 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        //std::cout << "negative chisq from psi fit" << endl;
 	        continue;
 	      }
-	    if(psi_vFit_vertex_noMC->chiSquared()>20.) continue;
+	    if(psi_vFit_vertex_noMC->chiSquared()>6.) continue;
 	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	    double JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
             if(!( (iTrack2->charge() )*( iTrack2->charge() )>0)) continue;
-            if(iTrack2->pt()<0.8)continue;
+            if(iTrack2->pt()<2.5)continue;
   	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;
   	        
   	        if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
   	        if(!(iTrack2->bestTrack())) continue;
+            reco::TransientTrack track2TT((*theB).build(iTrack2->bestTrack()));
+  	        //begin vertex fit of Jpsi and pi1
+            //ParticleMass Jpsi_mass = 3.0969;
+            //ParticleMass Pion_mass = 0.13957061;
+	        //float Jpsi_sigma = 0.000006 ;
+	        //float Pion_sigma = 0.00000024;
+	        //float psi_sigma = psi_mass*1.e-6;
+	        
+	        //Creating a KinematicParticleFactory
+	        KinematicParticleFactoryFromTransientTrack pFactory2;
+	        
+    
+	        vector<RefCountedKinematicParticle> JpsiPiPi_fit;
+	        try {
+	          //JpsiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,J_vertexFitChi2->at(i),J_vertexFitNdf->at(i),Jpsi_sigma));
+	         // JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
+	          JpsiPiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,0,0,Jpsi_sigma));
+	          JpsiPiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,0,0,Pion_sigma));
+	          JpsiPiPi_fit.push_back(pFactory.particle(track2TT,Pion_mass,0,0,Pion_sigma));
+	        }
+	        catch(...) { 
+	          std::cout<<" Exception caught ... continuing 1 "<<std::endl; 
+	          continue;
+	        }
+	        
+	        KinematicParticleVertexFitter fitter2;   
+	        
+	        RefCountedKinematicTree psiVertexFitTree2;
+	        try {
+	          psiVertexFitTree2 = fitter2.fit(JpsiPiPi_fit); 
+	        }
+	        catch (...) { 
+	          std::cout<<" Exception caught ... continuing 2 "<<std::endl; 
+	          continue;
+	        }
+	        
+	        if (!psiVertexFitTree2->isValid()) 
+	        {
+	            //std::cout << "caught an exception in the psi vertex fit" << std::endl;
+	            continue; 
+	        }
+	        
+	        psiVertexFitTree2->movePointerToTheTop();
+	        
+	        RefCountedKinematicParticle psi_vFit_noMC2 = psiVertexFitTree2->currentParticle();
+	        RefCountedKinematicVertex psi_vFit_vertex_noMC2 = psiVertexFitTree2->currentDecayVertex();
+	        
+	        if( psi_vFit_vertex_noMC2->chiSquared() < 0 )
+	          {
+	            //std::cout << "negative chisq from psi fit" << endl;
+	            continue;
+	          }
+	        if(psi_vFit_vertex_noMC2->chiSquared()>6.) continue;
+	        double JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
+	        double JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC2->currentState().globalPosition());
+	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2.0) continue;
 	        nPiPair++;
 
 	    }
