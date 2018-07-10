@@ -98,6 +98,13 @@ jpsipipi::jpsipipi(const edm::ParameterSet& iConfig)
   J_px1(0), J_py1(0), J_pz1(0),
   J_px2(0), J_py2(0), J_pz2(0), 
   J_charge1(0), J_charge2(0),
+  J_lxy(0),
+  J_lxyErr(0),
+  Pi_dJP(0),
+  JPi_lxy(0),
+  JPi_lxyErr(0),
+  JPiPi_lxy(0),
+  JPiPi_lxyErr(0),
   Pi_nhits1(0),
   Pi_npixelhits1(0),
   Pi_nhits2(0),
@@ -302,10 +309,12 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  
 	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
-	  double J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
-	  double J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
+	  float J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
+	  float J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
+      
 	  if (J_dxy/J_dxyerr<3.0) continue;
-	  
+	  J_lxy->push_back(J_dxy);
+	  J_lxyErr->push_back(J_dxyerr);
 	  //fill variables?iMuon1->track()->pt()
 	  JpsiFTS.push_back(psi_vFit_noMC->initialState().freeTrajectoryState());
 
@@ -378,7 +387,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    JpsiPi.calculate(JpsiFTS.at(i), pi_trajectory);
   	    if( !JpsiPi.status() ) continue;
 	    float djp = fabs( JpsiPi.distance() );	  
-	    if (djp < 0. || djp > 0.05) continue;
+	    if (djp < 0. || djp > 0.03) continue;
 	   
 	    //begin vertex fit of Jpsi and pi1
         ParticleMass Jpsi_mass = 3.0969;
@@ -431,8 +440,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        continue;
 	      }
 	    if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
-	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
-	    double JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
+	    float JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
+	    float JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
@@ -441,7 +450,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             if(iTrack2->pt()<0.8)continue;
   	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;
   	        if(iTrack2->charge() == 0) continue; //NO neutral objects
-  	        //if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+  	        if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
   	        if(!(iTrack2->bestTrack())) continue;
             reco::TransientTrack track2TT((*theB).build(iTrack2->bestTrack()));
@@ -514,12 +523,18 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             Pi_e2->push_back(iTrack2->energy());
             Pi_charge1->push_back(iTrack1->charge());
             Pi_charge2->push_back(iTrack2->charge());
-            Pi_dxy1->push_back(iTrack1->dxy());
-            Pi_dxy2->push_back(iTrack2->dxy());
+            Pi_dxy1->push_back(iTrack1->dxy(bestVtx.position()));
+            Pi_dxy2->push_back(iTrack2->dxy(bestVtx.position()));
             Pi_dxyerr1->push_back(iTrack1->dxyError());
             Pi_dxyerr2->push_back(iTrack2->dxyError());
             Pi_vertexchisq1->push_back(psi_vFit_vertex_noMC->chiSquared());
             Pi_vertexchisq2->push_back(psi_vFit_vertex_noMC2->chiSquared());
+            Pi_dJP->push_back(djp);
+            JPi_lxy->push_back(JpsiPi_dxy);
+            JPi_lxyErr->push_back(JpsiPi_dxyerr);
+            JPiPi_lxy->push_back(JpsiPiPi_dxy);
+            JPiPi_lxyErr->push_back(JpsiPiPi_dxyerr);
+
 	        nPiPair++;
 
 	    }
@@ -555,6 +570,13 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
    mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
    JpsiFTS.clear();
+   J_lxy->clear();
+   J_lxyErr->clear();
+   Pi_dJP->clear();
+   JPi_lxy->clear();
+   JPi_lxyErr->clear();
+   JPiPi_lxy->clear();
+   JPiPi_lxyErr->clear();
    Pi_nhits1->clear();
    Pi_npixelhits1->clear();
    Pi_nhits2->clear();
@@ -628,6 +650,14 @@ jpsipipi::beginJob()
   tree_->Branch("mu2PF",&mu2PF);
   tree_->Branch("mu1loose",&mu1loose);
   tree_->Branch("mu2loose",&mu2loose);
+
+  tree_->Branch("J_lxy",&J_lxy);
+  tree_->Branch("J_lxyErr",&J_lxyErr);
+  tree_->Branch("Pi_dJP",&Pi_dJP);
+  tree_->Branch("JPi_lxy",&JPi_lxy);
+  tree_->Branch("JPi_lxyErr",&JPi_lxyErr);
+  tree_->Branch("JPiPi_lxy",&JPiPi_lxy);
+  tree_->Branch("JPiPi_lxyErr",&JPiPi_lxyErr);
   tree_->Branch("Pi_nhits1",&Pi_nhits1);
   tree_->Branch("Pi_npixelhits1",&Pi_npixelhits1);
   tree_->Branch("Pi_nhits2",&Pi_nhits2);
