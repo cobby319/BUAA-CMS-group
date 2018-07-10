@@ -477,8 +477,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	        
   	       /* if(fabs(iTrack2->pdgId()!= 211)) {
 	        std::cout << "fabs(iTrack2->pdgId()!= 211)" << endl;
-	        continue;
-	      } *///Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+	        continue;*/
+	      } //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) {
 	        std::cout << "!(iTrack2->trackHighPurity()" << endl;
 	        continue;
