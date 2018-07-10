@@ -368,6 +368,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    float djp = fabs( JpsiPi.distance() );	  
 	    if (djp < 0. || djp > 0.5) continue;
 
+        /*
 	    //begin vertex fit of Jpsi and pi1
         ParticleMass Jpsi_mass = 3.0969;
         ParticleMass Pion_mass = 0.13957061;
@@ -420,6 +421,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	    double JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
+	    */
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
             if(!( (iTrack2->charge() )*( iTrack2->charge() )>0)) continue;
