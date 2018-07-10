@@ -110,8 +110,6 @@ private:
   std::vector<double>       *J_px1, *J_py1, *J_pz1;
   std::vector<double>       *J_px2, *J_py2, *J_pz2;
   std::vector<int>         *J_charge1, *J_charge2;
-  std::vector<float>       *J_vertexFitChi2;
-  std::vector<float>       *J_vertexFitNdf;
 
   unsigned int              nPiPair;
   
