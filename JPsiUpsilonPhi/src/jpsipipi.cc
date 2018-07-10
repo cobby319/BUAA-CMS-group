@@ -300,7 +300,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  
 	  //some loose cuts go here
 	  
-	  if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
+	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  double J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	  double J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
@@ -430,13 +430,13 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        //std::cout << "negative chisq from psi fit" << endl;
 	        continue;
 	      }
-	    if(psi_vFit_vertex_noMC->chiSquared()>45.) continue;
+	    if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
 	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	    double JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
-            //if(!( (iTrack2->charge() )*( iTrack2->charge() )<0)) continue;
+            if(!( (iTrack1->charge() )*( iTrack2->charge() )<0)) continue;
             
             if(iTrack2->pt()<0.8)continue;
   	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;
@@ -496,7 +496,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            //std::cout << "negative chisq from psi fit" << endl;
 	            continue;
 	          }
-	        if(psi_vFit_vertex_noMC2->chiSquared()>45.) continue;
+	        if(psi_vFit_vertex_noMC2->chiSquared()>10.) continue;
 	        double JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
 	        double JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC2->currentState().globalPosition());
 	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2.0) continue;
@@ -534,7 +534,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
    if (nJ > 0 && nPiPair>0)
    { tree_->Fill();
 
-    std::cout << "filling tree" << endl;
+    //std::cout << "filling tree" << endl;
    
     }
 
