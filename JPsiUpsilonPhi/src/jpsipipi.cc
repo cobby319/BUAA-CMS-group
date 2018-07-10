@@ -311,7 +311,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  double J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	  double J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
-	  if (J_dxy/J_dxyerr<3.0) continue;
+	  if (J_dxy/J_dxyerr<5.0) continue;
 	  
 	  //fill variables?iMuon1->track()->pt()
 	  JpsiFTS.push_back(psi_vFit_noMC->currentState().freeTrajectoryState());
@@ -375,7 +375,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	{
 		
 		
-  	    if(iTrack1->pt()<1)continue;
+  	    if(iTrack1->pt()<3)continue;
   	    if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
   	    if(iTrack1->charge() == 0) continue; //NO neutral objects
   	    if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
@@ -440,6 +440,10 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        //std::cout << "negative chisq from psi fit" << endl;
 	        continue;
 	      }
+	    if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
+	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
+	    double JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
+	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
   
 
 
@@ -449,7 +453,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
             if(!( (iTrack2->charge() )*( iTrack2->charge() )>0)) continue;
-            if(iTrack2->pt()<0.8)continue;
+            if(iTrack2->pt()<2)continue;
   	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;
   	        
   	        if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
