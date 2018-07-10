@@ -97,7 +97,28 @@ jpsipipi::jpsipipi(const edm::ParameterSet& iConfig)
 
   J_px1(0), J_py1(0), J_pz1(0),
   J_px2(0), J_py2(0), J_pz2(0), 
-  J_charge1(0), J_charge2(0)
+  J_charge1(0), J_charge2(0)，
+  nPiPair        (0),
+  Pi_Hits1       (0),
+  Pi_Hits2       (0),
+  Pi_pixelHits1  (0),
+  Pi_pixelHits2  (0),
+  Pi_Eta1        (0),
+  Pi_Eta2        (0),
+  Pi_Phi1        (0),
+  Pi_Phi2        (0),
+  Pi_Pt1         (0),
+  Pi_Pt2         (0),
+  Pi_E1          (0),
+  Pi_E2          (0),
+  Pi_VertexChi2_1(0),
+  Pi_VertexChi2_2(0),
+  Pi_Lxy1        (0),
+  Pi_Lxy2        (0),
+  Pi_LxyErr1     (0),
+  Pi_LxyErr2     (0),
+  Jpipi_mass     (0),
+  Jpi1_mass      (0)
 
 
 
@@ -343,6 +364,9 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 for(unsigned int i=0; i<JpsiFTS.size(); i++)
 {
 	reco::TransientTrack JpsiTT((*theB).build(JpsiFTS.at(i)));
+	TLorentzVector Jpsi_P4;
+	Jpsi_P4.SetXYZM(J_px->at(i),J_py->at(i),J_pz->at(i),J_mass->at(i));
+
 	for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1)
 	{
 		
@@ -363,6 +387,9 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    if( !JpsiPi.status() ) continue;
 	    float djp = fabs( JpsiPi.distance() );	  
 	    if (djp < 0. || djp > 0.5) continue;
+	    TLorentzVector Pi1_P4;
+	    Pi1_P4.SetPtEtaPhiE(iTrack1->pt(),iTrack1->eta(),iTrack1->phi(),iTrack1->energy());
+
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
             if(!( (iTrack2->charge() )*( iTrack2->charge() )>0)) continue;
@@ -372,6 +399,31 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	        if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
   	        if(!(iTrack2->bestTrack())) continue;
+  	        TLorentzVector Pi2_P4;
+	        Pi2_P4.SetPtEtaPhiE(iTrack2->pt(),iTrack2->eta(),iTrack2->phi(),iTrack2->energy());
+  	        nPiPair++;
+  
+            Pi_Hits1       ->push_back(iTrack1->numberOfHits())      ;           
+            Pi_Hits2       ->push_back(iTrack2->numberOfHits())      ;           
+            Pi_pixelHits1  ->push_back(iTrack1->numberOfPixelHits()) ;                
+            Pi_pixelHits2  ->push_back(iTrack2->numberOfPixelHits()) ;                
+            Pi_Eta1        ->push_back(iTrack1->eta())               ;  
+            Pi_Eta2        ->push_back(iTrack2->eta())               ;  
+            Pi_Phi1        ->push_back(iTrack1->phi())               ;  
+            Pi_Phi2        ->push_back(iTrack2->phi())               ;  
+            Pi_Pt1         ->push_back(iTrack1->pt())                ; 
+            Pi_Pt2         ->push_back(iTrack2->pt())                ; 
+            Pi_E1          ->push_back(iTrack1->energy())            ;     
+            Pi_E2          ->push_back(iTrack2->energy())            ;     
+            Pi_VertexChi2_1->push_back(iTrack1->vertexChi2())        ;                     
+            Pi_VertexChi2_2->push_back(iTrack2->vertexChi2())        ;                     
+            Pi_Lxy1        ->push_back(iTrack1->dxy())               ;              
+            Pi_Lxy2        ->push_back(iTrack2->dxy())               ;              
+            Pi_LxyErr1     ->push_back(iTrack1->dxyError())          ;                   
+            Pi_LxyErr2     ->push_back(iTrack2->dxyError())          ;                   
+            Jpipi_mass     ->push_back((Jpsi_P4+Pi1_P4+Pi2_P4).M())  ;
+            Jpi1_mass      ->push_back((Jpsi_P4+Pi1_P4).M())         ;
+
 	        
 
 	    }
@@ -383,7 +435,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	
   
   
-   if (nJ > 0) tree_->Fill();
+   if (nJ > 0 && nPiPair >0) tree_->Fill();
 
     //std::cout << "filling tree" << endl;
    
@@ -391,6 +443,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 
    
    nJ = 0; 
+   nPiPair =0;
    
 
    J_mass->clear(); J_px->clear();   J_py->clear();  J_pz->clear();  
@@ -404,6 +457,26 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 
    mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
+   Pi_Hits1       ->clear();
+   Pi_Hits2       ->clear();
+   Pi_pixelHits1  ->clear();
+   Pi_pixelHits2  ->clear();
+   Pi_Eta1        ->clear();
+   Pi_Eta2        ->clear();
+   Pi_Phi1        ->clear();
+   Pi_Phi2        ->clear();
+   Pi_Pt1         ->clear();
+   Pi_Pt2         ->clear();
+   Pi_E1          ->clear();
+   Pi_E2          ->clear();
+   Pi_VertexChi2_1->clear();
+   Pi_VertexChi2_2->clear();
+   Pi_Lxy1        ->clear();
+   Pi_Lxy2        ->clear();
+   Pi_LxyErr1     ->clear();
+   Pi_LxyErr2     ->clear();
+   Jpipi_mass     ->clear();
+   Jpi1_mass      ->clear();
    JpsiFTS.clear();
 
 }
@@ -457,8 +530,27 @@ jpsipipi::beginJob()
   tree_->Branch("mu2PF",&mu2PF);
   tree_->Branch("mu1loose",&mu1loose);
   tree_->Branch("mu2loose",&mu2loose);
-
-
+  tree_->Branch("nPiPair        ", &nPiPair, "nPiPair/i"  );
+  tree_->Branch("Pi_Hits1       ", &Pi_Hits1       );
+  tree_->Branch("Pi_Hits2       ", &Pi_Hits2       );
+  tree_->Branch("Pi_pixelHits1  ", &Pi_pixelHits1  );
+  tree_->Branch("Pi_pixelHits2  ", &Pi_pixelHits2  );
+  tree_->Branch("Pi_Eta1        ", &Pi_Eta1        );
+  tree_->Branch("Pi_Eta2        ", &Pi_Eta2        );
+  tree_->Branch("Pi_Phi1        ", &Pi_Phi1        );
+  tree_->Branch("Pi_Phi2        ", &Pi_Phi2        );
+  tree_->Branch("Pi_Pt1         ", &Pi_Pt1         );
+  tree_->Branch("Pi_Pt2         ", &Pi_Pt2         );
+  tree_->Branch("Pi_E1          ", &Pi_E1          );
+  tree_->Branch("Pi_E2          ", &Pi_E2          );
+  tree_->Branch("Pi_VertexChi2_1", &Pi_VertexChi2_1);
+  tree_->Branch("Pi_VertexChi2_2", &Pi_VertexChi2_2);
+  tree_->Branch("Pi_Lxy1        ", &Pi_Lxy1        );
+  tree_->Branch("Pi_Lxy2        ", &Pi_Lxy2        );
+  tree_->Branch("Pi_LxyErr1     ", &Pi_LxyErr1     );
+  tree_->Branch("Pi_LxyErr2     ", &Pi_LxyErr2     );
+  tree_->Branch("Jpipi_mass     ", &Jpipi_mass     );
+  tree_->Branch("Jpi1_mass      ", &Jpi1_mass      );
 }
 
 
