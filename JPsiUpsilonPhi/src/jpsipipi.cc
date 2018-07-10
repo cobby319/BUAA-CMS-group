@@ -445,7 +445,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
-            if(iTrack1->charge() == iTrack2->charge()) continue;
+            //if(iTrack1->charge() == iTrack2->charge()) continue;
             if(iTrack2->charge()==0) continue;
             if(iTrack2->pt()<0.8)continue;
   	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;
