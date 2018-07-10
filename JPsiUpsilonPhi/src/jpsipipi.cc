@@ -363,7 +363,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	{
 		
 		
-  	    if(iTrack1->pt()<1)continue;
+  	    if(iTrack1->pt()<3)continue;
   	    if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
   	    if(iTrack1->charge() == 0) continue; //NO neutral objects
   	    if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
@@ -378,7 +378,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    JpsiPi.calculate(JpsiFTS.at(i), pi_trajectory);
   	    if( !JpsiPi.status() ) continue;
 	    float djp = fabs( JpsiPi.distance() );	  
-	    if (djp < 0. || djp > 0.05) continue;
+	    if (djp < 0. || djp > 0.025) continue;
 	   
 	    //begin vertex fit of Jpsi and pi1
         ParticleMass Jpsi_mass = 3.0969;
@@ -430,7 +430,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        //std::cout << "negative chisq from psi fit" << endl;
 	        continue;
 	      }
-	    if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
+	    if(psi_vFit_vertex_noMC->chiSquared()>6.) continue;
 	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	    double JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
@@ -438,10 +438,10 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    {
             if(!( (iTrack1->charge() )*( iTrack2->charge() )<0)) continue;
             
-            if(iTrack2->pt()<0.8)continue;
+            if(iTrack2->pt()<2.5)continue;
   	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;
   	        if(iTrack2->charge() == 0) continue; //NO neutral objects
-  	        //if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+  	        if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
   	        if(!(iTrack2->bestTrack())) continue;
             reco::TransientTrack track2TT((*theB).build(iTrack2->bestTrack()));
@@ -496,7 +496,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            //std::cout << "negative chisq from psi fit" << endl;
 	            continue;
 	          }
-	        if(psi_vFit_vertex_noMC2->chiSquared()>10.) continue;
+	        if(psi_vFit_vertex_noMC2->chiSquared()>6.) continue;
 	        double JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
 	        double JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC2->currentState().globalPosition());
 	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2.0) continue;
@@ -534,7 +534,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
    if (nJ > 0 && nPiPair>0)
    { tree_->Fill();
 
-    //std::cout << "filling tree" << endl;
+    std::cout << "filling tree" << endl;
    
     }
 
