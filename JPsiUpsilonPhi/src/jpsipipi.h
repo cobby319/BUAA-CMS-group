@@ -128,6 +128,8 @@ private:
   std::vector<float>       *Pi_dxy2;
   std::vector<float>       *Pi_dxyerr1;
   std::vector<float>       *Pi_dxyerr2;
+  std::vector<float>       *Pi_vertexchisq1;
+  std::vector<float>       *Pi_vertexchisq2;
 
 
 };

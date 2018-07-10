@@ -115,7 +115,9 @@ jpsipipi::jpsipipi(const edm::ParameterSet& iConfig)
   Pi_dxy1(0),
   Pi_dxy2(0),
   Pi_dxyerr1(0),
-  Pi_dxyerr2(0)
+  Pi_dxyerr2(0),
+  Pi_vertexchisq1(0),
+  Pi_vertexchisq2(0)
 
 
  {
@@ -428,7 +430,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        //std::cout << "negative chisq from psi fit" << endl;
 	        continue;
 	      }
-	    if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
+	    if(psi_vFit_vertex_noMC->chiSquared()>45.) continue;
 	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	    double JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
@@ -516,6 +518,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             Pi_dxy2->push_back(iTrack2->dxy());
             Pi_dxyerr1->push_back(iTrack1->dxyError());
             Pi_dxyerr2->push_back(iTrack2->dxyError());
+            Pi_vertexchisq1->push_back(psi_vFit_vertex_noMC->chiSquared());
+            Pi_vertexchisq2->push_back(psi_vFit_vertex_noMC2->chiSquared());
 	        nPiPair++;
 
 	    }
@@ -569,6 +573,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
    Pi_dxy2->clear();
    Pi_dxyerr1->clear();
    Pi_dxyerr2->clear();
+   Pi_vertexchisq1->clear();
+   Pi_vertexchisq2->clear();
 
 }
 
@@ -640,7 +646,8 @@ jpsipipi::beginJob()
   tree_->Branch("Pi_dxy2",&Pi_dxy2);
   tree_->Branch("Pi_dxyerr1",&Pi_dxyerr1);
   tree_->Branch("Pi_dxyerr2",&Pi_dxyerr2);
-
+  tree_->Branch("Pi_vertexchisq1",&Pi_vertexchisq1);
+  tree_->Branch("Pi_vertexchisq2",&Pi_vertexchisq2);
 
 }
 
