@@ -382,7 +382,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    if(!(iTrack1->trackHighPurity())) continue;
   	    
   	    reco::TransientTrack track1TT((*theB).build(iTrack1->bestTrack()));
-  	    FreeTrajectoryState pi_trajectory = track1TT.impactPointTSCP().theState();
+  	    //FreeTrajectoryState pi_trajectory = track1TT.impactPointTSCP().theState();
   	    //ClosestApproachInRPhi JpsiPi;
 
   	    
