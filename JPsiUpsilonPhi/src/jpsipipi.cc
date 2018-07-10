@@ -183,7 +183,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
     for(View<pat::Muon>::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) 
 	{
-	  //if(iMuon1==iMuon2) continue;
+	  if(iMuon1==iMuon2) continue;
 	  
 	  //opposite charge 
 	  if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue;
@@ -298,7 +298,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  
 	  //some loose cuts go here
 	  
-	  if(psi_vFit_vertex_noMC->chiSquared()>30.) continue;
+	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  double J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	  double J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
@@ -376,7 +376,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    JpsiPi.calculate(JpsiFTS.at(i), pi_trajectory);
   	    if( !JpsiPi.status() ) continue;
 	    float djp = fabs( JpsiPi.distance() );	  
-	    //if (djp < 0. || djp > 0.025) continue;
+	    if (djp < 0. || djp > 0.025) continue;
 	   
 	    //begin vertex fit of Jpsi and pi1
         ParticleMass Jpsi_mass = 3.0969;
@@ -428,7 +428,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        //std::cout << "negative chisq from psi fit" << endl;
 	        continue;
 	      }
-	    if(psi_vFit_vertex_noMC->chiSquared()>20.) continue;
+	    if(psi_vFit_vertex_noMC->chiSquared()>6.) continue;
 	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	    double JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
@@ -493,7 +493,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            //std::cout << "negative chisq from psi fit" << endl;
 	            continue;
 	          }
-	        if(psi_vFit_vertex_noMC2->chiSquared()>10.) continue;
+	        if(psi_vFit_vertex_noMC2->chiSquared()>6.) continue;
 	        double JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
 	        double JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC2->currentState().globalPosition());
 	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2.0) continue;
