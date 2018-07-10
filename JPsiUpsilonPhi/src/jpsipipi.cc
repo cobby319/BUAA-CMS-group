@@ -316,8 +316,8 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  float J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->initialState().globalPosition());
       
 	  if (J_dxy<0.08) continue;
-	  muontt1->push_back(muon1TT);
-	  muontt2->push_back(muon2TT);
+	  muontt1.push_back(muon1TT);
+	  muontt2.push_back(muon2TT);
 	  J_lxy->push_back(J_dxy);
 	  J_lxyErr->push_back(J_dxyerr);
 	  //fill variables?iMuon1->track()->pt()
@@ -412,7 +412,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    try {
 	      //JpsiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,J_vertexFitChi2->at(i),J_vertexFitNdf->at(i),Jpsi_sigma));
 	     // JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
-	      JpsiPi_fit.push_back(pFactory.particle(muontt1,muon_mass,chi,ndf,muon_sigma));
+	      JpsiPi_fit.push_back(pFactory.particle(muontt1.at(i),muon_mass,chi,ndf,muon_sigma));
 	      JpsiPi_fit.push_back(pFactory.particle(muontt2,muon_mass,chi,ndf,muon_sigma));
 	      JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
 	    }
@@ -479,8 +479,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        try {
 	          //JpsiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,J_vertexFitChi2->at(i),J_vertexFitNdf->at(i),Jpsi_sigma));
 	         // JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
-	          JpsiPi_fit.push_back(pFactory.particle(muontt1,muon_mass,chi,ndf,muon_sigma));
-	          JpsiPi_fit.push_back(pFactory.particle(muontt2,muon_mass,chi,ndf,muon_sigma));
+	          JpsiPi_fit.push_back(pFactory.particle(muontt1.at(i),muon_mass,chi,ndf,muon_sigma));
+	          JpsiPi_fit.push_back(pFactory.particle(muontt2.at(i),muon_mass,chi,ndf,muon_sigma));
 	          JpsiPiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
 	          JpsiPiPi_fit.push_back(pFactory.particle(track2TT,Pion_mass,iTrack2->vertexChi2(),iTrack2->vertexNdof(),Pion_sigma));
 	        }
@@ -581,8 +581,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
    mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
    JpsiFTS.clear();
-   muontt1->clear();
-   muontt2->clear();
+   muontt1.clear();
+   muontt2.clear();
    J_lxy->clear();
    J_lxyErr->clear();
    Pi_dJP->clear();
