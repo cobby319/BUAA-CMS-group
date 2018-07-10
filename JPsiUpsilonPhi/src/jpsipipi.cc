@@ -298,7 +298,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  
 	  //some loose cuts go here
 	  
-	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
+	  if(psi_vFit_vertex_noMC->chiSquared()>30.) continue;
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  double J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	  double J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
@@ -365,18 +365,18 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        std::cout << "iTrack1->pt()<1" << endl;
 	        continue;
 	      } 
- 	    /*if(iTrack1->eta()>2||iTrack1->eta()<-2){
+ 	    if(iTrack1->eta()>2||iTrack1->eta()<-2){
 	        std::cout << "iTrack1->eta()>2||iTrack1->eta()<-2" << endl;
 	        continue;
-	      }*/
+	      }
   	    if(iTrack1->charge() == 0){
 	        std::cout << "iTrack1->charge() == 0" << endl;
 	        continue;
 	      }
-  	    /*if(fabs(iTrack1->pdgId()!= 211)) {
+  	    if(fabs(iTrack1->pdgId()!= 211)) {
 	        std::cout << "fabs(iTrack1->pdgId()!= 211" << endl;
 	        continue;
-	      }*/
+	      }
   	    if(!(iTrack1->bestTrack())) {
 	        std::cout << "!(iTrack1->bestTrack())" << endl;
 	        continue;
@@ -453,7 +453,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        std::cout << "psi_vFit_vertex_noMC->chiSquared() < 0" << endl;
 	        continue;
 	      }
-	    if(psi_vFit_vertex_noMC->chiSquared()>6.) {
+	    if(psi_vFit_vertex_noMC->chiSquared()>20.) {
 	        std::cout << "psi_vFit_vertex_noMC->chiSquared()>20" << endl;
 	        continue;
 	      }
@@ -470,14 +470,14 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        std::cout << "iTrack2->pt()<0.8" << endl;
 	        continue;
 	      }
-  	       /* if(iTrack2->eta()>2||iTrack1->eta()<-2){
+  	        if(iTrack2->eta()>2||iTrack1->eta()<-2){
 	        std::cout << "iTrack2->eta()>2||iTrack1->eta()<-2" << endl;
 	        continue;
-	      }*/
+	      }
   	        
-  	       /* if(fabs(iTrack2->pdgId()!= 211)) {
+  	        if(fabs(iTrack2->pdgId()!= 211)) {
 	        std::cout << "fabs(iTrack2->pdgId()!= 211)" << endl;
-	        continue;*/
+	        continue;
 	      } //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) {
 	        std::cout << "!(iTrack2->trackHighPurity()" << endl;
