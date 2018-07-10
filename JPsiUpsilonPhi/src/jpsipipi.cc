@@ -372,11 +372,12 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	{
 		
 		
-  	    if(iTrack1->pt()<1)continue;
+  	    if(iTrack1->pt()<3)continue;
   	    if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
-  	    if(iTrack1->charge() == 0) continue; //NO neutral objects
-  	    if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	    if(!(iTrack1->bestTrack())) continue;
+  	    if(iTrack1->bestTrack()->charge() == 0) continue; //NO neutral objects
+  	    //if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+  	    
   	    if(iTrack1->vertexChi2()>10) continue;
   	    if(!(iTrack1->trackHighPurity())) continue;
   	    
@@ -445,14 +446,15 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
-            //if(iTrack1->charge() == iTrack2->charge()) continue;
-            if(iTrack2->charge()==0) continue;
-            if(iTrack2->pt()<0.8)continue;
+            if(iTrack1->bestTrack()->charge() == iTrack2->bestTrack()->charge()) continue;
+            
+            if(iTrack2->pt()<2)continue;
   	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;
-  	        if(iTrack2->charge() == 0) continue; //NO neutral objects
-  	        if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
-  	        if(!(iTrack2->trackHighPurity())) continue;
   	        if(!(iTrack2->bestTrack())) continue;
+  	        if(iTrack2->bestTrack()->charge() == 0) continue; //NO neutral objects
+  	        //if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+  	        if(!(iTrack2->trackHighPurity())) continue;
+  	        
             reco::TransientTrack track2TT((*theB).build(iTrack2->bestTrack()));
   	        //begin vertex fit of Jpsi and pi1
             //ParticleMass Jpsi_mass = 3.0969;
