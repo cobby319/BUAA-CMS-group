@@ -428,7 +428,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        //std::cout << "negative chisq from psi fit" << endl;
 	        continue;
 	      }
-	    if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
+	    if(psi_vFit_vertex_noMC->chiSquared()>40.) continue;
 	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	    double JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
@@ -494,7 +494,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            //std::cout << "negative chisq from psi fit" << endl;
 	            continue;
 	          }
-	        if(psi_vFit_vertex_noMC2->chiSquared()>10.) continue;
+	        if(psi_vFit_vertex_noMC2->chiSquared()>40.) continue;
 	        double JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
 	        double JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC2->currentState().globalPosition());
 	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2.0) continue;
