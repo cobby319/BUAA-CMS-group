@@ -446,12 +446,12 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
-            if(iTrack1->bestTrack()->charge() == iTrack2->bestTrack()->charge()) continue;
+            if((iTrack1->charge())*(iTrack2->charge())==1) continue;
             
             if(iTrack2->pt()<2)continue;
   	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;
   	        if(!(iTrack2->bestTrack())) continue;
-  	        if(iTrack2->bestTrack()->charge() == 0) continue; //NO neutral objects
+  	        if(iTrack2->charge() == 0) continue; //NO neutral objects
   	        //if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
   	        
@@ -508,8 +508,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            continue;
 	          }
 	        if(psi_vFit_vertex_noMC2->chiSquared()>10.) continue;
-	        double JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
-	        double JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC2->currentState().globalPosition());
+	        float JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
+	        float JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC2->currentState().globalPosition());
 	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2.0) continue;
 	        Pi_nhits1->push_back(iTrack1->numberOfHits());
             Pi_npixelhits1->push_back(iTrack2->numberOfPixelHits());
