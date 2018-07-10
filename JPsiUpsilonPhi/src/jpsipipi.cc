@@ -413,7 +413,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	      //JpsiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,J_vertexFitChi2->at(i),J_vertexFitNdf->at(i),Jpsi_sigma));
 	     // JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
 	      JpsiPi_fit.push_back(pFactory.particle(muontt1.at(i),muon_mass,chi,ndf,muon_sigma));
-	      JpsiPi_fit.push_back(pFactory.particle(muontt2,muon_mass,chi,ndf,muon_sigma));
+	      JpsiPi_fit.push_back(pFactory.particle(muontt2.at(i),muon_mass,chi,ndf,muon_sigma));
 	      JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
 	    }
 	    catch(...) { 
