@@ -286,7 +286,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  
 	  //some loose cuts go here
 	  
-	  if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
+	  if(psi_vFit_vertex_noMC->chiSquared()>15.) continue;
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  double J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	  double J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
@@ -351,7 +351,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	{
 		
 		
-  	    if(iTrack1->pt()<1)continue;
+  	    if(iTrack1->pt()<3)continue;
   	    if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
   	    if(iTrack1->charge() == 0) continue; //NO neutral objects
   	    if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
@@ -366,9 +366,9 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    JpsiPi.calculate(JpsiFTS.at(i), pi_trajectory);
   	    if( !JpsiPi.status() ) continue;
 	    float djp = fabs( JpsiPi.distance() );	  
-	    if (djp < 0. || djp > 0.5) continue;
+	    if (djp < 0. || djp > 0.05) continue;
 
-        /*
+        
 	    //begin vertex fit of Jpsi and pi1
         ParticleMass Jpsi_mass = 3.0969;
         ParticleMass Pion_mass = 0.13957061;
@@ -417,15 +417,15 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        //std::cout << "negative chisq from psi fit" << endl;
 	        continue;
 	      }
-	    if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
+	    if(psi_vFit_vertex_noMC->chiSquared()>20.) continue;
 	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	    double JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
-	    */
+	    
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
             if(!( (iTrack2->charge() )*( iTrack2->charge() )>0)) continue;
-            if(iTrack2->pt()<0.8)continue;
+            if(iTrack2->pt()<2)continue;
   	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;
   	        
   	        if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
@@ -483,7 +483,7 @@ jpsipipi::beginJob()
   tree_ = fs->make<TTree>("ntuple"," J/psi ntuple");
 
   tree_->Branch("nJ",&nJ,"nJ/i"); 
-  //tree_->Branch("nPiPair",&nPiPair,"nPiPair/i"); 
+  tree_->Branch("nPiPair",&nPiPair,"nPiPair/i"); 
   tree_->Branch("J_mass", &J_mass);
   tree_->Branch("J_px", &J_px);
   tree_->Branch("J_py", &J_py);
