@@ -97,9 +97,7 @@ jpsipipi::jpsipipi(const edm::ParameterSet& iConfig)
 
   J_px1(0), J_py1(0), J_pz1(0),
   J_px2(0), J_py2(0), J_pz2(0), 
-  J_charge1(0), J_charge2(0),
-  J_vertexFitChi2(0),
-  J_vertexFitNdf(0)
+  J_charge1(0), J_charge2(0)
 
 
 
@@ -309,8 +307,6 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  J_py2->push_back(iMuon2->track()->py());
 	  J_pz2->push_back(iMuon2->track()->pz());
 	  J_charge2->push_back(iMuon2->charge());
-	  J_vertexFitChi2->push_back(psi_vFit_vertex_noMC->chiSquared());
-	  J_vertexFitNdf->push_back(psi_vFit_vertex_noMC->degreesOfFreedom());
 	  
 	   // ************
 	  
@@ -454,8 +450,6 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
    J_mass->clear(); J_px->clear();   J_py->clear();  J_pz->clear();  
    J_px1->clear();  J_py1->clear();  J_pz1->clear(), J_charge1->clear();
    J_px2->clear();  J_py2->clear();  J_pz2->clear(), J_charge2->clear();
-   J_vertexFitNdf->clear();
-   J_vertexFitChi2->clear();
 
    
    mupC2->clear();
