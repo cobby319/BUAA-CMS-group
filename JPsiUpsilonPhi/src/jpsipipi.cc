@@ -298,7 +298,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  
 	  //some loose cuts go here
 	  
-	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
+	  if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  double J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	  double J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
@@ -453,8 +453,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        std::cout << "psi_vFit_vertex_noMC->chiSquared() < 0" << endl;
 	        continue;
 	      }
-	    if(psi_vFit_vertex_noMC->chiSquared()>6.) {
-	        std::cout << "psi_vFit_vertex_noMC->chiSquared()>20" << endl;
+	    if(psi_vFit_vertex_noMC->chiSquared()>50) {
+	        std::cout <<"chisq is"<<psi_vFit_vertex_noMC->chiSquared()<< "psi_vFit_vertex_noMC->chiSquared()>50" << endl;
 	        continue;
 	      }
 	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
@@ -539,8 +539,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            std::cout << "psi_vFit_vertex_noMC2->chiSquared() < 0" << endl;
 	            continue;
 	          }
-	        if(psi_vFit_vertex_noMC2->chiSquared()>10.) {
-	        std::cout << "psi_vFit_vertex_noMC2->chiSquared()>10" << endl;
+	        if(psi_vFit_vertex_noMC2->chiSquared()>50.) {
+	        std::cout << "psi_vFit_vertex_noMC2->chiSquared()>50" << endl;
 	        continue;
 	      }
 	        double JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
