@@ -391,7 +391,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    if( !JpsiPi.status() ) continue;
 	    float djp = fabs( JpsiPi.distance() );	  
 	    if (djp < 0. || djp > 0.5) continue;
-
+        
+        /*
 	    //begin vertex fit of Jpsi and pi1
         ParticleMass Jpsi_mass = 3.0969;
         ParticleMass Pion_mass = 0.13957061;
@@ -444,7 +445,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	    double JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
-  
+        */
 
 
 	    TLorentzVector Pi1_P4;
@@ -555,7 +556,7 @@ jpsipipi::beginJob()
   edm::Service<TFileService> fs;
   tree_ = fs->make<TTree>("ntuple"," J/psi ntuple");
 
-  tree_->Branch("nJ",&nJ,"nJ/i"); 
+  tree_->Branch("nJ",&nJ,"nJ/I"); 
   tree_->Branch("J_mass", &J_mass);
   tree_->Branch("J_px", &J_px);
   tree_->Branch("J_py", &J_py);
@@ -592,7 +593,7 @@ jpsipipi::beginJob()
   tree_->Branch("mu2PF",&mu2PF);
   tree_->Branch("mu1loose",&mu1loose);
   tree_->Branch("mu2loose",&mu2loose);
-  tree_->Branch("nPiPair", &nPiPair, "nPiPair/i");
+  tree_->Branch("nPiPair", &nPiPair, "nPiPair/I");
   tree_->Branch("Pi_Hits1", &Pi_Hits1       );
   tree_->Branch("Pi_Hits2", &Pi_Hits2       );
   tree_->Branch("Pi_pixelHits1", &Pi_pixelHits1  );
