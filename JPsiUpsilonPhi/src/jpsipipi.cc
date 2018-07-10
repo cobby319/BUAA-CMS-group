@@ -98,6 +98,7 @@ jpsipipi::jpsipipi(const edm::ParameterSet& iConfig)
   J_px1(0), J_py1(0), J_pz1(0),
   J_px2(0), J_py2(0), J_pz2(0), 
   J_charge1(0), J_charge2(0),
+  J_vertexFitChi2(0), J_vertexFitNdf(0),
   Pi_nhits1(0),
   Pi_npixelhits1(0),
   Pi_nhits2(0),
@@ -305,7 +306,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if (J_dxy/J_dxyerr<3.0) continue;
 	  
 	  //fill variables?iMuon1->track()->pt()
-	  JpsiFTS.push_back(psi_vFit_noMC->InitialState().freeTrajectoryState());
+	  JpsiFTS.push_back(psi_vFit_noMC->initialState().freeTrajectoryState());
 
 	  J_mass->push_back( psi_vFit_noMC->currentState().mass() );
 	  J_px->push_back( psi_vFit_noMC->currentState().globalMomentum().x() );
@@ -416,10 +417,10 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 
 	    vector<RefCountedKinematicParticle> JpsiPi_fit;
 	    try {
-	      //JpsiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,J_vertexFitChi2->at(i),J_vertexFitNdf->at(i),Jpsi_sigma));
-	     // JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
-	      JpsiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,0,0,Jpsi_sigma));
-	      JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,0,0,Pion_sigma));
+	      JpsiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,J_vertexFitChi2->at(i),J_vertexFitNdf->at(i),Jpsi_sigma));
+	      JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
+	      //JpsiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,0,0,Jpsi_sigma));
+	     // JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,0,0,Pion_sigma));
 	    }
 	    catch(...) { 
 	      std::cout<<" Exception caught ... continuing 1 "<<std::endl; 
@@ -454,7 +455,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        continue;
 	      }
 	    if(psi_vFit_vertex_noMC->chiSquared()>50) {
-	        std::cout <<"chisq is"<<psi_vFit_vertex_noMC->chiSquared()<< "psi_vFit_vertex_noMC->chiSquared()>50" << endl;
+	        std::cout <<"tk1 chisq is"<<psi_vFit_vertex_noMC->chiSquared()<< "psi_vFit_vertex_noMC->chiSquared()>50" << endl;
 	        continue;
 	      }
 	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
@@ -501,11 +502,11 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
     
 	        vector<RefCountedKinematicParticle> JpsiPiPi_fit;
 	        try {
-	          //JpsiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,J_vertexFitChi2->at(i),J_vertexFitNdf->at(i),Jpsi_sigma));
-	         // JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
-	          JpsiPiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,0,0,Jpsi_sigma));
-	          JpsiPiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,0,0,Pion_sigma));
-	          JpsiPiPi_fit.push_back(pFactory.particle(track2TT,Pion_mass,0,0,Pion_sigma));
+	          JpsiPiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,J_vertexFitChi2->at(i),J_vertexFitNdf->at(i),Jpsi_sigma));
+	          JpsiPiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
+	          JpsiPiPi_fit.push_back(pFactory.particle(track2TT,Jpsi_mass,iTrack2->vertexChi2(),iTrack2->vertexNdof(),Pion_sigma));
+	          //JpsiPiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,0,0,Pion_sigma));
+	         // JpsiPiPi_fit.push_back(pFactory.particle(track2TT,Pion_mass,0,0,Pion_sigma));
 	        }
 	        catch(...) { 
 	          std::cout<<" Exception caught ... continuing 1 "<<std::endl; 
@@ -540,7 +541,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            continue;
 	          }
 	        if(psi_vFit_vertex_noMC2->chiSquared()>50.) {
-	        std::cout << "psi_vFit_vertex_noMC2->chiSquared()>50" << endl;
+	        std::cout << "tk2  psi_vFit_vertex_noMC2->chiSquared()>50" << endl;
 	        continue;
 	      }
 	        double JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
@@ -596,6 +597,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
    J_mass->clear(); J_px->clear();   J_py->clear();  J_pz->clear();  
    J_px1->clear();  J_py1->clear();  J_pz1->clear(), J_charge1->clear();
    J_px2->clear();  J_py2->clear();  J_pz2->clear(), J_charge2->clear();
+   J_vertexFitNdf->clear();
+   J_vertexFitChi2->clear();
 
    
    mupC2->clear();
