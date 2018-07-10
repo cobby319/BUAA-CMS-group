@@ -305,7 +305,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if (J_dxy/J_dxyerr<3.0) continue;
 	  
 	  //fill variables?iMuon1->track()->pt()
-	  JpsiFTS.push_back(psi_vFit_noMC->InitialState().freeTrajectoryState());
+	  JpsiFTS.push_back(psi_vFit_noMC->currentState().freeTrajectoryState());
 
 	  J_mass->push_back( psi_vFit_noMC->currentState().mass() );
 	  J_px->push_back( psi_vFit_noMC->currentState().globalMomentum().x() );
