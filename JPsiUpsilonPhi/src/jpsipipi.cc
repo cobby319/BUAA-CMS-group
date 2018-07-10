@@ -91,7 +91,7 @@ jpsipipi::jpsipipi(const edm::ParameterSet& iConfig)
   mu1soft(0), mu2soft(0), mu1tight(0), mu2tight(0), 
   mu1PF(0), mu2PF(0), mu1loose(0), mu2loose(0),
  
-  nJ(0),
+  nJ(0),nPiPair(0),
 
   J_mass(0), J_px(0), J_py(0), J_pz(0),J_energy(0),
 
@@ -372,7 +372,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	        if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
   	        if(!(iTrack2->bestTrack())) continue;
-	        
+	        nPiPair++;
 
 	    }
 	}
@@ -383,7 +383,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	
   
   
-   if (nJ > 0) tree_->Fill();
+   if (nJ > 0 &&nPiPair>0) tree_->Fill();
 
     //std::cout << "filling tree" << endl;
    
@@ -391,6 +391,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 
    
    nJ = 0; 
+   nPiPair =0;
    
 
    J_mass->clear(); J_px->clear();   J_py->clear();  J_pz->clear();  
@@ -421,6 +422,7 @@ jpsipipi::beginJob()
   tree_ = fs->make<TTree>("ntuple"," J/psi ntuple");
 
   tree_->Branch("nJ",&nJ,"nJ/i"); 
+  tree_->Branch("nPiPair",&nPiPair,"nPiPair/i"); 
   tree_->Branch("J_mass", &J_mass);
   tree_->Branch("J_px", &J_px);
   tree_->Branch("J_py", &J_py);
