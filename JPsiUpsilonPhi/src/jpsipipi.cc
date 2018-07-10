@@ -374,7 +374,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 
   	    FreeTrajectoryState pi_trajectory = track1TT.impactPointTSCP().theState();
   	    JpsiPi.calculate(JpsiFTS.at(i), pi_trajectory);
-  	    //if( !JpsiPi.status() ) continue;
+  	    if( !JpsiPi.status() ) continue;
 	    float djp = fabs( JpsiPi.distance() );	  
 	    //if (djp < 0. || djp > 0.025) continue;
 	   
@@ -428,10 +428,10 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        //std::cout << "negative chisq from psi fit" << endl;
 	        continue;
 	      }
-	    //if(psi_vFit_vertex_noMC->chiSquared()>20.) continue;
+	    if(psi_vFit_vertex_noMC->chiSquared()>20.) continue;
 	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	    double JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
-	    //if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
+	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
             if(!( (iTrack2->charge() )*( iTrack2->charge() )<0)) continue;
