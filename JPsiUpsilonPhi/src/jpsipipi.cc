@@ -362,7 +362,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 		
 		
   	    if(iTrack1->pt()<1)continue;
-  	    //if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
+  	    if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
   	    if(iTrack1->charge() == 0) continue; //NO neutral objects
   	    if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	    if(!(iTrack1->bestTrack())) continue;
@@ -494,7 +494,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            //std::cout << "negative chisq from psi fit" << endl;
 	            continue;
 	          }
-	        if(psi_vFit_vertex_noMC2->chiSquared()>50.) continue;
+	        if(psi_vFit_vertex_noMC2->chiSquared()>45.) continue;
 	        double JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
 	        double JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC2->currentState().globalPosition());
 	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2.0) continue;
