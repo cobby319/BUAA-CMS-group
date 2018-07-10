@@ -209,7 +209,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  cApp.calculate(mu1State, mu2State);
 	  if( !cApp.status() ) continue;
 	  float dca = fabs( cApp.distance() );	  
-	  if (dca < 0. || dca > 0.5) continue;
+	  if (dca < 0. || dca > 0.025) continue;
 	  //cout<<" closest approach  "<<dca<<endl;
 
 	  // ******  Methods to check to which category of muon candidates a given pat::Muon object belongs ****
@@ -362,7 +362,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    JpsiPi.calculate(JpsiFTS.at(i), pi_trajectory);
   	    if( !JpsiPi.status() ) continue;
 	    float djp = fabs( JpsiPi.distance() );	  
-	    if (djp < 0. || djp > 0.5) continue;
+	    if (djp < 0. || djp > 0.025) continue;
 	   
 	    //begin vertex fit of Jpsi and pi1
         ParticleMass Jpsi_mass = 3.0969;
