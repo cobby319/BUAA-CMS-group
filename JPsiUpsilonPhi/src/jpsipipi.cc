@@ -594,26 +594,26 @@ jpsipipi::beginJob()
   tree_->Branch("mu1loose",&mu1loose);
   tree_->Branch("mu2loose",&mu2loose);
   tree_->Branch("nPiPair", &nPiPair, "nPiPair/I");
-  tree_->Branch("Pi_Hits1", &Pi_Hits1       );
-  tree_->Branch("Pi_Hits2", &Pi_Hits2       );
-  tree_->Branch("Pi_pixelHits1", &Pi_pixelHits1  );
-  tree_->Branch("Pi_pixelHits2", &Pi_pixelHits2  );
-  tree_->Branch("Pi_Eta1", &Pi_Eta1        );
-  tree_->Branch("Pi_Eta2", &Pi_Eta2        );
-  tree_->Branch("Pi_Phi1", &Pi_Phi1        );
-  tree_->Branch("Pi_Phi2", &Pi_Phi2        );
-  tree_->Branch("Pi_Pt1 ", &Pi_Pt1         );
-  tree_->Branch("Pi_Pt2", &Pi_Pt2         );
-  tree_->Branch("Pi_E1", &Pi_E1          );
-  tree_->Branch("Pi_E2", &Pi_E2          );
+  /*tree_->Branch("Pi_Hits1", &Pi_Hits1);
+  tree_->Branch("Pi_Hits2", &Pi_Hits2);
+  tree_->Branch("Pi_pixelHits1", &Pi_pixelHits1);
+  tree_->Branch("Pi_pixelHits2", &Pi_pixelHits2);
+  tree_->Branch("Pi_Eta1", &Pi_Eta1);
+  tree_->Branch("Pi_Eta2", &Pi_Eta2);
+  tree_->Branch("Pi_Phi1", &Pi_Phi1);
+  tree_->Branch("Pi_Phi2", &Pi_Phi2);
+  tree_->Branch("Pi_Pt1 ", &Pi_Pt1);
+  tree_->Branch("Pi_Pt2", &Pi_Pt2);
+  tree_->Branch("Pi_E1", &Pi_E1);
+  tree_->Branch("Pi_E2", &Pi_E2);
   tree_->Branch("Pi_VertexChi2_1", &Pi_VertexChi2_1);
   tree_->Branch("Pi_VertexChi2_2", &Pi_VertexChi2_2);
-  tree_->Branch("Pi_Lxy1", &Pi_Lxy1        );
-  tree_->Branch("Pi_Lxy2", &Pi_Lxy2        );
-  tree_->Branch("Pi_LxyErr1", &Pi_LxyErr1     );
-  tree_->Branch("Pi_LxyErr2", &Pi_LxyErr2     );
-  tree_->Branch("Jpipi_mass", &Jpipi_mass     );
-  tree_->Branch("Jpi1_mass", &Jpi1_mass      );
+  tree_->Branch("Pi_Lxy1", &Pi_Lxy1);
+  tree_->Branch("Pi_Lxy2", &Pi_Lxy2);
+  tree_->Branch("Pi_LxyErr1", &Pi_LxyErr1);
+  tree_->Branch("Pi_LxyErr2", &Pi_LxyErr2);
+  tree_->Branch("Jpipi_mass", &Jpipi_mass);
+  tree_->Branch("Jpi1_mass", &Jpi1_mass);*/
 }
 
 
