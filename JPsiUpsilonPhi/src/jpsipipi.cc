@@ -361,8 +361,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	{
 		
 		
-  	    if(iTrack1->pt()<3){
-	        std::cout << "iTrack1->pt()<3" << endl;
+  	    if(iTrack1->pt()<1){
+	        std::cout << "iTrack1->pt()<1" << endl;
 	        continue;
 	      } 
  	    if(iTrack1->eta()>2||iTrack1->eta()<-2){
@@ -466,8 +466,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
             if(!( (iTrack2->charge() )*( iTrack2->charge() )<0)) continue;
-            if(iTrack2->pt()<2.5){
-	        std::cout << "iTrack2->pt()<2.5" << endl;
+            if(iTrack2->pt()<0.8){
+	        std::cout << "iTrack2->pt()<0.8" << endl;
 	        continue;
 	      }
   	        if(iTrack2->eta()>2||iTrack1->eta()<-2){
