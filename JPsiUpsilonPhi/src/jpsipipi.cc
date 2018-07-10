@@ -483,7 +483,7 @@ jpsipipi::beginJob()
   tree_ = fs->make<TTree>("ntuple"," J/psi ntuple");
 
   tree_->Branch("nJ",&nJ,"nJ/i"); 
-  tree_->Branch("nPiPair",&nPiPair,"nPiPair/i"); 
+  //tree_->Branch("nPiPair",&nPiPair,"nPiPair/i"); 
   tree_->Branch("J_mass", &J_mass);
   tree_->Branch("J_px", &J_px);
   tree_->Branch("J_py", &J_py);
