@@ -91,7 +91,7 @@ jpsipipi::jpsipipi(const edm::ParameterSet& iConfig)
   mu1soft(0), mu2soft(0), mu1tight(0), mu2tight(0), 
   mu1PF(0), mu2PF(0), mu1loose(0), mu2loose(0),
  
-  nJ(0),nPiPair(0),
+  nJ(0),
 
   J_mass(0), J_px(0), J_py(0), J_pz(0),J_energy(0),
 
@@ -363,59 +363,6 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    if( !JpsiPi.status() ) continue;
 	    float djp = fabs( JpsiPi.distance() );	  
 	    if (djp < 0. || djp > 0.5) continue;
-
-	    //begin vertex fit of Jpsi and pi1
-        ParticleMass Jpsi_mass = 3.0969;
-        ParticleMass Pion_mass = 0.13957061;
-	    float Jpsi_sigma = 0.000006 ;
-	    float Pion_sigma = 0.00000024;
-	    //float psi_sigma = psi_mass*1.e-6;
-	    
-	    //Creating a KinematicParticleFactory
-	    KinematicParticleFactoryFromTransientTrack pFactory;
-	    
-
-	    vector<RefCountedKinematicParticle> JpsiPi_fit;
-	    try {
-	      JpsiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,J_vertexFitChi2->at(i),J_vertexFitNdf->at(i),Jpsi_sigma));
-	      JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
-	    }
-	    catch(...) { 
-	      std::cout<<" Exception caught ... continuing 1 "<<std::endl; 
-	      continue;
-	    }
-	    
-	    KinematicParticleVertexFitter fitter;   
-	    
-	    RefCountedKinematicTree psiVertexFitTree;
-	    try {
-	      psiVertexFitTree = fitter.fit(JpsiPi_fit); 
-	    }
-	    catch (...) { 
-	      std::cout<<" Exception caught ... continuing 2 "<<std::endl; 
-	      continue;
-	    }
-	    
-	    if (!psiVertexFitTree->isValid()) 
-	    {
-	        //std::cout << "caught an exception in the psi vertex fit" << std::endl;
-	        continue; 
-	    }
-	    
-	    psiVertexFitTree->movePointerToTheTop();
-	    
-	    RefCountedKinematicParticle psi_vFit_noMC = psiVertexFitTree->currentParticle();
-	    RefCountedKinematicVertex psi_vFit_vertex_noMC = psiVertexFitTree->currentDecayVertex();
-	    
-	    if( psi_vFit_vertex_noMC->chiSquared() < 0 )
-	      {
-	        //std::cout << "negative chisq from psi fit" << endl;
-	        continue;
-	      }
-	    if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
-	    double JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
-	    double JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
-	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
             if(!( (iTrack2->charge() )*( iTrack2->charge() )>0)) continue;
@@ -425,7 +372,6 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	        if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
   	        if(!(iTrack2->bestTrack())) continue;
-  	        nPiPair++;
 	        
 
 	    }
@@ -437,7 +383,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	
   
   
-   if (nJ > 0 && nPiPair>0) tree_->Fill();
+   if (nJ > 0) tree_->Fill();
 
     //std::cout << "filling tree" << endl;
    
@@ -445,7 +391,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 
    
    nJ = 0; 
-   nPiPair=0;
+   
 
    J_mass->clear(); J_px->clear();   J_py->clear();  J_pz->clear();  
    J_px1->clear();  J_py1->clear();  J_pz1->clear(), J_charge1->clear();
@@ -475,7 +421,6 @@ jpsipipi::beginJob()
   tree_ = fs->make<TTree>("ntuple"," J/psi ntuple");
 
   tree_->Branch("nJ",&nJ,"nJ/i"); 
-  tree_->Branch("nPiPair",&nPiPair,"nPiPair/i"); 
   tree_->Branch("J_mass", &J_mass);
   tree_->Branch("J_px", &J_px);
   tree_->Branch("J_py", &J_py);
