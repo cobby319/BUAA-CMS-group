@@ -493,10 +493,10 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            //std::cout << "negative chisq from psi fit" << endl;
 	            continue;
 	          }
-	        //if(psi_vFit_vertex_noMC2->chiSquared()>10.) continue;
+	        if(psi_vFit_vertex_noMC2->chiSquared()>10.) continue;
 	        double JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
 	        double JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC2->currentState().globalPosition());
-	        //if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2.0) continue;
+	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2.0) continue;
 	        Pi_nhits1->push_back(iTrack1->numberOfHits());
             Pi_npixelhits1->push_back(iTrack2->numberOfPixelHits());
             Pi_nhits2->push_back(iTrack2->numberOfHits());
