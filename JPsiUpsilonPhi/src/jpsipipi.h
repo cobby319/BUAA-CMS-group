@@ -93,22 +93,22 @@ private:
 
   TTree*      tree_;
   
-  std::vector<float>       *mumC2;
+  std::vector<double>       *mumC2;
   std::vector<int>         *mumNHits, *mumNPHits; 
-  std::vector<float>       *mupC2;
+  std::vector<double>       *mupC2;
   std::vector<int>         *mupNHits, *mupNPHits;
-  std::vector<float>       *mumdxy, *mupdxy, *mumdz, *mupdz;
-  std::vector<float>       *muon_dca;
+  std::vector<double>       *mumdxy, *mupdxy, *mumdz, *mupdz;
+  std::vector<double>       *muon_dca;
 
   std::vector<bool>        *mu1soft, *mu2soft, *mu1tight, *mu2tight;  
   std::vector<bool>        *mu1PF, *mu2PF, *mu1loose, *mu2loose;  
  
   unsigned int              nJ;
     
-  std::vector<float>       *J_mass, *J_px, *J_py, *J_pz, *J_energy;
+  std::vector<double>       *J_mass, *J_px, *J_py, *J_pz, *J_energy;
 
-  std::vector<float>       *J_px1, *J_py1, *J_pz1;
-  std::vector<float>       *J_px2, *J_py2, *J_pz2;
+  std::vector<double>       *J_px1, *J_py1, *J_pz1;
+  std::vector<double>       *J_px2, *J_py2, *J_pz2;
   std::vector<int>         *J_charge1, *J_charge2;
   std::vector<float>       *J_vertexFitChi2;
   std::vector<float>       *J_vertexFitNdf;
@@ -119,21 +119,21 @@ private:
   std::vector<int>          *Pi_Hits2;
   std::vector<int>          *Pi_pixelHits1;
   std::vector<int>          *Pi_pixelHits2;
-  std::vector<float>       *Pi_Eta1;
-  std::vector<float>       *Pi_Eta2;
-  std::vector<float>       *Pi_Phi1;
-  std::vector<float>       *Pi_Phi2;
-  std::vector<float>       *Pi_Pt1;
-  std::vector<float>       *Pi_Pt2;
-  std::vector<float>       *Pi_E1;
-  std::vector<float>       *Pi_E2;
-  std::vector<float>       *Pi_VertexChi2_1;
-  std::vector<float>       *Pi_VertexChi2_2;
-  std::vector<float>       *Pi_Lxy1;
-  std::vector<float>       *Pi_Lxy2;
-  std::vector<float>       *Pi_LxyErr1;
-  std::vector<float>       *Pi_LxyErr2;
-  std::vector<float>       *Jpipi_mass;
-  std::vector<float>       *Jpi1_mass;
+  std::vector<double>       *Pi_Eta1;
+  std::vector<double>       *Pi_Eta2;
+  std::vector<double>       *Pi_Phi1;
+  std::vector<double>       *Pi_Phi2;
+  std::vector<double>       *Pi_Pt1;
+  std::vector<double>       *Pi_Pt2;
+  std::vector<double>       *Pi_E1;
+  std::vector<double>       *Pi_E2;
+  std::vector<double>       *Pi_VertexChi2_1;
+  std::vector<double>       *Pi_VertexChi2_2;
+  std::vector<double>       *Pi_Lxy1;
+  std::vector<double>       *Pi_Lxy2;
+  std::vector<double>       *Pi_LxyErr1;
+  std::vector<double>       *Pi_LxyErr2;
+  std::vector<double>       *Jpipi_mass;
+  std::vector<double>       *Jpi1_mass;
 };
 #endif
