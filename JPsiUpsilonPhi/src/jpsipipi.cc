@@ -97,11 +97,25 @@ jpsipipi::jpsipipi(const edm::ParameterSet& iConfig)
 
   J_px1(0), J_py1(0), J_pz1(0),
   J_px2(0), J_py2(0), J_pz2(0), 
-  J_charge1(0), J_charge2(0)
-
-
-
- 
+  J_charge1(0), J_charge2(0),
+  Pi_nhits1(0),
+  Pi_npixelhits1(0),
+  Pi_nhits2(0),
+  Pi_npixelhits2(0),
+  Pi_eta1(0),
+  Pi_eta2(0),
+  Pi_phi1(0),
+  Pi_phi2(0),
+  Pi_pt1(0),
+  Pi_pt2(0),
+  Pi_e1(0),
+  Pi_e2(0),
+  Pi_charge1(0),
+  Pi_charge2(0),
+  Pi_dxy1(0),
+  Pi_dxy2(0),
+  Pi_dxyerr1(0),
+  Pi_dxyerr2(0)
 
 
  {
@@ -483,6 +497,24 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        double JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
 	        double JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC2->currentState().globalPosition());
 	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2.0) continue;
+	        Pi_nhits1->push_back(iTrack1->numberOfHits());
+            Pi_npixelhits1->push_back(iTrack2->numberOfPixelHits());
+            Pi_nhits2->push_back(iTrack2->numberOfHits());
+            Pi_npixelhits2->push_back(iTrack2->numberOfPixelHits());
+            Pi_eta1->push_back(iTrack1->eta());
+            Pi_eta2->push_back(iTrack2->eta());
+            Pi_phi1->push_back(iTrack1->phi());
+            Pi_phi2->push_back(iTrack2->phi());
+            Pi_pt1->push_back(iTrack1->pt());
+            Pi_pt2->push_back(iTrack2->pt());
+            Pi_e1->push_back(iTrack1->energy());
+            Pi_e2->push_back(iTrack2->energy());
+            Pi_charge1->push_back(iTrack1->charge());
+            Pi_charge2->push_back(iTrack2->charge());
+            Pi_dxy1->push_back(iTrack1->dxy());
+            Pi_dxy2->push_back(iTrack2->dxy());
+            Pi_dxyerr1->push_back(iTrack1->dxyError());
+            Pi_dxyerr2->push_back(iTrack2->dxyError());
 	        nPiPair++;
 
 	    }
@@ -517,6 +549,24 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
    mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
    JpsiFTS.clear();
+   Pi_nhits1->clear();
+   Pi_npixelhits1->clear();
+   Pi_nhits2->clear();
+   Pi_npixelhits2->clear();
+   Pi_eta1->clear();
+   Pi_eta2->clear();
+   Pi_phi1->clear();
+   Pi_phi2->clear();
+   Pi_pt1->clear();
+   Pi_pt2->clear();
+   Pi_e1->clear();
+   Pi_e2->clear();
+   Pi_charge1->clear();
+   Pi_charge2->clear();
+   Pi_dxy1->clear();
+   Pi_dxy2->clear();
+   Pi_dxyerr1->clear();
+   Pi_dxyerr2->clear();
 
 }
 
@@ -570,6 +620,24 @@ jpsipipi::beginJob()
   tree_->Branch("mu2PF",&mu2PF);
   tree_->Branch("mu1loose",&mu1loose);
   tree_->Branch("mu2loose",&mu2loose);
+  tree_->Branch("Pi_nhits1",&Pi_nhits1);
+  tree_->Branch("Pi_npixelhits1",&Pi_npixelhits1);
+  tree_->Branch("Pi_nhits2",&Pi_nhits2);
+  tree_->Branch("Pi_npixelhits2",&Pi_npixelhits2);
+  tree_->Branch("Pi_eta1",&Pi_eta1);
+  tree_->Branch("Pi_eta2",&Pi_eta2);
+  tree_->Branch("Pi_phi1",&Pi_phi1);
+  tree_->Branch("Pi_phi2",&Pi_phi2);
+  tree_->Branch("Pi_pt1",&Pi_pt1);
+  tree_->Branch("Pi_pt2",&Pi_pt2);
+  tree_->Branch("Pi_e1",&Pi_e1);
+  tree_->Branch("Pi_e2",&Pi_e2);
+  tree_->Branch("Pi_charge1",&Pi_charge1);
+  tree_->Branch("Pi_charge2",&Pi_charge2);
+  tree_->Branch("Pi_dxy1",&Pi_dxy1);
+  tree_->Branch("Pi_dxy2",&Pi_dxy2);
+  tree_->Branch("Pi_dxyerr1",&Pi_dxyerr1);
+  tree_->Branch("Pi_dxyerr2",&Pi_dxyerr2);
 
 
 }
