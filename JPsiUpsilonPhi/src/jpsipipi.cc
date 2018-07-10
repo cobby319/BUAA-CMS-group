@@ -310,7 +310,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  float J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
-	  float J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
+	  float J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(bestVtx.position());
       
 	  if (J_dxy/J_dxyerr<3.0) continue;
 	  J_lxy->push_back(J_dxy);
@@ -382,13 +382,14 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    if(!(iTrack1->trackHighPurity())) continue;
   	    
   	    reco::TransientTrack track1TT((*theB).build(iTrack1->bestTrack()));
-  	    ClosestApproachInRPhi JpsiPi;
-
   	    FreeTrajectoryState pi_trajectory = track1TT.impactPointTSCP().theState();
-  	    JpsiPi.calculate(JpsiFTS.at(i), pi_trajectory);
-  	    if( !JpsiPi.status() ) continue;
-	    float djp = fabs( JpsiPi.distance() );	  
-	    if (djp < 0. || djp > 0.03) continue;
+  	    //ClosestApproachInRPhi JpsiPi;
+
+  	    
+  	    //JpsiPi.calculate(JpsiFTS.at(i), pi_trajectory);
+  	    //if( !JpsiPi.status() ) continue;
+	    float djp = 0; //fabs( JpsiPi.distance() );	  
+	    //if (djp < 0. || djp > 0.03) continue;
 	   
 	    //begin vertex fit of Jpsi and pi1
         ParticleMass Jpsi_mass = 3.0969;
@@ -440,9 +441,9 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        //std::cout << "negative chisq from psi fit" << endl;
 	        continue;
 	      }
-	    if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
+	    if(psi_vFit_vertex_noMC->chiSquared()>6.) continue;
 	    float JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
-	    float JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->currentState().globalPosition());
+	    float JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(bestVtx.position());
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3.0) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
@@ -509,7 +510,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	          }
 	        if(psi_vFit_vertex_noMC2->chiSquared()>10.) continue;
 	        float JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
-	        float JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC2->currentState().globalPosition());
+	        float JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(bestVtx.position());
 	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2.0) continue;
 	        Pi_nhits1->push_back(iTrack1->numberOfHits());
             Pi_npixelhits1->push_back(iTrack2->numberOfPixelHits());
