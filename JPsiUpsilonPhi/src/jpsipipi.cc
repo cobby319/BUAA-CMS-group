@@ -98,6 +98,8 @@ jpsipipi::jpsipipi(const edm::ParameterSet& iConfig)
   J_px1(0), J_py1(0), J_pz1(0),
   J_px2(0), J_py2(0), J_pz2(0), 
   J_charge1(0), J_charge2(0),
+  J_vertexFitChi2(0),
+  J_vertexFitNdf (0),
   nPiPair        (0),
   Pi_Hits1       (0),
   Pi_Hits2       (0),
@@ -319,6 +321,8 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  J_py->push_back( psi_vFit_noMC->currentState().globalMomentum().y() );
 	  J_pz->push_back( psi_vFit_noMC->currentState().globalMomentum().z() );
 	  
+	  J_vertexFitChi2->push_back(psi_vFit_vertex_noMC->chiSquared());
+	  J_vertexFitNdf->push_back(psi_vFit_vertex_noMC->degreesOfFreedom());
 	  J_px1->push_back(iMuon1->track()->px());
 	  J_py1->push_back(iMuon1->track()->py());
 	  J_pz1->push_back(iMuon1->track()->pz());
@@ -387,6 +391,58 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    if( !JpsiPi.status() ) continue;
 	    float djp = fabs( JpsiPi.distance() );	  
 	    if (djp < 0. || djp > 0.5) continue;
+
+	    //begin vertex fit of Jpsi and pi1
+        ParticleMass Jpsi_mass = 3.0969;
+        ParticleMass Pion_mass = 0.13957061;
+	    float Jpsi_sigma = 0.000006 ;
+	    float Pion_sigma = 0.00000024;
+	    //float psi_sigma = psi_mass*1.e-6;
+	    
+	    //Creating a KinematicParticleFactory
+	    KinematicParticleFactoryFromTransientTrack pFactory;
+	    
+
+	    vector<RefCountedKinematicParticle> JpsiPi_fit;
+	    try {
+	      JpsiPi_fit.push_back(pFactory.particle(JpsiTT,Jpsi_mass,J_vertexFitChi2->at(i),J_vertexFitNdf->at(i),Jpsi_sigma));
+	      JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
+	    }
+	    catch(...) { 
+	      std::cout<<" Exception caught ... continuing 1 "<<std::endl; 
+	      continue;
+	    }
+	    
+	    KinematicParticleVertexFitter fitter;   
+	    
+	    RefCountedKinematicTree psiVertexFitTree;
+	    try {
+	      psiVertexFitTree = fitter.fit(JpsiPi_fit); 
+	    }
+	    catch (...) { 
+	      std::cout<<" Exception caught ... continuing 2 "<<std::endl; 
+	      continue;
+	    }
+	    
+	    if (!psiVertexFitTree->isValid()) 
+	    {
+	        //std::cout << "caught an exception in the psi vertex fit" << std::endl;
+	        continue; 
+	    }
+	    
+	    psiVertexFitTree->movePointerToTheTop();
+	    
+	    RefCountedKinematicParticle psi_vFit_noMC = psiVertexFitTree->currentParticle();
+	    RefCountedKinematicVertex psi_vFit_vertex_noMC = psiVertexFitTree->currentDecayVertex();
+	    
+	    if( psi_vFit_vertex_noMC->chiSquared() < 0 )
+	      {
+	        //std::cout << "negative chisq from psi fit" << endl;
+	        continue;
+	      }
+  
+
+
 	    TLorentzVector Pi1_P4;
 	    Pi1_P4.SetPtEtaPhiE(iTrack1->pt(),iTrack1->eta(),iTrack1->phi(),iTrack1->energy());
 
@@ -457,6 +513,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 
    mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
+   J_vertexFitChi2->clear();
+   J_vertexFitNdf ->clear();
    Pi_Hits1       ->clear();
    Pi_Hits2       ->clear();
    Pi_pixelHits1  ->clear();
@@ -530,27 +588,27 @@ jpsipipi::beginJob()
   tree_->Branch("mu2PF",&mu2PF);
   tree_->Branch("mu1loose",&mu1loose);
   tree_->Branch("mu2loose",&mu2loose);
-  tree_->Branch("nPiPair        ", &nPiPair, "nPiPair/i"  );
-  tree_->Branch("Pi_Hits1       ", &Pi_Hits1       );
-  tree_->Branch("Pi_Hits2       ", &Pi_Hits2       );
-  tree_->Branch("Pi_pixelHits1  ", &Pi_pixelHits1  );
-  tree_->Branch("Pi_pixelHits2  ", &Pi_pixelHits2  );
-  tree_->Branch("Pi_Eta1        ", &Pi_Eta1        );
-  tree_->Branch("Pi_Eta2        ", &Pi_Eta2        );
-  tree_->Branch("Pi_Phi1        ", &Pi_Phi1        );
-  tree_->Branch("Pi_Phi2        ", &Pi_Phi2        );
-  tree_->Branch("Pi_Pt1         ", &Pi_Pt1         );
-  tree_->Branch("Pi_Pt2         ", &Pi_Pt2         );
-  tree_->Branch("Pi_E1          ", &Pi_E1          );
-  tree_->Branch("Pi_E2          ", &Pi_E2          );
+  tree_->Branch("nPiPair", &nPiPair, "nPiPair/i");
+  tree_->Branch("Pi_Hits1", &Pi_Hits1       );
+  tree_->Branch("Pi_Hits2", &Pi_Hits2       );
+  tree_->Branch("Pi_pixelHits1", &Pi_pixelHits1  );
+  tree_->Branch("Pi_pixelHits2", &Pi_pixelHits2  );
+  tree_->Branch("Pi_Eta1", &Pi_Eta1        );
+  tree_->Branch("Pi_Eta2", &Pi_Eta2        );
+  tree_->Branch("Pi_Phi1", &Pi_Phi1        );
+  tree_->Branch("Pi_Phi2", &Pi_Phi2        );
+  tree_->Branch("Pi_Pt1 ", &Pi_Pt1         );
+  tree_->Branch("Pi_Pt2", &Pi_Pt2         );
+  tree_->Branch("Pi_E1", &Pi_E1          );
+  tree_->Branch("Pi_E2", &Pi_E2          );
   tree_->Branch("Pi_VertexChi2_1", &Pi_VertexChi2_1);
   tree_->Branch("Pi_VertexChi2_2", &Pi_VertexChi2_2);
-  tree_->Branch("Pi_Lxy1        ", &Pi_Lxy1        );
-  tree_->Branch("Pi_Lxy2        ", &Pi_Lxy2        );
-  tree_->Branch("Pi_LxyErr1     ", &Pi_LxyErr1     );
-  tree_->Branch("Pi_LxyErr2     ", &Pi_LxyErr2     );
-  tree_->Branch("Jpipi_mass     ", &Jpipi_mass     );
-  tree_->Branch("Jpi1_mass      ", &Jpi1_mass      );
+  tree_->Branch("Pi_Lxy1", &Pi_Lxy1        );
+  tree_->Branch("Pi_Lxy2", &Pi_Lxy2        );
+  tree_->Branch("Pi_LxyErr1", &Pi_LxyErr1     );
+  tree_->Branch("Pi_LxyErr2", &Pi_LxyErr2     );
+  tree_->Branch("Jpipi_mass", &Jpipi_mass     );
+  tree_->Branch("Jpi1_mass", &Jpi1_mass      );
 }
 
 
