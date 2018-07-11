@@ -112,6 +112,7 @@ private:
   std::vector<int>         *J_charge1, *J_charge2;
   std::vector<float>       *J_lxy;
   std::vector<float>       *J_lxyErr;
+  std::vector<float>       *J_vertexchi2;
   std::vector<float>       *Pi_dJP;
   std::vector<float>       *JPi_lxy;
   std::vector<float>       *JPi_lxyErr;
