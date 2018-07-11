@@ -59,6 +59,7 @@ public :
    vector<bool>    *mu2loose;
    vector<float>   *J_lxy;
    vector<float>   *J_lxyErr;
+   vector<float>   *J_vertexchi2;
    vector<float>   *Pi_dJP;
    vector<float>   *JPi_lxy;
    vector<float>   *JPi_lxyErr;
@@ -121,6 +122,7 @@ public :
    TBranch        *b_mu2loose;   //!
    TBranch        *b_J_lxy;   //!
    TBranch        *b_J_lxyErr;   //!
+   TBranch        *b_J_vertexchi2; //!
    TBranch        *b_Pi_dJP;   //!
    TBranch        *b_JPi_lxy;   //!
    TBranch        *b_JPi_lxyErr;   //!
@@ -256,6 +258,7 @@ void ntuple::Init(TTree *tree)
    mu2loose = 0;
    J_lxy = 0;
    J_lxyErr = 0;
+   J_vertexchi2 =0;
    Pi_dJP = 0;
    JPi_lxy = 0;
    JPi_lxyErr = 0;
@@ -322,6 +325,7 @@ void ntuple::Init(TTree *tree)
    fChain->SetBranchAddress("mu2loose", &mu2loose, &b_mu2loose);
    fChain->SetBranchAddress("J_lxy", &J_lxy, &b_J_lxy);
    fChain->SetBranchAddress("J_lxyErr", &J_lxyErr, &b_J_lxyErr);
+   fChain->SetBranchAddress("J_vertexchi2",&J_vertexchi2,&b_J_vertexchi2);
    fChain->SetBranchAddress("Pi_dJP", &Pi_dJP, &b_Pi_dJP);
    fChain->SetBranchAddress("JPi_lxy", &JPi_lxy, &b_JPi_lxy);
    fChain->SetBranchAddress("JPi_lxyErr", &JPi_lxyErr, &b_JPi_lxyErr);

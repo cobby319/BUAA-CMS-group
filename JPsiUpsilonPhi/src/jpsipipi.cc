@@ -100,6 +100,7 @@ jpsipipi::jpsipipi(const edm::ParameterSet& iConfig)
   J_charge1(0), J_charge2(0),
   J_lxy(0),
   J_lxyErr(0),
+  J_vertexchi2(0),
   Pi_dJP(0),
   JPi_lxy(0),
   JPi_lxyErr(0),
@@ -318,6 +319,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if (J_dxy<0.08) continue;
 	  muontt1.push_back(muon1TT);
 	  muontt2.push_back(muon2TT);
+	  J_vertexchi2->push_back(psi_vFit_vertex_noMC->chiSquared());
 	  J_lxy->push_back(J_dxy);
 	  J_lxyErr->push_back(J_dxyerr);
 	  //fill variables?iMuon1->track()->pt()
@@ -377,7 +379,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	{
 		
 		
-  	    if(iTrack1->pt()<3)continue;
+  	    if(iTrack1->pt()<1)continue;
   	    if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
   	    if(!(iTrack1->bestTrack())) continue;
   	    if(iTrack1->bestTrack()->charge() == 0) continue; //NO neutral objects
@@ -456,7 +458,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    {
             if((iTrack1->charge())*(iTrack2->charge())==1) continue;
             
-            if(iTrack2->pt()<2)continue;
+            if(iTrack2->pt()<0.8)continue;
   	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;
   	        if(!(iTrack2->bestTrack())) continue;
   	        if(iTrack2->charge() == 0) continue; //NO neutral objects
@@ -587,6 +589,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
    muontt2.clear();
    J_lxy->clear();
    J_lxyErr->clear();
+   J_vertexchi2->clear();
    Pi_dJP->clear();
    JPi_lxy->clear();
    JPi_lxyErr->clear();
@@ -668,6 +671,7 @@ jpsipipi::beginJob()
 
   tree_->Branch("J_lxy",&J_lxy);
   tree_->Branch("J_lxyErr",&J_lxyErr);
+  tree_->Branch("J_J_vertexchi2",&J_vertexchi2);
   tree_->Branch("Pi_dJP",&Pi_dJP);
   tree_->Branch("JPi_lxy",&JPi_lxy);
   tree_->Branch("JPi_lxyErr",&JPi_lxyErr);
