@@ -4,6 +4,7 @@
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
+#include <TLorentzVector.h>
 
 void ntuple::Loop()
 {
@@ -67,7 +68,24 @@ void ntuple::Loop()
       if(jentry % 10000 ==0) cout << jentry << " of " << nentries << endl;
       double weight = 1.;
       mon.fillHisto("Num_J/Psi","tot",nJ,weight);
-      
+
+      auto smallestchi2 = std::min_element(std::begin(Pi_vertexchisq2), std::end(Pi_vertexchisq2))
+      int piN =std::distance(std::begin(Pi_vertexchisq2), smallestchi2);
+      auto largestlxy = std::max_element(std::begin(J_lxy), std::end(J_lxy))
+      int jpsiN =std::distance(std::begin(J_lxy), largestlxy);
+      TLorentzVector jpsi, pion1,pion2;
+      jpsi.SetXYZM(J_px.at(jpsiN),J_py.at(jpsiN),J_pz.at(jpsiN),J_mass.at(jpsiN)); 
+      pion1.SetPtEtaPhiE(Pi_pt1.at(piN),Pi_eta1.at(piN),Pi_phi1.at(piN),Pi_e1.at(piN));
+      pion2.SetPtEtaPhiE(Pi_pt2.at(piN),Pi_eta2.at(piN),Pi_phi2.at(piN),Pi_e2.at(piN));
+      mon.fillHisto("M_J/Psi","tot",jpsi.M(),weight);
+      mon.fillHisto("pT_J/Psi","tot",jpsi.Pt(),weight);
+      float jpipi_mass = (jpsi+pion1+pion2).M();
+      if (jpipi_mass>4.1 &&jpipi_mass<4.2) mon.fillHisto("M_J/PsiPicut4.2","tot",(jpsi+pion1).M(),weight);
+      else if (jpipi_mass>4.2 &&jpipi_mass<4.25) mon.fillHisto("M_J/PsiPicut4.25","tot",(jpsi+pion1).M(),weight);
+      else if (jpipi_mass>4.25 &&jpipi_mass<4.3) mon.fillHisto("M_J/PsiPicut4.3","tot",(jpsi+pion1).M(),weight);
+      else if (jpipi_mass>4.3 &&jpipi_mass<4.4) mon.fillHisto("M_J/PsiPicut4.4","tot",(jpsi+pion1).M(),weight);
+      else if (jpipi_mass>4.4 &&jpipi_mass<4.7) mon.fillHisto("M_J/PsiPicut4.7","tot",(jpsi+pion1).M(),weight);
+      else if (jpipi_mass>4.7 &&jpipi_mass<5.0) mon.fillHisto("M_J/PsiPicut5.0","tot",(jpsi+pion1).M(),weight);
       // if (Cut(ientry) < 0) continue;
    }
    outFile->Write();
