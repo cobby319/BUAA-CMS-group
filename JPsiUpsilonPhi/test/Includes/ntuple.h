@@ -23,6 +23,7 @@ public :
    Int_t           fCurrent; //!current Tree number in a TChain
 
    // Declaration of leaf types
+   TString         outputFile_;
    UInt_t          nJ;
    UInt_t          nPiPair;
    vector<float>   *J_mass;
