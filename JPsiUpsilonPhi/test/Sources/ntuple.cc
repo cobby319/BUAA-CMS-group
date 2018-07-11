@@ -32,7 +32,7 @@ void ntuple::Loop()
 //    fChain->GetEntry(jentry);       //read all branches
 //by  b_branchname->GetEntry(ientry); //read only this branch
    if (fChain == 0) return;
-   TFile *outFile = new TFile(outputFile_,"RECREATE");
+   
    SmartSelectionMonitor mon;
    /*TH1F *h =(TH1F*) mon.addHistogram(new TH1F("eventflow",";;Events",6,0,6));
    h->GetXaxis()->SetBinLabel(1,"skimmed");
@@ -42,15 +42,15 @@ void ntuple::Loop()
    h->GetXaxis()->SetBinLabel(5,"J+2PfitChi2");
    h->GetXaxis()->SetBinLabel(6,"cosine<P,r>");*/
 
-   TH1F *h1 =(TH1F*)mon.addHistogram(new TH1F("Num_J/Psi",";N_{J/#psi};Events",5,0,5));
-   TH1F *h2 =(TH1F*)mon.addHistogram(new TH1F("M_J/Psi",";M_{J/#psi};Events",50,2.8,3.3));
-   TH1F *h3 =(TH1F*)mon.addHistogram(new TH1F("pT_J/Psi",";p_{T,J/Psi};Events",120,0,120)); 
-   TH1F *h4 =(TH1F*)mon.addHistogram(new TH1F("M_J/PsiPicut4.2",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
-   TH1F *h5 =(TH1F*)mon.addHistogram(new TH1F("M_J/PsiPicut4.25",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
-   TH1F *h6 =(TH1F*)mon.addHistogram(new TH1F("M_J/PsiPicut4.3",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
-   TH1F *h7 =(TH1F*)mon.addHistogram(new TH1F("M_J/PsiPicut4.4",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
-   TH1F *h8 =(TH1F*)mon.addHistogram(new TH1F("M_J/PsiPicut4.7",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
-   TH1F *h9 =(TH1F*)mon.addHistogram(new TH1F("M_J/PsiPicut5.0",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
+   TH1F *h1 =new TH1F("Num_J/Psi",";N_{J/#psi};Events",5,0,5);
+   TH1F *h2 =new TH1F("M_J/Psi",";M_{J/#psi};Events",50,2.8,3.3);
+   TH1F *h3 =new TH1F("pT_J/Psi",";p_{T,J/Psi};Events",120,0,120); 
+   TH1F *h4 =new TH1F("M_J/PsiPicut4.2",";m_{J/psi,Pi};Events",40,3.5,4.3); 
+   TH1F *h5 =new TH1F("M_J/PsiPicut4.25",";m_{J/psi,Pi};Events",40,3.5,4.3); 
+   TH1F *h6 =new TH1F("M_J/PsiPicut4.3",";m_{J/psi,Pi};Events",40,3.5,4.3); 
+   TH1F *h7 =new TH1F("M_J/PsiPicut4.4",";m_{J/psi,Pi};Events",40,3.5,4.3); 
+   TH1F *h8 =new TH1F("M_J/PsiPicut4.7",";m_{J/psi,Pi};Events",40,3.5,4.3); 
+   TH1F *h9 =new TH1F("M_J/PsiPicut5.0",";m_{J/psi,Pi};Events",40,3.5,4.3); 
 
 
 
@@ -79,6 +79,7 @@ void ntuple::Loop()
       h2->Fill(jpsi.M());
       h3->Fill(jpsi.Pt());
       float jpipi_mass = (jpsi+pion1+pion2).M();
+      cout <<  "jpp mass is  " << jpipi_mass << endl;
       if (jpipi_mass>4.1 &&jpipi_mass<4.2)        h4->Fill((jpsi+pion1).M());
       else if (jpipi_mass>4.2 &&jpipi_mass<4.25)  h5->Fill((jpsi+pion1).M());
       else if (jpipi_mass>4.25 &&jpipi_mass<4.3)  h6->Fill((jpsi+pion1).M());
@@ -87,6 +88,7 @@ void ntuple::Loop()
       else if (jpipi_mass>4.7 &&jpipi_mass<5.0)   h9->Fill((jpsi+pion1).M());
       // if (Cut(ientry) < 0) continue;
    }
+   TFile *outFile = new TFile(outputFile_,"RECREATE");
    outFile->Write();
    outFile->Close();
 }
