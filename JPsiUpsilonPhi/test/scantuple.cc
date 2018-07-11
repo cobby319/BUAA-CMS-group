@@ -10,7 +10,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-TString InputFile = "OUTPUTS/DoubleMuon_Run2016/CONFIGS/DoubleMuon_jpsipipi.root";
+TString InputFile = "OUTPUTS/DoubleMuon_Run2016/MERGED/DoubleMuon_jpsipipi.root";
   TString OutputFile = "theOutputFile.root";
   //--- Parse the arguments -----------------------------------------------------
   if (argc > 1) 
