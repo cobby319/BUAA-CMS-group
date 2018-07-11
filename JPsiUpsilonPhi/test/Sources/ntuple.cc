@@ -74,9 +74,9 @@ void ntuple::Loop()
       auto largestlxy = std::max_element(std::begin(J_lxy), std::end(J_lxy))
       int jpsiN =std::distance(std::begin(J_lxy), largestlxy);
       TLorentzVector jpsi, pion1,pion2;
-      jpsi.SetXYZM(J_px.at(jpsiN),J_py.at(jpsiN),J_pz.at(jpsiN),J_mass.at(jpsiN)); 
-      pion1.SetPtEtaPhiE(Pi_pt1.at(piN),Pi_eta1.at(piN),Pi_phi1.at(piN),Pi_e1.at(piN));
-      pion2.SetPtEtaPhiE(Pi_pt2.at(piN),Pi_eta2.at(piN),Pi_phi2.at(piN),Pi_e2.at(piN));
+      jpsi.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN)); 
+      pion1.SetPtEtaPhiE(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pi_e1->at(piN));
+      pion2.SetPtEtaPhiE(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pi_e2->at(piN));
       mon.fillHisto("M_J/Psi","tot",jpsi.M(),weight);
       mon.fillHisto("pT_J/Psi","tot",jpsi.Pt(),weight);
       float jpipi_mass = (jpsi+pion1+pion2).M();
