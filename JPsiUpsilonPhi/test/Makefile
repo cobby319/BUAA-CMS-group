@@ -2,7 +2,7 @@ EXEC     = scantuple\
 	#Add other executables here if needed...
 CXX      = g++
 CXXFLAGS = -L/cvmfs/cms.cern.ch/slc6_amd64_gcc530/lcg/root/6.06.00-ikhhed6/lib -lGui -lCore -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lMathCore -lThread -lMultiProc -pthread -lm -ldl -rdynamic -pthread -std=c++11 -Wno-deprecated-declarations -m64 -I/cvmfs/cms.cern.ch/slc6_amd64_gcc530/lcg/root/6.06.00-ikhhed6/include
-SRC      = $(wildcard Sources/*.cc)
+SRC      = $(wildcard Sources/*.cc) $(wildcard Common/*.cc) $(wildcard Tools/*.cc) #All the analysis looper should end with Looper.cc
 OBJ      = $(SRC:.cc=.o)
 
 all: $(EXEC)
@@ -16,7 +16,7 @@ scantuple: scantuple.cc $(OBJ)
 .PHONY: clean mrproper
 
 clean:
-	rm -rf *.o *.d Sources/*.o
+	rm -rf *.o *.d Sources/*.o Common/*.o Tools/*.o
 
 mrproper: clean
 	rm -rf $(EXEC)
