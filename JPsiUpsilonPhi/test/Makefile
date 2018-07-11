@@ -7,7 +7,7 @@ OBJ      = $(SRC:.cc=.o)
 
 all: $(EXEC)
 
-maketptree: scantuple.cc $(OBJ)
+scantuple: scantuple.cc $(OBJ)
 	$(CXX) $< $(CXXFLAGS) $(OBJ) -o $@
 
 %.o: %.cc %.h
