@@ -81,7 +81,7 @@ void ntuple::Loop()
       else if (jpipi_mass>4.7 &&jpipi_mass<5.0)   mon.fillHisto("M_J/PsiPicut5.0","tot",(jpsi+pion1).M(),weight);
       // if (Cut(ientry) < 0) continue;
    }
-   TFile *outFile = new TFile(outputFile_,"RECREATE");
-   outFile->Write();
-   outFile->Close();
+   TFile* outFile=TFile::Open(outputFile_,"recreate");
+    mon.WriteForSysts(syst_,keepAllControlPlots_);
+    outFile->Close();
 }
