@@ -19,14 +19,6 @@ TString InputFile = "../OUTPUTS/DoubleMuon_Run2016/CONFIGS/DoubleMuon_jpsipipi.r
     {
       TString currentArg = argv[i];
         //--- possible options ---
-	    if(!currentArg.BeginsWith("--"))
-      {
-	       cout<<"a command must contain arguments beginning with --"<<endl;
-	       cout<<"usage:"<<endl;
-	       cout<<"--input=test.root"<<endl;
-	       cout<<"--output=out.root"<<endl;
-	       exit(0);
-	    }
       if (currentArg.BeginsWith("--input=")) 
       {
         getArg(currentArg, InputFile);
