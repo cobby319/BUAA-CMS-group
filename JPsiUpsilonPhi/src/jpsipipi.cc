@@ -575,7 +575,9 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 
    
    mupC2->clear();
+   mumC2->clear();
    mupNHits->clear(); mupNPHits->clear();
+   mumNHits->clear(); mumNPHits->clear();
    mumdxy->clear(); mupdxy->clear(); mumdz->clear(); mupdz->clear(); muon_dca->clear();
 
    mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
