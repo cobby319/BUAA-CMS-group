@@ -82,6 +82,6 @@ void ntuple::Loop()
       // if (Cut(ientry) < 0) continue;
    }
    TFile* outFile=TFile::Open(outputFile_,"recreate");
-    mon.WriteForSysts(syst_,keepAllControlPlots_);
+    mon.Write();
     outFile->Close();
 }
