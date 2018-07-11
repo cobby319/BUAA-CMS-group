@@ -68,8 +68,10 @@ void ntuple::Loop()
 
       auto smallestchi2 = std::min_element(Pi_vertexchisq2->begin(), Pi_vertexchisq2->end());
       int piN =std::distance(Pi_vertexchisq2->begin(), smallestchi2);
+      cout <<  "selected pi is " << piN << endl;
       auto largestlxy = std::max_element(J_lxy->begin(), J_lxy->end());
       int jpsiN =std::distance(J_lxy->begin(), largestlxy);
+      cout <<  "selected jpsi is " << jpsiN << endl;
       TLorentzVector jpsi, pion1,pion2;
       jpsi.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN)); 
       pion1.SetPtEtaPhiE(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pi_e1->at(piN));
