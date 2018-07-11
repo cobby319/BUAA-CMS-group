@@ -34,26 +34,26 @@ void ntuple::Loop()
    if (fChain == 0) return;
    TFile *outFile = new TFile(outputFile_,"RECREATE");
    SmartSelectionMonitor mon;
-   TH1F *h =(TH1F*) mon.addHistogram(new TH1F("eventflow",";;Events",6,0,6));
+   /*TH1F *h =(TH1F*) mon.addHistogram(new TH1F("eventflow",";;Events",6,0,6));
    h->GetXaxis()->SetBinLabel(1,"skimmed");
    h->GetXaxis()->SetBinLabel(2,"muonIDsoft");
    h->GetXaxis()->SetBinLabel(3,"J/PsiLxy");
    h->GetXaxis()->SetBinLabel(4,"J+PfitChi2");
    h->GetXaxis()->SetBinLabel(5,"J+2PfitChi2");
-   h->GetXaxis()->SetBinLabel(6,"cosine<P,r>");
+   h->GetXaxis()->SetBinLabel(6,"cosine<P,r>");*/
 
-   mon.addHistogram(new TH1F("Num_J/Psi",";N_{J/#psi};Events",5,0,5));
-   mon.addHistogram(new TH1F("M_J/Psi",";M_{J/#psi};Events",50,2.8,3.3));
-   mon.addHistogram(new TH1F("pT_J/Psi",";p_{T,J/Psi};Events",120,0,120)); 
+   TH1F *h1 =(TH1F*) mon.addHistogram(new TH1F("Num_J/Psi",";N_{J/#psi};Events",5,0,5));
+   TH1F *h2 =(TH1F*) mon.addHistogram(new TH1F("M_J/Psi",";M_{J/#psi};Events",50,2.8,3.3));
+   TH1F *h3 =(TH1F*) mon.addHistogram(new TH1F("pT_J/Psi",";p_{T,J/Psi};Events",120,0,120)); 
 
 
  
-   mon.addHistogram(new TH1F("M_J/PsiPicut4.2",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
-   mon.addHistogram(new TH1F("M_J/PsiPicut4.25",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
-   mon.addHistogram(new TH1F("M_J/PsiPicut4.3",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
-   mon.addHistogram(new TH1F("M_J/PsiPicut4.4",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
-   mon.addHistogram(new TH1F("M_J/PsiPicut4.7",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
-   mon.addHistogram(new TH1F("M_J/PsiPicut5.0",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
+   TH1F *h4 =(TH1F*) mon.addHistogram(new TH1F("M_J/PsiPicut4.2",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
+   TH1F *h5 =(TH1F*) mon.addHistogram(new TH1F("M_J/PsiPicut4.25",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
+   TH1F *h6 =(TH1F*) mon.addHistogram(new TH1F("M_J/PsiPicut4.3",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
+   TH1F *h7 =(TH1F*) mon.addHistogram(new TH1F("M_J/PsiPicut4.4",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
+   TH1F *h8 =(TH1F*) mon.addHistogram(new TH1F("M_J/PsiPicut4.7",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
+   TH1F *h9 =(TH1F*) mon.addHistogram(new TH1F("M_J/PsiPicut5.0",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
 
 
 
