@@ -43,15 +43,7 @@ void ntuple::Loop()
    h->GetXaxis()->SetBinLabel(4,"J+PfitChi2");
    h->GetXaxis()->SetBinLabel(5,"J+2PfitChi2");
    h->GetXaxis()->SetBinLabel(6,"cosine<P,r>");*/
-addHistogram( new TH1F("Num_J/Psi",";N_{J/#psi};Events",5,0,5));
- addHistogram( new TH1F("M_J/Psi",";M_{J/#psi};Events",50,2.8,3.3));
- addHistogram( new TH1F("pT_J/Psi",";p_{T,J/Psi};Events",120,0,120)); 
- addHistogram( new TH1F("M_J/PsiPicut4.2",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
- addHistogram( new TH1F("M_J/PsiPicut4.25",";m_{J/psi,Pi};Events",40,3.5,4.3));
- addHistogram( new TH1F("M_J/PsiPicut4.3",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
- addHistogram( new TH1F("M_J/PsiPicut4.4",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
- addHistogram( new TH1F("M_J/PsiPicut4.7",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
- addHistogram( new TH1F("M_J/PsiPicut5.0",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
+
 
 
 
