@@ -1,4 +1,4 @@
-#include "../Loopers_Includes/SmartSelectionMonitor_hzz.h"
+#include "../Includes/SmartSelectionMonitor_hzz.h"
 
 bool SmartSelectionMonitor_hzz::declareHistos(){ //FIXME: Later, will take an array as input for the binnings.
   addHistogram(new TH1F("totEventInBaobab",";Number of events in Baobab;Events",150,0,150));
