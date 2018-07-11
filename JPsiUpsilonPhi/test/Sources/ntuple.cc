@@ -33,7 +33,7 @@ void ntuple::Loop()
    if (fChain == 0) return;
    TFile *outFile = new TFile(outputFile_,"RECREATE");
    SmartSelectionMonitor mon;
-   TH1F *h =(TH1F*) addHistogram(new TH1F("eventflow",";;Events",6,0,6));
+   TH1F *h =(TH1F*) mon.addHistogram(new TH1F("eventflow",";;Events",6,0,6));
    h->GetXaxis()->SetBinLabel(1,"skimmed");
    h->GetXaxis()->SetBinLabel(2,"muonIDsoft");
    h->GetXaxis()->SetBinLabel(3,"J/PsiLxy");
