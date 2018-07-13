@@ -42,12 +42,12 @@ dataset = {
 #'DoubleEG_Run2016F-07Aug17':'/DoubleEG/Run2016F-07Aug17-v1/MINIAOD',
 #'DoubleEG_Run2016G-07Aug17':'/DoubleEG/Run2016G-07Aug17-v1/MINIAOD',
 #'DoubleEG_Run2016H-07Aug17':'/DoubleEG/Run2016H-07Aug17-v1/MINIAOD'
-'Charmonium_Run2016C-03Feb2017-v1':'/Charmonium/Run2016C-03Feb2017-v1/MINIAOD'
-'Charmonium_Run2016D-03Feb2017-v1':'/Charmonium/Run2016D-03Feb2017-v1/MINIAOD'
-'Charmonium_Run2016E-03Feb2017-v1':'/Charmonium/Run2016E-03Feb2017-v1/MINIAOD'
-'Charmonium_Run2016F-03Feb2017-v1':'/Charmonium/Run2016F-03Feb2017-v1/MINIAOD'
-'Charmonium_Run2016G-03Feb2017-v1':'/Charmonium/Run2016G-03Feb2017-v1/MINIAOD'
-'Charmonium_Run2016B-03Feb2017_ver2-v2':'/Charmonium/Run2016B-03Feb2017_ver2-v2/MINIAOD'
+#'Charmonium_Run2016C-03Feb2017-v1':'/Charmonium/Run2016C-03Feb2017-v1/MINIAOD'
+#'Charmonium_Run2016D-03Feb2017-v1':'/Charmonium/Run2016D-03Feb2017-v1/MINIAOD'
+#'Charmonium_Run2016E-03Feb2017-v1':'/Charmonium/Run2016E-03Feb2017-v1/MINIAOD'
+#'Charmonium_Run2016F-03Feb2017-v1':'/Charmonium/Run2016F-03Feb2017-v1/MINIAOD'
+#'Charmonium_Run2016G-03Feb2017-v1':'/Charmonium/Run2016G-03Feb2017-v1/MINIAOD'
+#'Charmonium_Run2016B-03Feb2017_ver2-v2':'/Charmonium/Run2016B-03Feb2017_ver2-v2/MINIAOD'
 'Charmonium_Run2016H-03Feb2017_ver3-v1':'/Charmonium/Run2016H-03Feb2017_ver3-v1/MINIAOD'
 }
 
@@ -67,11 +67,11 @@ if __name__ == '__main__':
     config = config()
 
     name = '_data'
-    config.General.workArea = 'crab_projects_20180427_07Aug17_rereco'
+    config.General.workArea = 'crab_projects_20180713test'
     config.General.transferLogs = False
     config.General.transferOutputs = True
-    config.JobType.pluginName = 'Analysis'
-    config.JobType.psetName = 'IIHE.py'
+    config.JobType.pluginName = 'jpsipipi'
+    config.JobType.psetName = 'test_H.py'
   #  config.JobType.inputFiles   = ['data','rcdata.2016.v3']
   #  config.JobType.pyCfgParams = ['DataProcessing=legacy_rerecodata']
 #    config.JobType.pyCfgParams = ['DataProcessing=rerecodata']
