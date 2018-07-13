@@ -70,7 +70,7 @@ if __name__ == '__main__':
     config.General.workArea = 'crab_projects_20180713test'
     config.General.transferLogs = False
     config.General.transferOutputs = True
-    config.JobType.pluginName = 'jpsipipi'
+    config.JobType.pluginName = 'Analysis'
     config.JobType.psetName = 'test_B-G.py'
   #  config.JobType.inputFiles   = ['data','rcdata.2016.v3']
   #  config.JobType.pyCfgParams = ['DataProcessing=legacy_rerecodata']
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     config.Data.unitsPerJob = 10
     config.Data.publication = False
     config.Data.ignoreLocality = False
-    config.Data.lumiMask = '/user/hanwen/bphytest/CMSSW_8_0_26_patch1/src/BUAA-CMS-group/JPsiUpsilonPhi/test/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt'
+    config.Data.lumiMask = 'Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt'
 #    config.Data.lumiMask = '/user/wenxing/FINAL_code_170407/CMSSW_8_0_26_patch1/src/UserCode/IIHETree/test/resubmit_DoubleEG.json'
 #    config.Data.lumiMask = '/user/wenxing/FINAL_code_170407/CMSSW_8_0_26_patch1/src/UserCode/IIHETree/test/resubmit_SingleEG.json'
     config.Site.storageSite = 'T2_BE_IIHE'
