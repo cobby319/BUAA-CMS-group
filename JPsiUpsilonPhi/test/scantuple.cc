@@ -10,7 +10,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-TString InputFile = "OUTPUTS/DoubleMuon_Run2016/MERGED/DoubleMuon_jpsipipi.root";
+TString InputFile = "/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016H-03Feb2017_ver3-v1/180713_140833/0000/Charmonium_Run2016_84.root";
   TString OutputFile = "theOutputFile.root";
   //--- Parse the arguments -----------------------------------------------------
   if (argc > 1) 
