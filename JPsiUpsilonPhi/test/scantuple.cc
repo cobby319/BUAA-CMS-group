@@ -12,6 +12,9 @@ int main(int argc, char **argv)
 {
 TString InputFile = "/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016H-03Feb2017_ver3-v1/180713_140833/0000/Charmonium_Run2016_84.root";
   TString OutputFile = "theOutputFile.root";
+  TString catalogInputFile = "";
+  int skipFile =0;
+  int maxFile = 0;
   //--- Parse the arguments -----------------------------------------------------
   if (argc > 1) 
   {
@@ -23,6 +26,15 @@ TString InputFile = "/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium
       {
         getArg(currentArg, InputFile);
       }
+      else if (currentArg.BeginsWith("catalogInputFile=")) {
+        getArg(currentArg, catalogInputFile);
+      }
+      else if (currentArg.BeginsWith("skip-files=")) {
+        getArg(currentArg, skipFile);
+      }
+      else if (currentArg.BeginsWith("max-files=")) {
+        getArg(currentArg, maxFile);
+      }
       else if (currentArg.BeginsWith("--output=")) 
       {
         getArg(currentArg, OutputFile);
@@ -32,7 +44,7 @@ TString InputFile = "/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium
   }
 
 
-ntuple mytree(InputFile, OutputFile);
+ntuple mytree(catalogInputFile, OutputFile, skipFile, maxFile);
 mytree.Loop();
 return 0;
 

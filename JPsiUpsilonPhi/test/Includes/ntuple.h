@@ -23,6 +23,7 @@ public :
    Int_t           fCurrent; //!current Tree number in a TChain
 
    // Declaration of leaf types
+   int maxEvents_;
    TString         outputFile_;
    UInt_t          nJ;
    UInt_t          nPiPair;
@@ -163,12 +164,17 @@ public :
 #endif
 
 #ifdef ntuple_cxx
-ntuple::ntuple(TString fileName, TString outputFile) : fChain(0) 
+ntuple::ntuple(TString fileName, TString outputFile, int skipFile, int maxFiles,) : fChain(0) 
 {
-   outputFile_ = outputFile;
-   TChain * chain = new TChain("rootuple/ntuple","");
-  chain->Add(fileName);
+   
+  outputFile_ = outputFile;
+  maxEvents_ = maxEvents;
+
+  TChain * chain = new TChain("rootuple/ntuple","");
+  FillTheTChain(chain, fileName, skipFile, maxFiles);
   TTree *tree = chain;
+
+
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
@@ -182,7 +188,7 @@ TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("Memory Directory");
 // The following code should be used if you want this class to access a chain
 //       // of trees.
 TChain * chain = new TChain("rootuple/ntuple","");
-      chain->Add("DoubleMuon_jpsipipi.root/rootuple/ntuple");
+      chain->Add("test.root/rootuple/ntuple");
       tree = chain;
 #endif // SINGLE_TREE
 
@@ -195,6 +201,64 @@ ntuple::~ntuple()
    delete fChain->GetCurrentFile();
 }
 
+void ntuple::FillTheTChain(TChain *theChain, TString theInputCatalog, int skipFiles, int maxFiles){
+  cout << "catalog name=" << theInputCatalog << endl;
+
+  std::ifstream f(theInputCatalog);
+  if(!f.good()){
+    std::cerr << "Failed to open file "<< theInputCatalog << "!\n";
+    return;
+  }
+
+
+  int iline = 0;
+  int nfiles = 0;
+  std::string firstFile_ = "";
+  while(f.good()){
+    ++iline;
+    std::string l;
+    std::string::size_type p;
+
+    std::getline(f, l);
+
+    //trim white spaces:
+    p = l.find_first_not_of(" \t");
+    if(p!=std::string::npos) l.erase(0, p);
+    p = l.find_last_not_of(" \t\n\r");
+    if(p!=std::string::npos) l.erase(p + 1);
+    else l.clear();
+
+    //skip empty lines and comment lines:
+    if (!l.size() || l[0] == '#' || l[0] == '*') continue;
+
+    //extract first column (file name):
+    p = l.find_first_of(" \t");
+    if(p!=std::string::npos) l.erase(p);
+
+    //sanity check:
+    const char ext[6] = ".root";
+
+    if(l.size() < sizeof(ext) || l.substr(l.size() - sizeof(ext) + 1) != ext){
+      std::cerr << "Line " << iline << " of catalog file " << theInputCatalog << " was skipped.\n";
+      continue;
+    }
+
+
+
+    if(skipFiles <= 0){
+      ++nfiles;
+      if((maxFiles > 0) &&  (nfiles > maxFiles)) break;
+      std::cout << "Add file " << l.c_str() << " to the list of input files.\n";
+      theChain->Add(l.c_str());
+      if(firstFile_.size()==0) firstFile_ = l;
+    } else{
+    --skipFiles;
+  }
+}
+
+return ;
+
+}
 Int_t ntuple::GetEntry(Long64_t entry)
 {
 // Read contents of entry.

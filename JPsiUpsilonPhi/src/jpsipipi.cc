@@ -671,7 +671,7 @@ jpsipipi::beginJob()
 
   tree_->Branch("J_lxy",&J_lxy);
   tree_->Branch("J_lxyErr",&J_lxyErr);
-  tree_->Branch("J_J_vertexchi2",&J_vertexchi2);
+  tree_->Branch("J_vertexchi2",&J_vertexchi2);
   tree_->Branch("Pi_dJP",&Pi_dJP);
   tree_->Branch("JPi_lxy",&JPi_lxy);
   tree_->Branch("JPi_lxyErr",&JPi_lxyErr);
