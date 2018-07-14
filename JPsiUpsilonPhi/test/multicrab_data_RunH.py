@@ -48,7 +48,7 @@ dataset = {
 #'Charmonium_Run2016F-03Feb2017-v1':'/Charmonium/Run2016F-03Feb2017-v1/MINIAOD'
 #'Charmonium_Run2016G-03Feb2017-v1':'/Charmonium/Run2016G-03Feb2017-v1/MINIAOD'
 #'Charmonium_Run2016B-03Feb2017_ver2-v2':'/Charmonium/Run2016B-03Feb2017_ver2-v2/MINIAOD'
-'Charmonium_Run2016H-03Feb2017_ver3-v1':'/Charmonium/Run2016H-03Feb2017_ver3-v1/MINIAOD'
+'Charmonium_Run2016H':'/Charmonium/Run2016H-03Feb2017_ver3-v1/MINIAOD'
 }
 
 nfiles = {
@@ -67,7 +67,7 @@ if __name__ == '__main__':
     config = config()
 
     name = '_data'
-    config.General.workArea = 'crab_projects_20180713test'
+    config.General.workArea = 'crab_projects_20180714test'
     config.General.transferLogs = False
     config.General.transferOutputs = True
     config.JobType.pluginName = 'Analysis'

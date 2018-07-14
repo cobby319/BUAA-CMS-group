@@ -42,12 +42,12 @@ dataset = {
 #'DoubleEG_Run2016F-07Aug17':'/DoubleEG/Run2016F-07Aug17-v1/MINIAOD',
 #'DoubleEG_Run2016G-07Aug17':'/DoubleEG/Run2016G-07Aug17-v1/MINIAOD',
 #'DoubleEG_Run2016H-07Aug17':'/DoubleEG/Run2016H-07Aug17-v1/MINIAOD'
-'Charmonium_Run2016C-03Feb2017-v1':'/Charmonium/Run2016C-03Feb2017-v1/MINIAOD',
-'Charmonium_Run2016D-03Feb2017-v1':'/Charmonium/Run2016D-03Feb2017-v1/MINIAOD',
-'Charmonium_Run2016E-03Feb2017-v1':'/Charmonium/Run2016E-03Feb2017-v1/MINIAOD',
-'Charmonium_Run2016F-03Feb2017-v1':'/Charmonium/Run2016F-03Feb2017-v1/MINIAOD',
-'Charmonium_Run2016G-03Feb2017-v1':'/Charmonium/Run2016G-03Feb2017-v1/MINIAOD',
-'Charmonium_Run2016B-03Feb2017_ver2-v2':'/Charmonium/Run2016B-03Feb2017_ver2-v2/MINIAOD',
+'Charmonium_Run2016C':'/Charmonium/Run2016C-03Feb2017-v1/MINIAOD',
+'Charmonium_Run2016D':'/Charmonium/Run2016D-03Feb2017-v1/MINIAOD',
+'Charmonium_Run2016E':'/Charmonium/Run2016E-03Feb2017-v1/MINIAOD',
+'Charmonium_Run2016F':'/Charmonium/Run2016F-03Feb2017-v1/MINIAOD',
+'Charmonium_Run2016G':'/Charmonium/Run2016G-03Feb2017-v1/MINIAOD',
+'Charmonium_Run2016B':'/Charmonium/Run2016B-03Feb2017_ver2-v2/MINIAOD',
 #'Charmonium_Run2016H-03Feb2017_ver3-v1':'/Charmonium/Run2016H-03Feb2017_ver3-v1/MINIAOD'
 }
 
@@ -67,7 +67,7 @@ if __name__ == '__main__':
     config = config()
 
     name = '_data'
-    config.General.workArea = 'crab_projects_20180713test'
+    config.General.workArea = 'crab_projects_20180714test'
     config.General.transferLogs = False
     config.General.transferOutputs = True
     config.JobType.pluginName = 'Analysis'
