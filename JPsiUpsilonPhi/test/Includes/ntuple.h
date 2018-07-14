@@ -150,7 +150,7 @@ public :
    TBranch        *b_Pi_vertexchisq1;   //!
    TBranch        *b_Pi_vertexchisq2;   //!
 
-   ntuple(TString fileName, TString outputFile);
+   ntuple(TString fileName, TString outputFile, int skipFile, int maxFiles);
    virtual ~ntuple();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
