@@ -43,7 +43,7 @@ def prepare_job_script(theCatalog,jobID):
     iteFileInJob=0
 #    for aFile in listFiles:
     scriptLines += ("date;\n")
-    scriptLines += ("./scantuple input="+theCatalog+"output=histos_"+str(jobID)+".root;\n")
+    scriptLines += ("./scantuple input="+theCatalog+" output=histos_"+str(jobID)+".root;\n")
  #   scriptLines += ("cmsRun /user/hanwen/bphytest/CMSSW_8_0_26_patch1/src/BUAA-CMS-group/JPsiUpsilonPhi/test/"+cfgDirectory+"/runOnBatch_scantuple_"+str(jobID)+"_cfg.py;\n")
 #        scriptLines += ("rm inputFile_"+str(jobID)+"_"+str(iteFileInJob)+".root;\n\n")
 #        iteFileInJob = iteFileInJob+1
