@@ -14,7 +14,7 @@ TString InputFile = "/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium
   TString OutputFile = "theOutputFile.root";
   TString catalogInputFile = "";
   int skipFile =0;
-  int maxFile = 1;
+  int maxFile = -1;
   //--- Parse the arguments -----------------------------------------------------
   if (argc > 1) 
   {
