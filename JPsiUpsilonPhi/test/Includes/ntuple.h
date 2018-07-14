@@ -164,7 +164,7 @@ public :
 #endif
 
 #ifdef ntuple_cxx
-ntuple::ntuple(TString fileName, TString outputFile, int skipFile, int maxFiles,) : fChain(0) 
+ntuple::ntuple(TString fileName, TString outputFile, int skipFile, int maxFiles) : fChain(0) 
 {
    
   outputFile_ = outputFile;
