@@ -85,8 +85,9 @@ void ntuple::Loop()
       }
       // if (Cut(ientry) < 0) continue;
    }
-   TFile* outFile=TFile::Open("test.root","recreate");
-   outFile->cd();
-    outFile->Write();
-    outFile->Close();
+   TFile* outFile=TFile::Open(outputFile_,"recreate");
+   TDirectoryFile *dir = new TDirectoryFile("histos","histos","",outFile);
+   gDirectory->cd("histos");
+   mon.Write();
+   outFile->Close();
 }
