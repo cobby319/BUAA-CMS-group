@@ -456,7 +456,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    if(psi_vFit_vertex_noMC->chiSquared()>6.) continue;
 	    float JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
 	    float JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->initialState().globalPosition());
-	    JpsiPi_fit->clear();
+	    JpsiPi_fit.clear();
 	    if (JpsiPi_dxy<0.08) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
@@ -479,7 +479,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        
 	        //Creating a KinematicParticleFactory
 	        KinematicParticleFactoryFromTransientTrack pFactory2;
-	        34
+	      
     
 	        vector<RefCountedKinematicParticle> JpsiPiPi_fit;
 	        try {
@@ -555,7 +555,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             JPiPi_y->push_back( psi_vFit_noMC2->currentState().globalPosition().y());
             JPiPi_z->push_back( psi_vFit_noMC2->currentState().globalPosition().z());
 	        nPiPair++;
-	        JpsiPiPi_fit->clear();
+	        JpsiPiPi_fit.clear();
 
 	    }
 	}
