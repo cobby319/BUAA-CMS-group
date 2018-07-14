@@ -174,18 +174,12 @@ ntuple::ntuple(TString fileName, TString outputFile, int skipFile, int maxFiles,
    
   outputFile_ = outputFile;
 
-  if (CatalogOrFile) {
-    TChain * chain = new TChain("rootuple/ntuple","");
-    FillTheTChain(chain, fileName, skipFile, maxFiles);
-    TTree *tree = chain;
-  }
-  else if (!CatalogOrFile)
-  {
-      TChain * chain = new TChain("rootuple/ntuple","");
-      chain->Add(fileName);
-      TTree *tree = chain;
-  }
   
+   TChain * chain = new TChain("rootuple/ntuple","");
+   if      (CatalogOrFile)  FillTheTChain(chain, fileName, skipFile, maxFiles);
+   else if (!CatalogOrFile)   chain->Add(fileName);
+   TTree *tree = chain;
+ 
 
 
 // if parameter tree is not specified (or zero), connect the file
