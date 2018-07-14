@@ -14,8 +14,6 @@ def printPath(path):
                 file.write("\n")
     file.close()
 
-
-
 def main():
     if type == "mc_ele":
         printPath('/pnfs/iihe/cms/store/user/hanwen/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8-001-Ele/CRAB_PrivateMC/crab_DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8-TagProbePruner-Ele/180408_045629')
@@ -48,9 +46,20 @@ def main():
         printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016F-03Feb2017-v1/180714_004017')
         printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016G-03Feb2017-v1/180714_004036')
         printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016H-03Feb2017_ver3-v1/180713_140833')
-
-
-    
+    if type == "Run2016B":
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016B-03Feb2017_ver2-v2/180714_004045')
+    if type == "Run2016C":
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016C-03Feb2017-v1/180714_004026')
+    if type == "Run2016D":
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016D-03Feb2017-v1/180714_004054')       
+    if type == "Run2016E":
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016E-03Feb2017-v1/180714_004007')   
+    if type == "Run2016F":
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016F-03Feb2017-v1/180714_004017')
+    if type == "Run2016G":
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016G-03Feb2017-v1/180714_004036')
+    if type == "Run2016H":
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016H-03Feb2017_ver3-v1/180713_140833')
 
 if __name__ == '__main__':
     type = sys.argv[1]
