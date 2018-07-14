@@ -80,8 +80,8 @@ void ntuple::Loop()
       else if (jpipi_mass>4.4 &&jpipi_mass<4.7)   mon.fillHisto("M_J/PsiPicut4.7","tot",(jpsi+pion1).M(),weight);
       else if (jpipi_mass>4.7 &&jpipi_mass<5.0)   
       {
-         cout<< "fill histo" <<endl ;
-         mon.fillHisto("M_J/PsiPicut5.0","tot",(jpsi+pion1).M(),weight);
+         
+         if(mon.fillHisto("M_J/PsiPicut5.0","tot",(jpsi+pion1).M(),weight)) cout<< "fill histo" <<endl ;;
       }
       // if (Cut(ientry) < 0) continue;
    }
