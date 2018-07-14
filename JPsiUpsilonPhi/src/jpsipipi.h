@@ -138,6 +138,10 @@ private:
   std::vector<float>       *Pi_dxyerr2;
   std::vector<float>       *Pi_vertexchisq1;
   std::vector<float>       *Pi_vertexchisq2;
+  std::vector<float>       *JPiPi_x;
+  std::vector<float>       *JPiPi_y;
+  std::vector<float>       *JPiPi_z;
+
 
 
 };

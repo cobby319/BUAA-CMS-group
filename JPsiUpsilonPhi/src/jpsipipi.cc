@@ -125,7 +125,10 @@ jpsipipi::jpsipipi(const edm::ParameterSet& iConfig)
   Pi_dxyerr1(0),
   Pi_dxyerr2(0),
   Pi_vertexchisq1(0),
-  Pi_vertexchisq2(0)
+  Pi_vertexchisq2(0),
+  JPiPi_x(0),
+  JPiPi_y(0),
+  JPiPi_z(0)
 
 
  {
@@ -476,7 +479,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        
 	        //Creating a KinematicParticleFactory
 	        KinematicParticleFactoryFromTransientTrack pFactory2;
-	        
+	        34
     
 	        vector<RefCountedKinematicParticle> JpsiPiPi_fit;
 	        try {
@@ -548,7 +551,9 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             JPi_lxyErr->push_back(JpsiPi_dxyerr);
             JPiPi_lxy->push_back(JpsiPiPi_dxy);
             JPiPi_lxyErr->push_back(JpsiPiPi_dxyerr);
-
+            JPiPi_x->push_back( psi_vFit_noMC2->currentState().globalPosition().x());
+            JPiPi_y->push_back( psi_vFit_noMC2->currentState().globalPosition().y());
+            JPiPi_z->push_back( psi_vFit_noMC2->currentState().globalPosition().z());
 	        nPiPair++;
 	        JpsiPiPi_fit->clear();
 
@@ -617,6 +622,9 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
    Pi_dxyerr2->clear();
    Pi_vertexchisq1->clear();
    Pi_vertexchisq2->clear();
+   JPiPi_x->clear();
+   JPiPi_y->clear();
+   JPiPi_z->clear();
 
 }
 
@@ -699,6 +707,9 @@ jpsipipi::beginJob()
   tree_->Branch("Pi_dxyerr2",&Pi_dxyerr2);
   tree_->Branch("Pi_vertexchisq1",&Pi_vertexchisq1);
   tree_->Branch("Pi_vertexchisq2",&Pi_vertexchisq2);
+  tree_->Branch("JPiPi_x",&JPiPi_x);
+  tree_->Branch("JPiPi_y",&JPiPi_y);
+  tree_->Branch("JPiPi_z",&JPiPi_z);
 
 }
 
