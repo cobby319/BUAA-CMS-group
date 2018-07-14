@@ -154,7 +154,7 @@ public :
    TBranch        *b_Pi_vertexchisq1;   //!
    TBranch        *b_Pi_vertexchisq2;   //!
 
-   ntuple(TString fileName, TString outputFile, int skipFile, int maxFiles);
+   ntuple(TString fileName, TString outputFile, int skipFile, int maxFiles,int CatalogOrFile);
    virtual ~ntuple();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
@@ -169,14 +169,23 @@ public :
 #endif
 
 #ifdef ntuple_cxx
-ntuple::ntuple(TString fileName, TString outputFile, int skipFile, int maxFiles) : fChain(0) 
+ntuple::ntuple(TString fileName, TString outputFile, int skipFile, int maxFiles,int CatalogOrFile) : fChain(0) 
 {
    
   outputFile_ = outputFile;
 
-  TChain * chain = new TChain("rootuple/ntuple","");
-  FillTheTChain(chain, fileName, skipFile, maxFiles);
-  TTree *tree = chain;
+  if (CatalogOrFile) {
+    TChain * chain = new TChain("rootuple/ntuple","");
+    FillTheTChain(chain, fileName, skipFile, maxFiles);
+    TTree *tree = chain;
+  }
+  else if (!CatalogOrFile)
+  {
+      TChain * chain = new TChain("rootuple/ntuple","");
+      chain->Add(fileName);
+      TTree *tree = chain;
+  }
+  
 
 
 // if parameter tree is not specified (or zero), connect the file

@@ -78,7 +78,7 @@ if __name__ == '__main__':
 #    config.JobType.pyCfgParams = ['DataProcessing=promptdata']
     config.Data.inputDBS = 'global'
     config.Data.splitting = 'LumiBased'
-    config.Data.unitsPerJob = 10
+    config.Data.unitsPerJob = 200
     config.Data.publication = False
     config.Data.ignoreLocality = False
     config.Data.lumiMask = 'Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt'
