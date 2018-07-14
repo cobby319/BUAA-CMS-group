@@ -8,7 +8,11 @@
 #ifndef ntuple_h
 #define ntuple_h
 
+#include <iostream>
+#include <fstream>
+#include <thread>
 #include <TROOT.h>
+#include <TString.h>
 #include <TChain.h>
 #include <TFile.h>
 
