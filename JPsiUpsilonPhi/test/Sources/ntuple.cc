@@ -72,17 +72,14 @@ void ntuple::Loop()
       mon.fillHisto("M_J/Psi","tot",jpsi.M(),weight);;
       mon.fillHisto("pT_J/Psi","tot",jpsi.Pt(),weight);
       float jpipi_mass = (jpsi+pion1+pion2).M();
-      if (jpipi_mass>4.1 &&jpipi_mass<5)  cout <<  "jpp mass is  " << jpipi_mass << endl;
+     // if (jpipi_mass>4.1 &&jpipi_mass<5)  cout <<  "jpp mass is  " << jpipi_mass << endl;
       if (jpipi_mass>4.1 &&jpipi_mass<4.2)        mon.fillHisto("M_J/PsiPicut4.2","tot",(jpsi+pion1).M(),weight);
       else if (jpipi_mass>4.2 &&jpipi_mass<4.25)  mon.fillHisto("M_J/PsiPicut4.25","tot",(jpsi+pion1).M(),weight);
       else if (jpipi_mass>4.25 &&jpipi_mass<4.3)  mon.fillHisto("M_J/PsiPicut4.3","tot",(jpsi+pion1).M(),weight);
       else if (jpipi_mass>4.3 &&jpipi_mass<4.4)   mon.fillHisto("M_J/PsiPicut4.4","tot",(jpsi+pion1).M(),weight);
       else if (jpipi_mass>4.4 &&jpipi_mass<4.7)   mon.fillHisto("M_J/PsiPicut4.7","tot",(jpsi+pion1).M(),weight);
-      else if (jpipi_mass>4.7 &&jpipi_mass<5.0)   
-      {
-         
-         if(mon.fillHisto("M_J/PsiPicut5.0","tot",(jpsi+pion1).M(),weight)) cout<< "fill histo" <<endl ;;
-      }
+      else if (jpipi_mass>4.7 &&jpipi_mass<5.0)   mon.fillHisto("M_J/PsiPicut5.0","tot",(jpsi+pion1).M(),weight);
+      
       // if (Cut(ientry) < 0) continue;
    }
    TFile* outFile=TFile::Open(outputFile_,"recreate");
