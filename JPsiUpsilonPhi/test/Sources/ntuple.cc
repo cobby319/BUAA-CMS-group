@@ -61,10 +61,10 @@ void ntuple::Loop()
 
       auto smallestchi2 = std::min_element(Pi_vertexchisq2->begin(), Pi_vertexchisq2->end());
       int piN =std::distance(Pi_vertexchisq2->begin(), smallestchi2);
-      cout <<  "selected pi is " << piN << endl;
+      //cout <<  "selected pi is " << piN << endl;
       auto largestlxy = std::max_element(J_lxy->begin(), J_lxy->end());
       int jpsiN =std::distance(J_lxy->begin(), largestlxy);
-      cout <<  "selected jpsi is " << jpsiN << endl;
+      //cout <<  "selected jpsi is " << jpsiN << endl;
       TLorentzVector jpsi, pion1,pion2;
       jpsi.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN)); 
       pion1.SetPtEtaPhiE(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pi_e1->at(piN));
@@ -78,7 +78,11 @@ void ntuple::Loop()
       else if (jpipi_mass>4.25 &&jpipi_mass<4.3)  mon.fillHisto("M_J/PsiPicut4.3","tot",(jpsi+pion1).M(),weight);
       else if (jpipi_mass>4.3 &&jpipi_mass<4.4)   mon.fillHisto("M_J/PsiPicut4.4","tot",(jpsi+pion1).M(),weight);
       else if (jpipi_mass>4.4 &&jpipi_mass<4.7)   mon.fillHisto("M_J/PsiPicut4.7","tot",(jpsi+pion1).M(),weight);
-      else if (jpipi_mass>4.7 &&jpipi_mass<5.0)   mon.fillHisto("M_J/PsiPicut5.0","tot",(jpsi+pion1).M(),weight);
+      else if (jpipi_mass>4.7 &&jpipi_mass<5.0)   
+      {
+         cout<< "fill histo"
+         mon.fillHisto("M_J/PsiPicut5.0","tot",(jpsi+pion1).M(),weight);
+      }
       // if (Cut(ientry) < 0) continue;
    }
    TFile* outFile=TFile::Open(outputFile_,"recreate");
