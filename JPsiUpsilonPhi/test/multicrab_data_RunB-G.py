@@ -42,12 +42,12 @@ dataset = {
 #'DoubleEG_Run2016F-07Aug17':'/DoubleEG/Run2016F-07Aug17-v1/MINIAOD',
 #'DoubleEG_Run2016G-07Aug17':'/DoubleEG/Run2016G-07Aug17-v1/MINIAOD',
 #'DoubleEG_Run2016H-07Aug17':'/DoubleEG/Run2016H-07Aug17-v1/MINIAOD'
-'Charmonium_Run2016C-03Feb2017-v1':'/Charmonium/Run2016C-03Feb2017-v1/MINIAOD'
-'Charmonium_Run2016D-03Feb2017-v1':'/Charmonium/Run2016D-03Feb2017-v1/MINIAOD'
-'Charmonium_Run2016E-03Feb2017-v1':'/Charmonium/Run2016E-03Feb2017-v1/MINIAOD'
-'Charmonium_Run2016F-03Feb2017-v1':'/Charmonium/Run2016F-03Feb2017-v1/MINIAOD'
-'Charmonium_Run2016G-03Feb2017-v1':'/Charmonium/Run2016G-03Feb2017-v1/MINIAOD'
-'Charmonium_Run2016B-03Feb2017_ver2-v2':'/Charmonium/Run2016B-03Feb2017_ver2-v2/MINIAOD'
+'Charmonium_Run2016C-03Feb2017-v1':'/Charmonium/Run2016C-03Feb2017-v1/MINIAOD',
+'Charmonium_Run2016D-03Feb2017-v1':'/Charmonium/Run2016D-03Feb2017-v1/MINIAOD',
+'Charmonium_Run2016E-03Feb2017-v1':'/Charmonium/Run2016E-03Feb2017-v1/MINIAOD',
+'Charmonium_Run2016F-03Feb2017-v1':'/Charmonium/Run2016F-03Feb2017-v1/MINIAOD',
+'Charmonium_Run2016G-03Feb2017-v1':'/Charmonium/Run2016G-03Feb2017-v1/MINIAOD',
+'Charmonium_Run2016B-03Feb2017_ver2-v2':'/Charmonium/Run2016B-03Feb2017_ver2-v2/MINIAOD',
 #'Charmonium_Run2016H-03Feb2017_ver3-v1':'/Charmonium/Run2016H-03Feb2017_ver3-v1/MINIAOD'
 }
 
