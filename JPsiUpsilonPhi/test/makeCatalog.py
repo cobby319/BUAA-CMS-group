@@ -40,7 +40,7 @@ def main():
     if type == "Charm_Run2016":
         printPath('/pnfs/iihe/cms/ph/sc4/store/data/Run2016E/Charmonium/MINIAOD/23Sep2016-v1')
         printPath('/pnfs/iihe/cms/ph/sc4/store/data/Run2016H/Charmonium/MINIAOD/03Feb2017_ver3-v1')
-    if type == "Run2016"
+    if type == "Run2016":
         printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016B-03Feb2017_ver2-v2/180714_004045')
         printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016C-03Feb2017-v1/180714_004026')
         printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016D-03Feb2017-v1/180714_004054')
