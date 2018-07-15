@@ -294,8 +294,8 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  
 	  //some loose cuts go here
 	  
-	  if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
-	  if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue;
+	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
+	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  
 	  //fill variables?iMuon1->track()->pt()
 	  
@@ -467,7 +467,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  
 	  //some loose cuts go here
 	  
-	  if(upsilon_vFit_vertex_noMC->chiSquared()>50.) continue;
+	  if(upsilon_vFit_vertex_noMC->chiSquared()>10.) continue;
 	  if(upsilon_vFit_noMC->currentState().mass()<9.4603-0.3 || upsilon_vFit_noMC->currentState().mass()>9.4603+0.3) continue;
 	  
 	  //fill variables?iMuon3->track()->pt()
@@ -518,14 +518,24 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	}
     }
   for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1){
-  	if(!(iTrack1->bestTrack())) continue;
-  	if(iTrack1->pt()<0.8)continue;
-  	if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
+  	 if(iTrack1->pt()<1)continue;
+  	 if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
+  	 if(!(iTrack1->bestTrack())) continue;
+  	 if(iTrack1->bestTrack()->charge() == 0) continue; //NO neutral objects
+  	 //if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+  	 
+  	 if(iTrack1->vertexChi2()>5) continue;
+  	 if(!(iTrack1->trackHighPurity())) continue;
 
   	for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2){
-      if(iTrack1==iTrack2) continue;
-      if((iTrack1->charge())*(iTrack2->charge())==1) continue;
-      if(iTrack2->pt()<0.8)continue;
+        if((iTrack1->charge())*(iTrack2->charge())==1) continue;
+        if(iTrack2->vertexChi2()>5) continue;    
+        if(iTrack2->pt()<0.8)continue;
+  	    if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;
+  	    if(!(iTrack2->bestTrack())) continue;
+  	    if(iTrack2->charge() == 0) continue; //NO neutral objects
+  	    //if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+  	    if(!(iTrack2->trackHighPurity())) continue;
 
       Track glbTrackp;
       Track glbTrackn;
@@ -540,15 +550,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  
 	  //if(!glbTrackp || !glbTrackn )continue;
 
-	  if(!(glbTrackn.quality(reco::TrackBase::highPurity))) continue;
-	  if(!(glbTrackp.quality(reco::TrackBase::highPurity))) continue;	
 
-	  if(glbTrackp.normalizedChi2()>2) continue;
-	  if(glbTrackn.normalizedChi2()>2) continue;
-      if(glbTrackp.pt()<0.8) continue;
-	  if(glbTrackn.pt()<0.8) continue;
-      if(glbTrackp.eta()>2||glbTrackp.eta()<-2) continue;
-      if(glbTrackn.eta()>2||glbTrackn.eta()<-2) continue;
 	  if(glbTrackp.numberOfValidHits()<5) continue;
 	  if(glbTrackn.numberOfValidHits()<5) continue;
     
