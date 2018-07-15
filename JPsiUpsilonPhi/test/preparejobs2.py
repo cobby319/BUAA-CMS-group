@@ -91,13 +91,13 @@ def main():
         printPath('/pnfs/iihe/cms/ph/sc4/store/data/Run2016E/Charmonium/MINIAOD/23Sep2016-v1')
         printPath('/pnfs/iihe/cms/ph/sc4/store/data/Run2016H/Charmonium/MINIAOD/03Feb2017_ver3-v1')
     if type == "Run2016":
-        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016B/180714_053551')
-        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016C/180714_053542')
-        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016D/180714_053528')
-        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016E/180714_053518')
-        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016F/180714_053509')
-        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016G/180714_053500')
-        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016H/180714_053438')
+        printPath('/pnfs/iihe/cms/store/user/hanwen/test20180715/crab_Charmonium_Run2016B/180714_053551')
+        printPath('/pnfs/iihe/cms/store/user/hanwen/test20180715/crab_Charmonium_Run2016C/180714_053542')
+        printPath('/pnfs/iihe/cms/store/user/hanwen/test20180715/crab_Charmonium_Run2016D/180714_053528')
+        printPath('/pnfs/iihe/cms/store/user/hanwen/test20180715/crab_Charmonium_Run2016E/180714_053518')
+        printPath('/pnfs/iihe/cms/store/user/hanwen/test20180715/crab_Charmonium_Run2016F/180714_053509')
+        printPath('/pnfs/iihe/cms/store/user/hanwen/test20180715/crab_Charmonium_Run2016G/180714_053500')
+        printPath('/pnfs/iihe/cms/store/user/hanwen/test20180715/crab_Charmonium_Run2016H/180714_053438')
     if type == "Run2016B":
         printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016B-03Feb2017_ver2-v2/180714_004045')
     if type == "Run2016C":
@@ -120,6 +120,8 @@ def main():
         jobId = jobId + 1
         prepare_job_script(line.strip(),jobId)
 def harvestJobs():
+    global cfgDirectory 
+    cfgDirectory = 'OUTPUTS/'+type +'/CONFIGS'
     os.system("hadd "+cfgDirectory+"/Merged_"+type+".root "++cfgDirectory+"/*.root")
 if __name__ == '__main__':
     type = sys.argv[1]

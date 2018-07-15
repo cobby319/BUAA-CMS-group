@@ -551,9 +551,9 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             JPi_lxyErr->push_back(JpsiPi_dxyerr);
             JPiPi_lxy->push_back(JpsiPiPi_dxy);
             JPiPi_lxyErr->push_back(JpsiPiPi_dxyerr);
-            JPiPi_x->push_back( psi_vFit_noMC2->currentState().globalPosition().x());
-            JPiPi_y->push_back( psi_vFit_noMC2->currentState().globalPosition().y());
-            JPiPi_z->push_back( psi_vFit_noMC2->currentState().globalPosition().z());
+            JPiPi_x->push_back( psi_vFit_noMC2->currentState().globalPosition().x()-bestVtx.x());
+            JPiPi_y->push_back( psi_vFit_noMC2->currentState().globalPosition().y()-bestVtx.y());
+            JPiPi_z->push_back( psi_vFit_noMC2->currentState().globalPosition().z()-bestVtx.z());
 	        nPiPair++;
 	        JpsiPiPi_fit.clear();
 
