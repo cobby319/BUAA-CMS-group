@@ -72,14 +72,15 @@ void ntuple::Loop()
       mon.fillHisto("M_J/Psi","tot",jpsi.M(),weight);;
       mon.fillHisto("pT_J/Psi","tot",jpsi.Pt(),weight);
       float jpipi_mass = (jpsi+pion1+pion2).M();
+      mon.fillHisto("M_J/PsiPi+Pi-","total",jpipi_mass,weight);
      // if (jpipi_mass>4.1 &&jpipi_mass<5)  cout <<  "jpp mass is  " << jpipi_mass << endl;
-      if (jpipi_mass>4.2 &&jpipi_mass<4.25)         mon.fillHisto("M_J/PsiPicut4.20-4.25","",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.25 &&jpipi_mass<4.3)   mon.fillHisto("M_J/PsiPicut4.25-4.30","",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.3 &&jpipi_mass<4.4)    mon.fillHisto("M_J/PsiPicut4.30-4.40","",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.4 &&jpipi_mass<4.7)     mon.fillHisto("M_J/PsiPicut4.40-4.70","",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.7 &&jpipi_mass<5.0)     mon.fillHisto("M_J/PsiPicut4.70-5.00","",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.00 &&jpipi_mass<4.20)   mon.fillHisto("M_J/PsiPicut4.00-4.20","",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.24 &&jpipi_mass<4.28)   mon.fillHisto("M_J/PsiPicut4.24-4.28","",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.2 &&jpipi_mass<4.25)         mon.fillHisto("M_J/PsiPicut4.20-4.25","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.25 &&jpipi_mass<4.3)         mon.fillHisto("M_J/PsiPicut4.25-4.30","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.3 &&jpipi_mass<4.4)          mon.fillHisto("M_J/PsiPicut4.30-4.40","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.4 &&jpipi_mass<4.7)          mon.fillHisto("M_J/PsiPicut4.40-4.70","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.7 &&jpipi_mass<5.0)          mon.fillHisto("M_J/PsiPicut4.70-5.00","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.00 &&jpipi_mass<4.20)        mon.fillHisto("M_J/PsiPicut4.00-4.20","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.24 &&jpipi_mass<4.28)        mon.fillHisto("M_J/PsiPicut4.24-4.28","total",(jpsi+pion1).M(),weight);
 
       // if (Cut(ientry) < 0) continue;
    }
