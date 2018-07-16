@@ -72,7 +72,12 @@ void ntuple::Loop()
       mon.fillHisto("M_J/Psi","tot",jpsi.M(),weight);
       mon.fillHisto("pT_J/Psi","tot",jpsi.Pt(),weight);
       float jpipi_mass = (jpsi+pion1+pion2).M();
+      float pipi_mass =(pion1+pion2).M();
+      if (pipi_mass>0.81 && pipi_mass<0.97) continue;
+      if (pipi_mass>1.01 && pipi_mass<1.03) continue;
+      if (pipi_mass<0.35) continue;
       mon.fillHisto("M_J/PsiPi+Pi-","total",jpipi_mass,weight);
+
      // if (jpipi_mass>4.1 &&jpipi_mass<5)  cout <<  "jpp mass is  " << jpipi_mass << endl;
       if (jpipi_mass>4.2 &&jpipi_mass<4.25)         mon.fillHisto("M_J/PsiPicut4.20-4.25","total",(jpsi+pion1).M(),weight);
       if (jpipi_mass>4.25 &&jpipi_mass<4.3)         mon.fillHisto("M_J/PsiPicut4.25-4.30","total",(jpsi+pion1).M(),weight);
