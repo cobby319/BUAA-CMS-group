@@ -367,9 +367,9 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  mupdz->push_back(glbTrackM->dz(bestVtx.position()) );
 	  muon_dca->push_back(dca); 
 	  J_vertexchi2->push_back(psi_vFit_vertex_noMC->chiSquared());
-      J_rx->push_back(psi_vFit_vertex_noMC->position().x()-bestVtx.x())
-      J_ry->push_back(psi_vFit_vertex_noMC->position().y()-bestVtx.y())
-      J_rz->push_back(psi_vFit_vertex_noMC->position().z()-bestVtx.z())        	  
+      J_rx->push_back(psi_vFit_vertex_noMC->position().x()-bestVtx.x());
+      J_ry->push_back(psi_vFit_vertex_noMC->position().y()-bestVtx.y());
+      J_rz->push_back(psi_vFit_vertex_noMC->position().z()-bestVtx.z());        	  
 	  
 	  nJ++;	       
 	  muonParticles.clear();
