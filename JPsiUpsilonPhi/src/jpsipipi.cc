@@ -317,7 +317,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  float J_dxy = psi_vFit_vertex_noMC->position().transverse();
-	  float J_dxyerr = psi_vFit_vertex_noMC->error().rerr(psi_vFit_vertex_noMC2->position());
+	  float J_dxyerr = psi_vFit_vertex_noMC->error().rerr(psi_vFit_vertex_noMC->position());
       
 	  if (J_dxy/J_dxyerr<5.0) continue;
 	  muontt1.push_back(muon1TT);
