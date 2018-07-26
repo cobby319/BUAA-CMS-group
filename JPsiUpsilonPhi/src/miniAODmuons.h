@@ -106,6 +106,12 @@ private:
   unsigned int             nU, nJ,nPhi;
     
   std::vector<float>       *J_mass, *J_px, *J_py, *J_pz, *J_energy;
+  std::vector<float>       *J_vertexchi2;
+  std::vector<float>       *J_lxy;
+  std::vector<float>       *J_lxyerr;
+  std::vector<float>       *J_rx;
+  std::vector<float>       *J_ry;
+  std::vector<float>       *J_rz;
 
   std::vector<float>       *J_px1, *J_py1, *J_pz1;
   std::vector<float>       *J_px2, *J_py2, *J_pz2;
@@ -122,11 +128,26 @@ private:
   std::vector<bool>        *U_mu1soft, *U_mu2soft, *U_mu1tight, *U_mu2tight;
   std::vector<bool>        *U_mu1PF, *U_mu2PF, *U_mu1loose, *U_mu2loose;
   std::vector<float>       *U_mass, *U_px, *U_py, *U_pz, *U_energy;
+  std::vector<float>       *U_vertexchi2;
+  std::vector<float>       *U_lxy;
+  std::vector<float>       *U_lxyerr;
+  std::vector<float>       *U_rx;
+  std::vector<float>       *U_ry;
+  std::vector<float>       *U_rz;
 
   std::vector<float>       *U_px1, *U_py1, *U_pz1;
   std::vector<float>       *U_px2, *U_py2, *U_pz2;
   std::vector<int>         *U_charge1, *U_charge2;
   std::vector<float>       *Phi_mass, *Phi_px, *Phi_py, *Phi_pz, *Phi_energy;
+  std::vector<float>       *Phi_vertexchi2;
+  std::vector<float>       *Phi_lxy;
+  std::vector<float>       *Phi_lxyerr;
+  std::vector<float>       *Phi_rx;
+  std::vector<float>       *Phi_ry;
+  std::vector<float>       *Phi_rz;
+  std::vector<int>         *Phi_tk1NHits, *Phi_tk1NPHits;
+  std::vector<int>         *Phi_tk2NHits, *Phi_tk2NPHits;
+
   //std::vector<int>         *N_pfcandidate;
 };
 #endif

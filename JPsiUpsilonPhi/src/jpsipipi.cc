@@ -241,7 +241,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  cApp.calculate(mu1State, mu2State);
 	  if( !cApp.status() ) continue;
 	  float dca = fabs( cApp.distance() );	  
-	  if (dca < 0. || dca > 0.025) continue;
+	  if (dca < 0. || dca > 0.5) continue;
 	  //cout<<" closest approach  "<<dca<<endl;
 
 	  // ******  Methods to check to which category of muon candidates a given pat::Muon object belongs ****
@@ -316,10 +316,10 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  
 	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
-	  float J_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
-	  float J_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->initialState().globalPosition());
+	  float J_dxy = psi_vFit_vertex_noMC->position().transverse();
+	  float J_dxyerr = psi_vFit_vertex_noMC->error().rerr(psi_vFit_vertex_noMC2->position());
       
-	  if (J_dxy<0.08) continue;
+	  if (J_dxy/J_dxyerr<5.0) continue;
 	  muontt1.push_back(muon1TT);
 	  muontt2.push_back(muon2TT);
 	  J_vertexchi2->push_back(psi_vFit_vertex_noMC->chiSquared());
@@ -454,10 +454,10 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        continue;
 	      }
 	    if(psi_vFit_vertex_noMC->chiSquared()>6.) continue;
-	    float JpsiPi_dxy = psi_vFit_noMC->currentState().globalPosition().transverse();
-	    float JpsiPi_dxyerr = psi_vFit_noMC->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC->initialState().globalPosition());
+	    float JpsiPi_dxy = psi_vFit_vertex_noMC->position().transverse();
+	    float JpsiPi_dxyerr = psi_vFit_vertex_noMC->error().rerr(psi_vFit_vertex_noMC->position());
 	    JpsiPi_fit.clear();
-	    if (JpsiPi_dxy<0.08) continue;
+	    if (JpsiPi_dxy/JpsiPi_dxyerr<3) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
             if((iTrack1->charge())*(iTrack2->charge())==1) continue;
@@ -523,9 +523,9 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            continue;
 	          }
 	        if(psi_vFit_vertex_noMC2->chiSquared()>10.) continue;
-	        float JpsiPiPi_dxy = psi_vFit_noMC2->currentState().globalPosition().transverse();
-	        float JpsiPiPi_dxyerr = psi_vFit_noMC2->currentState().freeTrajectoryState().cartesianError().position().rerr(psi_vFit_noMC2->initialState().globalPosition());
-	        if (JpsiPiPi_dxy<0.08) continue;
+	        float JpsiPiPi_dxy = psi_vFit_vertex_noMC2->position().transverse();
+	        float JpsiPiPi_dxyerr = psi_vFit_vertex_noMC2->error().rerr(psi_vFit_vertex_noMC2->position());
+	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2) continue;
 	        Pi_nhits1->push_back(iTrack1->numberOfHits());
             Pi_npixelhits1->push_back(iTrack2->numberOfPixelHits());
             Pi_nhits2->push_back(iTrack2->numberOfHits());
@@ -551,9 +551,9 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             JPi_lxyErr->push_back(JpsiPi_dxyerr);
             JPiPi_lxy->push_back(JpsiPiPi_dxy);
             JPiPi_lxyErr->push_back(JpsiPiPi_dxyerr);
-            JPiPi_x->push_back( psi_vFit_noMC2->currentState().globalPosition().x()-bestVtx.x());
-            JPiPi_y->push_back( psi_vFit_noMC2->currentState().globalPosition().y()-bestVtx.y());
-            JPiPi_z->push_back( psi_vFit_noMC2->currentState().globalPosition().z()-bestVtx.z());
+            JPiPi_x->push_back( psi_vFit_vertex_noMC2->position().x()-bestVtx.x());
+            JPiPi_y->push_back( psi_vFit_vertex_noMC2->position().y()-bestVtx.y());
+            JPiPi_z->push_back( psi_vFit_vertex_noMC2->position().z()-bestVtx.z());
 	        nPiPair++;
 	        JpsiPiPi_fit.clear();
 
