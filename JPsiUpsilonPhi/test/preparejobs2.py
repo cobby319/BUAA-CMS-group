@@ -112,6 +112,8 @@ def main():
         printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016G-03Feb2017-v1/180714_004036')
     if type == "Run2016H":
         printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016H-03Feb2017_ver3-v1/180713_140833')
+    if type == "test"
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_JPsiPiPi_Run2016B/180728_062419')
     jobsDirectory ='OUTPUTS/'+type+'/JOBS' 
     cfgDirectory = 'OUTPUTS/'+type +'/CONFIGS' 
     datasetFile = open("OUTPUTS/"+type+"/JOBS/catalog_"+type+".txt",'r')
