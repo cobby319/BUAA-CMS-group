@@ -70,6 +70,9 @@ public :
    vector<float>   *JPi_lxyErr;
    vector<float>   *JPiPi_lxy;
    vector<float>   *JPiPi_lxyErr;
+   vector<float>   *JPiPi_x;
+   vector<float>   *JPiPi_y;
+   vector<float>   *JPiPi_z;
    vector<int>     *Pi_nhits1;
    vector<int>     *Pi_npixelhits1;
    vector<int>     *Pi_nhits2;
@@ -133,6 +136,9 @@ public :
    TBranch        *b_JPi_lxyErr;   //!
    TBranch        *b_JPiPi_lxy;   //!
    TBranch        *b_JPiPi_lxyErr;   //!
+   TBranch        *b_JPiPi_x;
+   TBranch        *b_JPiPi_y;
+   TBranch        *b_JPiPi_z;
    TBranch        *b_Pi_nhits1;   //!
    TBranch        *b_Pi_npixelhits1;   //!
    TBranch        *b_Pi_nhits2;   //!
@@ -335,6 +341,9 @@ void ntuple::Init(TTree *tree)
    JPi_lxyErr = 0;
    JPiPi_lxy = 0;
    JPiPi_lxyErr = 0;
+   JPiPi_x = 0;
+   JPiPi_y = 0;
+   JPiPi_z = 0;
    Pi_nhits1 = 0;
    Pi_npixelhits1 = 0;
    Pi_nhits2 = 0;
@@ -402,6 +411,9 @@ void ntuple::Init(TTree *tree)
    fChain->SetBranchAddress("JPi_lxyErr", &JPi_lxyErr, &b_JPi_lxyErr);
    fChain->SetBranchAddress("JPiPi_lxy", &JPiPi_lxy, &b_JPiPi_lxy);
    fChain->SetBranchAddress("JPiPi_lxyErr", &JPiPi_lxyErr, &b_JPiPi_lxyErr);
+   fChain->SetBranchAddress("JPiPi_x",&JPiPi_x,&b_JPiPi_x);
+   fChain->SetBranchAddress("JPiPi_y",&JPiPi_y,&b_JPiPi_y);
+   fChain->SetBranchAddress("JPiPi_z",&JPiPi_z,&b_JPiPi_z);
    fChain->SetBranchAddress("Pi_nhits1", &Pi_nhits1, &b_Pi_nhits1);
    fChain->SetBranchAddress("Pi_npixelhits1", &Pi_npixelhits1, &b_Pi_npixelhits1);
    fChain->SetBranchAddress("Pi_nhits2", &Pi_nhits2, &b_Pi_nhits2);
