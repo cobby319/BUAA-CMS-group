@@ -320,7 +320,7 @@ void miniAODmuons::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	  float J_dxy = psi_vFit_vertex_noMC->position().transverse();
 	  float J_dxyerr = psi_vFit_vertex_noMC->error().rerr(psi_vFit_vertex_noMC->position());
 	  //fill variables?iMuon1->track()->pt()
-	  if (J_dxy/J_dxyerr<5.0) continue;
+	  //if (J_dxy/J_dxyerr<5.0) continue;
 	  J_vertexchi2->push_back(psi_vFit_vertex_noMC->chiSquared());
 	  J_lxy->push_back(J_dxy);
 	  J_lxyerr->push_back(J_dxyerr);
@@ -556,7 +556,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	}
     }
   for(View<pat::PackedCandidate>::const_iterator iTrack1= thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end();++iTrack1){
-  	 if(iTrack1->pt()<1)continue;
+  	 if(iTrack1->pt()<0.8)continue;
   	 if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
   	 if(!(iTrack1->bestTrack())) continue;
   	 if(iTrack1->bestTrack()->charge() == 0) continue; //NO neutral objects
@@ -666,7 +666,7 @@ for(View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); iMuon3 !
 	  //some loose cuts go here
 	  
 	  if(upsilon_vFit_vertex_noMC->chiSquared()>10.) continue;
-	  if(upsilon_vFit_noMC->currentState().mass()<1.01946-0.01 || upsilon_vFit_noMC->currentState().mass()>1.01946+0.01) continue;
+	  if(upsilon_vFit_noMC->currentState().mass()<0.91946 || upsilon_vFit_noMC->currentState().mass()>1.11946) continue;
 	  
 	  float Phi_dxy = upsilon_vFit_vertex_noMC->position().transverse();
       float Phi_dxyerr = upsilon_vFit_vertex_noMC->error().rerr(upsilon_vFit_vertex_noMC->position());
