@@ -114,6 +114,12 @@ def main():
         printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_Charmonium_Run2016H-03Feb2017_ver3-v1/180713_140833')
     if type == "test":
         printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_JPsiPiPi_Run2016B/180728_062419')
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_JPsiPiPi_Run2016C/180728_062427')
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_JPsiPiPi_Run2016D/180728_062434')
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_JPsiPiPi_Run2016E/180728_062442')
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_JPsiPiPi_Run2016F/180728_062450')
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_JPsiPiPi_Run2016G/180728_062457')
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium/crab_JPsiPiPi_Run2016H/180728_062537')
     jobsDirectory ='OUTPUTS/'+type+'/JOBS' 
     cfgDirectory = 'OUTPUTS/'+type +'/CONFIGS' 
     datasetFile = open("OUTPUTS/"+type+"/JOBS/catalog_"+type+".txt",'r')
