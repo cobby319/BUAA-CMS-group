@@ -58,6 +58,7 @@
 #include "TLorentzVector.h"
 #include "TTree.h"
 #include "TH2F.h"
+#include "math.h"
 //
 // constants, enums and typedefs
 //
@@ -316,8 +317,9 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  
 	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
-	  float J_dxy = psi_vFit_vertex_noMC->position().transverse();
-
+	  float dx = psi_vFit_vertex_noMC->position().x()-bestVtx.x();
+	  float dy = psi_vFit_vertex_noMC->position().y()-bestVtx.y();
+	  float J_dxy = Sqrt(dx*dx+dy*dy);
 	  float J_dxyerr = psi_vFit_vertex_noMC->error().rerr(pvertex);
       
 	  if (J_dxy/J_dxyerr<5.0) continue;
@@ -455,7 +457,9 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        continue;
 	      }
 	    if(psi_vFit_vertex_noMC->chiSquared()>6.) continue;
-	    float JpsiPi_dxy = psi_vFit_vertex_noMC->position().transverse();
+	    float dx1 = psi_vFit_vertex_noMC->position().x()-bestVtx.x();
+	    float dy1 = psi_vFit_vertex_noMC->position().y()-bestVtx.y();
+	    float JpsiPi_dxy = Sqrt(dx1*dx1+dy1*dy1);
 	    float JpsiPi_dxyerr = psi_vFit_vertex_noMC->error().rerr(pvertex);
 	    JpsiPi_fit.clear();
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3) continue;
@@ -533,7 +537,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        rz = psi_vFit_vertex_noMC2->position().z()-bestVtx.z();
 	        float cosine = (px*rx+py*ry+pz*rz)/((px*px+py*py+pz*pz)*(rx*rx+ry*ry+rz*rz));
 	        if (cosine < 0.9 ) continue;
-	        float JpsiPiPi_dxy = psi_vFit_vertex_noMC2->position().transverse();
+            float JpsiPiPi_dxy = Sqrt(rx*rx+ry*ry);
 	        float JpsiPiPi_dxyerr = psi_vFit_vertex_noMC2->error().rerr(pvertex);
 	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2) continue;
 
