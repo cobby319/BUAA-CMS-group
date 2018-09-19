@@ -179,7 +179,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   iEvent.getByToken(primaryVertices_Label, primaryVertices_handle);
 
   bestVtx = *(primaryVertices_handle->begin());
-
+  const GlobalPoint pvertex = new GlobalPoint(bestVtx.x(),bestVtx.y(),bestVtx.z());
   //nVtx = primaryVertices_handle->size(); 
   
   //*****************************************
@@ -317,7 +317,8 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  float J_dxy = psi_vFit_vertex_noMC->position().transverse();
-	  float J_dxyerr = psi_vFit_vertex_noMC->error().rerr(bestVtx.position());
+
+	  float J_dxyerr = psi_vFit_vertex_noMC->error().rerr(pvertex.position());
       
 	  if (J_dxy/J_dxyerr<5.0) continue;
 	  muontt1.push_back(muon1TT);
@@ -455,7 +456,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	      }
 	    if(psi_vFit_vertex_noMC->chiSquared()>6.) continue;
 	    float JpsiPi_dxy = psi_vFit_vertex_noMC->position().transverse();
-	    float JpsiPi_dxyerr = psi_vFit_vertex_noMC->error().rerr(bestVtx.position());
+	    float JpsiPi_dxyerr = psi_vFit_vertex_noMC->error().rerr(pvertex.position());
 	    JpsiPi_fit.clear();
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
@@ -533,7 +534,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        float cosine = (px*rx+py*ry+pz*rz)/((px*px+py*py+pz*pz)*(rx*rx+ry*ry+rz*rz));
 	        if (cosine < 0.9 ) continue;
 	        float JpsiPiPi_dxy = psi_vFit_vertex_noMC2->position().transverse();
-	        float JpsiPiPi_dxyerr = psi_vFit_vertex_noMC2->error().rerr(bestVtx.position());
+	        float JpsiPiPi_dxyerr = psi_vFit_vertex_noMC2->error().rerr(pvertex.position());
 	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2) continue;
 
 	        Pi_nhits1->push_back(iTrack1->numberOfHits());
