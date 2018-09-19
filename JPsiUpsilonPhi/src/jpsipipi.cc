@@ -317,7 +317,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  float J_dxy = psi_vFit_vertex_noMC->position().transverse();
-	  float J_dxyerr = psi_vFit_vertex_noMC->error().rerr(psi_vFit_vertex_noMC->position());
+	  float J_dxyerr = psi_vFit_vertex_noMC->error().rerr(bestVtx->position());
       
 	  if (J_dxy/J_dxyerr<5.0) continue;
 	  muontt1.push_back(muon1TT);
@@ -455,7 +455,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	      }
 	    if(psi_vFit_vertex_noMC->chiSquared()>6.) continue;
 	    float JpsiPi_dxy = psi_vFit_vertex_noMC->position().transverse();
-	    float JpsiPi_dxyerr = psi_vFit_vertex_noMC->error().rerr(psi_vFit_vertex_noMC->position());
+	    float JpsiPi_dxyerr = psi_vFit_vertex_noMC->error().rerr(bestVtx->position());
 	    JpsiPi_fit.clear();
 	    if (JpsiPi_dxy/JpsiPi_dxyerr<3) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
@@ -523,9 +523,19 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            continue;
 	          }
 	        if(psi_vFit_vertex_noMC2->chiSquared()>10.) continue;
+	        float px,py,pz,rx,ry,rz;
+	        px = psi_vFit_noMC2->currentState().globalMomentum().x();
+	        py = psi_vFit_noMC2->currentState().globalMomentum().y();
+	        pz = psi_vFit_noMC2->currentState().globalMomentum().z();
+	        rx = psi_vFit_vertex_noMC2->position().x()-bestVtx.x();
+	        ry = psi_vFit_vertex_noMC2->position().y()-bestVtx.y();
+	        rz = psi_vFit_vertex_noMC2->position().z()-bestVtx.z();
+	        float cosine = (px*rx+py*ry+pz*rz)/((px*px+py*py+pz*pz)*(rx*rx+ry*ry+rz*rz));
+	        if (cosine < 0.9 ) continue;
 	        float JpsiPiPi_dxy = psi_vFit_vertex_noMC2->position().transverse();
-	        float JpsiPiPi_dxyerr = psi_vFit_vertex_noMC2->error().rerr(psi_vFit_vertex_noMC2->position());
+	        float JpsiPiPi_dxyerr = psi_vFit_vertex_noMC2->error().rerr(bestVtx->position());
 	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2) continue;
+
 	        Pi_nhits1->push_back(iTrack1->numberOfHits());
             Pi_npixelhits1->push_back(iTrack2->numberOfPixelHits());
             Pi_nhits2->push_back(iTrack2->numberOfHits());
