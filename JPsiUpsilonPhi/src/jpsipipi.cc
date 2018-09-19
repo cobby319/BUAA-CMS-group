@@ -179,7 +179,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   iEvent.getByToken(primaryVertices_Label, primaryVertices_handle);
 
   bestVtx = *(primaryVertices_handle->begin());
-  const GlobalPoint pvertex(new GlobalPoint(bestVtx.x(),bestVtx.y(),bestVtx.z()));
+  const GlobalPoint pvertex(bestVtx.x(),bestVtx.y(),bestVtx.z());
   //nVtx = primaryVertices_handle->size(); 
   
   //*****************************************
