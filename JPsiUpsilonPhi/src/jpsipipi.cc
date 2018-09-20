@@ -206,7 +206,8 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  
 	  //opposite charge 
 	  if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue;
-
+      if (!(iMuon1->isGlobalMuon()) && !(iMuon2->isGlobalMuon()) ) continue;
+      if (!(iMuon1->isTrackerMuon()) || !(iMuon2->isTrackerMuon()) ) continue;
 	  TrackRef glbTrackP;	  
 	  TrackRef glbTrackM;	  
 	  
@@ -326,7 +327,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  muontt1.push_back(muon1TT);
 	  muontt2.push_back(muon2TT);
 	  J_vertexchi2->push_back(psi_vFit_vertex_noMC->chiSquared());
-	  J_lxy->push_back(J_dxy);
+      J_lxy->push_back(J_dxy);
 	  J_lxyErr->push_back(J_dxyerr);
 	  //fill variables?iMuon1->track()->pt()
 	  JpsiFTS.push_back(psi_vFit_noMC->initialState().freeTrajectoryState());
@@ -393,7 +394,10 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    
   	    if(iTrack1->vertexChi2()>10) continue;
   	    if(!(iTrack1->trackHighPurity())) continue;
-  	    
+  	    if(iTrack1->numberOfHits()<6) continue;
+  	    if(iTrack1->numberOfPixelHits()<2) continue;
+  	    if(iTrack1->dxy(bestVtx.position())/iTrack1->dxyError() < 2.0) continue;
+        if ( IsTheSame(*iTrack1, muontt1.at(i).track()) || IsTheSame(*iTrack1,muontt2.at(i).track()) ) continue;
   	    reco::TransientTrack track1TT((*theB).build(iTrack1->bestTrack()));
   	    //FreeTrajectoryState pi_trajectory = track1TT.impactPointTSCP().theState();
   	    //ClosestApproachInRPhi JpsiPi;
@@ -462,7 +466,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    float JpsiPi_dxy = TMath::Sqrt(dx1*dx1+dy1*dy1);
 	    float JpsiPi_dxyerr = psi_vFit_vertex_noMC->error().rerr(pvertex);
 	    JpsiPi_fit.clear();
-	    if (JpsiPi_dxy/JpsiPi_dxyerr<3) continue;
+	    //if (JpsiPi_dxy/JpsiPi_dxyerr<3) continue;
 	    for(View<pat::PackedCandidate>::const_iterator iTrack2= iTrack1+1; iTrack2 != thePATTrackHandle->end();++iTrack2)
 	    {
             if((iTrack1->charge())*(iTrack2->charge())==1) continue;
@@ -473,7 +477,10 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	        if(iTrack2->charge() == 0) continue; //NO neutral objects
   	        //if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
-  	        
+  	        if(iTrack2->numberOfHits()<6) continue;
+  	        if(iTrack2->numberOfPixelHits()<2) continue;
+  	        if(iTrack2->dxy(bestVtx.position())/iTrack2->dxyError() < 1.0) continue;
+  	        if ( IsTheSame(*iTrack2, muontt1.at(i).track()) || IsTheSame(*iTrack2,muontt2.at(i).track()) ) continue;
             reco::TransientTrack track2TT((*theB).build(iTrack2->bestTrack()));
   	        //begin vertex fit of Jpsi and pi1
             //ParticleMass Jpsi_mass = 3.0969;
@@ -527,7 +534,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            //std::cout << "negative chisq from psi fit" << endl;
 	            continue;
 	          }
-	        if(psi_vFit_vertex_noMC2->chiSquared()>10.) continue;
+	        if(psi_vFit_vertex_noMC2->chiSquared()>6.) continue;
 	        float px,py,pz,rx,ry,rz;
 	        px = psi_vFit_noMC2->currentState().globalMomentum().x();
 	        py = psi_vFit_noMC2->currentState().globalMomentum().y();
@@ -539,10 +546,10 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        if (cosine < 0.9 ) continue;
             float JpsiPiPi_dxy = TMath::Sqrt(rx*rx+ry*ry);
 	        float JpsiPiPi_dxyerr = psi_vFit_vertex_noMC2->error().rerr(pvertex);
-	        if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2) continue;
+	        //if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2) continue;
 
 	        Pi_nhits1->push_back(iTrack1->numberOfHits());
-            Pi_npixelhits1->push_back(iTrack2->numberOfPixelHits());
+            Pi_npixelhits1->push_back(iTrack1->numberOfPixelHits());
             Pi_nhits2->push_back(iTrack2->numberOfHits());
             Pi_npixelhits2->push_back(iTrack2->numberOfPixelHits());
             Pi_eta1->push_back(iTrack1->eta());
@@ -642,7 +649,12 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
    JPiPi_z->clear();
 
 }
-
+bool jpsipipi::IsTheSame(const pat::GenericParticle& tk, const reco::Track  mu){
+  double DeltaEta = fabs(mu.eta()-tk.eta());
+  double DeltaP   = fabs(mu.p()-tk.p());
+  if (DeltaEta < 0.02 && DeltaP < 0.02) return true;
+  return false;
+}
 
 // ------------ method called once each job just before starting event loop  ------------
 
