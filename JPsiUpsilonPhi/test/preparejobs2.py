@@ -5,7 +5,7 @@ import os
 def printPath(path):  
     if not os.path.exists("OUTPUTS/"+type+"/JOBS/catalog_"+type+".txt"): 
         os.mknod("OUTPUTS/"+type+"/JOBS/catalog_"+type+".txt")
-    file=open("OUTPUTS/"+type+"/JOBS/catalog_"+type+".txt",'a')
+    catalogfile=open("OUTPUTS/"+type+"/JOBS/catalog_"+type+".txt",'a')
     for file in os.listdir(path):
         if os.path.isfile(path+'/'+file):
             if '.root' in file:
@@ -13,7 +13,7 @@ def printPath(path):
                 file.write("\n")
         else :
             printPath(path+'/'+file)
-    file.close()
+    catalogfile.close()
 
 
 def prepare_job_script(theCatalog,jobID):
