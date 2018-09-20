@@ -472,7 +472,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             if((iTrack1->charge())*(iTrack2->charge())==1) continue;
             
             if(iTrack2->pt()<0.8)continue;
-  	        if(iTrack2->eta()>2||iTrack1->eta()<-2)continue;
+  	        if(iTrack2->eta()>2||iTrack2->eta()<-2)continue;
   	        if(!(iTrack2->bestTrack())) continue;
   	        if(iTrack2->charge() == 0) continue; //NO neutral objects
   	        //if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)

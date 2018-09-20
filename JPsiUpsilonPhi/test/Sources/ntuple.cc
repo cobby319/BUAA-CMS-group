@@ -71,6 +71,11 @@ void ntuple::Loop()
       pion2.SetPtEtaPhiE(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pi_e2->at(piN));
       mon.fillHisto("M_J/Psi","tot",jpsi.M(),weight);
       mon.fillHisto("pT_J/Psi","tot",jpsi.Pt(),weight);
+      mon.fillHisto("Deta JpsiPi1","tot",jpsi.Eta()-pion1.Eta(),weight); 
+      mon.fillHisto("Deta JpsiPi2","tot",jpsi.Eta()-pion2.Eta(),weight); 
+      mon.fillHisto("Dphi JpsiPi1","tot",jpsi.Phi()-pion1.Phi(),weight); 
+      mon.fillHisto("Dphi JpsiPi2","tot",jpsi.Phi()-pion2.Phi(),weight); 
+      mon.fillHisto("lxy_jpsipipi","tot",JPiPi_lxy->at(piN),weight); 
       float jpipi_mass = (jpsi+pion1+pion2).M();
       float px,py,pz;
       float rx,ry,rz;
@@ -82,12 +87,12 @@ void ntuple::Loop()
       rz = JPiPi_z->at(piN);
       float cosine = (px*rx+py*ry+pz*rz)/((px*px+py*py+pz*pz)*(rx*rx+ry*ry+rz*rz));
       mon.fillHisto("cosine of P&r","total",cosine,weight);
-      if (cosine < 0.9 ) continue;
       float pipi_mass =(pion1+pion2).M();
       if (pipi_mass>0.81 && pipi_mass<0.97) continue;
       if (pipi_mass>1.01 && pipi_mass<1.03) continue;
       if (pipi_mass<0.35) continue;
-      mon.fillHisto("M_J/PsiPi+Pi-","total",jpipi_mass,weight);
+      mon.fillHisto("M_J/PsiPi+Pi- 3-8","total",jpipi_mass,weight);
+      if (jpipi_mass>4.0 &&jpipi_mass<5.0)   mon.fillHisto("M_J/PsiPi+Pi- 4-5","total",jpipi_mass,weight);
       mon.fillHisto("M_JpsiPi1&M_JpsiPi2","total",(jpsi+pion1).M(),(jpsi+pion2).M(),weight);
 
      // if (jpipi_mass>4.1 &&jpipi_mass<5)  cout <<  "jpp mass is  " << jpipi_mass << endl;
