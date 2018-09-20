@@ -207,7 +207,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  //opposite charge 
 	  if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue;
       if (!(iMuon1->isGlobalMuon()) && !(iMuon2->isGlobalMuon()) ) continue;
-      if (!(iMuon1->isTrackerMuon()) || !(iMuon2->isTrackerMuon()) ) continue;
+      //if (!(iMuon1->isTrackerMuon()) || !(iMuon2->isTrackerMuon()) ) continue;
 	  TrackRef glbTrackP;	  
 	  TrackRef glbTrackM;	  
 	  
