@@ -9,8 +9,8 @@ def printPath(path):
     for file in os.listdir(path):
         if os.path.isfile(path+'/'+file):
             if '.root' in file:
-                file.write('dcap://maite.iihe.ac.be'+path+'/'+file)
-                file.write("\n")
+                catalogfile.write('dcap://maite.iihe.ac.be'+path+'/'+file)
+                catalogfile.write("\n")
         else :
             printPath(path+'/'+file)
     catalogfile.close()
