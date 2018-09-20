@@ -82,6 +82,7 @@ private:
   void printout(const RefCountedKinematicVertex& myVertex) const;
   void printout(const RefCountedKinematicParticle& myParticle) const;
   void printout(const RefCountedKinematicTree& myTree) const;
+  bool IsTheSame(const pat::GenericParticle& tk, const reco::Track mu);
 
     // ----------member data ---------------------------
   
