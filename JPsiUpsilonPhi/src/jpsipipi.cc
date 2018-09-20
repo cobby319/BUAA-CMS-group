@@ -534,7 +534,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            //std::cout << "negative chisq from psi fit" << endl;
 	            continue;
 	          }
-	        if(psi_vFit_vertex_noMC2->chiSquared()>6.) continue;
+	        if(psi_vFit_vertex_noMC2->chiSquared() > psi_vFit_vertex_noMC->chiSquared() + 6.0 ) continue;
 	        float px,py,pz,rx,ry,rz;
 	        px = psi_vFit_noMC2->currentState().globalMomentum().x();
 	        py = psi_vFit_noMC2->currentState().globalMomentum().y();
