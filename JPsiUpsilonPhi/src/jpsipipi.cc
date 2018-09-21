@@ -206,7 +206,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  
 	  //opposite charge 
 	  if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue;
-      if (!(iMuon1->isGlobalMuon()) && !(iMuon2->isGlobalMuon()) ) continue;
+      //if (!(iMuon1->isGlobalMuon()) && !(iMuon2->isGlobalMuon()) ) continue;
       //if (!(iMuon1->isTrackerMuon()) || !(iMuon2->isTrackerMuon()) ) continue;
 	  TrackRef glbTrackP;	  
 	  TrackRef glbTrackM;	  
@@ -223,8 +223,8 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	      continue;
 	    }
 
-	  if(iMuon1->track()->pt()<4.0) continue;
-	  if(iMuon2->track()->pt()<4.0) continue;
+	  if(iMuon1->track()->pt()<2.0) continue;
+	  if(iMuon2->track()->pt()<2.0) continue;
 
 	  if(!(glbTrackM->quality(reco::TrackBase::highPurity))) continue;
 	  if(!(glbTrackP->quality(reco::TrackBase::highPurity))) continue;	 
@@ -386,11 +386,11 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	{
 		
 		
-  	    if(iTrack1->pt()<1)continue;
-  	    if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
+  	    //if(iTrack1->pt()<1)continue;
+  	    //if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
   	    if(!(iTrack1->bestTrack())) continue;
   	    if(iTrack1->bestTrack()->charge() == 0) continue; //NO neutral objects
-  	    //if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+  	    if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	    
   	    if(iTrack1->vertexChi2()>10) continue;
   	    if(!(iTrack1->trackHighPurity())) continue;
@@ -471,11 +471,11 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    {
             if((iTrack1->charge())*(iTrack2->charge())==1) continue;
             
-            if(iTrack2->pt()<0.8)continue;
-  	        if(iTrack2->eta()>2||iTrack2->eta()<-2)continue;
+            if(iTrack2->pt()<1)continue;
+  	        //if(iTrack2->eta()>2||iTrack2->eta()<-2)continue;
   	        if(!(iTrack2->bestTrack())) continue;
   	        if(iTrack2->charge() == 0) continue; //NO neutral objects
-  	        //if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+  	        if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
   	        if(iTrack2->numberOfHits()<6) continue;
   	        if(iTrack2->numberOfPixelHits()<2) continue;
