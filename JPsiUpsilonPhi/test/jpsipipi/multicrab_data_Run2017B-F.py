@@ -66,7 +66,7 @@ if __name__ == '__main__':
     config = config()
 
     name = '_data'
-    config.General.workArea = 'crab_Jpsipipi0924Run2017'
+    config.General.workArea = 'crab_JpsipipiRun2017'
     config.General.transferLogs = False
     config.General.transferOutputs = True
     config.JobType.pluginName = 'Analysis'
@@ -76,8 +76,9 @@ if __name__ == '__main__':
 #    config.JobType.pyCfgParams = ['DataProcessing=rerecodata']
 #    config.JobType.pyCfgParams = ['DataProcessing=promptdata']
     config.Data.inputDBS = 'global'
-    config.Data.splitting = 'LumiBased'
-    config.Data.unitsPerJob = 40000
+    config.Data.splitting = 'Automatic'
+    #config.Data.splitting = 'LumiBased'
+    #config.Data.unitsPerJob = 40000
     config.Data.publication = False
     config.Data.ignoreLocality = False
     config.Data.lumiMask = 'Cert_294927-306462_13TeV_PromptReco_Collisions17_JSON.txt'
