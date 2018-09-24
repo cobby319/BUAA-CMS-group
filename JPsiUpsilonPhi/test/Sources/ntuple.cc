@@ -70,8 +70,8 @@ void ntuple::Loop()
       jpsi.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN)); 
       pion1.SetPtEtaPhiM(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass);
       pion2.SetPtEtaPhiM(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass);
-      mon.fillHisto("M_J/Psi","tot",jpsi.M(),weight);
-      mon.fillHisto("pT_J/Psi","tot",jpsi.Pt(),weight);
+      mon.fillHisto("M_J","tot",jpsi.M(),weight);
+      mon.fillHisto("pT_J","tot",jpsi.Pt(),weight);
       mon.fillHisto("Deta JpsiPi1","tot",jpsi.Eta()-pion1.Eta(),weight); 
       mon.fillHisto("Deta JpsiPi2","tot",jpsi.Eta()-pion2.Eta(),weight); 
       mon.fillHisto("Dphi JpsiPi1","tot",jpsi.Phi()-pion1.Phi(),weight); 
@@ -92,18 +92,18 @@ void ntuple::Loop()
       if (pipi_mass>0.81 && pipi_mass<0.97) continue;
       if (pipi_mass>1.01 && pipi_mass<1.03) continue;
       if (pipi_mass<0.35) continue;
-      mon.fillHisto("M_J/PsiPi+Pi- 3-8","total",jpipi_mass,weight);
-      if (jpipi_mass>4.0 &&jpipi_mass<5.0)   mon.fillHisto("M_J/PsiPi+Pi- 4-5","total",jpipi_mass,weight);
-      mon.fillHisto("M_JpsiPi1&M_JpsiPi2","total",(jpsi+pion1).M(),(jpsi+pion2).M(),weight);
+      mon.fillHisto("M_JPP3-8","total",jpipi_mass,weight);
+      if (jpipi_mass>4.0 &&jpipi_mass<5.0)   mon.fillHisto("M_JPP4-5","total",jpipi_mass,weight);
+      mon.fillHisto("M_JpsiPi1&M_JpsiPi2","total",(jpsi+pion1).M()*(jpsi+pion1).M(),(jpsi+pion2).M()*(jpsi+pion2).M(),weight);
 
      // if (jpipi_mass>4.1 &&jpipi_mass<5)  cout <<  "jpp mass is  " << jpipi_mass << endl;
-      if (jpipi_mass>4.2 &&jpipi_mass<4.25)         mon.fillHisto("M_J/PsiPicut4.20-4.25","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.25 &&jpipi_mass<4.3)         mon.fillHisto("M_J/PsiPicut4.25-4.30","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.3 &&jpipi_mass<4.4)          mon.fillHisto("M_J/PsiPicut4.30-4.40","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.4 &&jpipi_mass<4.7)          mon.fillHisto("M_J/PsiPicut4.40-4.70","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.7 &&jpipi_mass<5.0)          mon.fillHisto("M_J/PsiPicut4.70-5.00","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.00 &&jpipi_mass<4.20)        mon.fillHisto("M_J/PsiPicut4.00-4.20","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.24 &&jpipi_mass<4.28)        mon.fillHisto("M_J/PsiPicut4.24-4.28","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.2 &&jpipi_mass<4.25)         mon.fillHisto("M_JPP4.20-4.25","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.25 &&jpipi_mass<4.3)         mon.fillHisto("M_JPP4.25-4.30","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.3 &&jpipi_mass<4.4)          mon.fillHisto("M_JPP4.30-4.40","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.4 &&jpipi_mass<4.7)          mon.fillHisto("M_JPP4.40-4.70","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.7 &&jpipi_mass<5.0)          mon.fillHisto("M_JPP4.70-5.00","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.00 &&jpipi_mass<4.20)        mon.fillHisto("M_JPP4.00-4.20","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.24 &&jpipi_mass<4.28)        mon.fillHisto("M_JPP4.24-4.28","total",(jpsi+pion1).M(),weight);
 
       // if (Cut(ientry) < 0) continue;
    }
