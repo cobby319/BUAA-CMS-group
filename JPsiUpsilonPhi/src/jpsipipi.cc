@@ -394,8 +394,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    
   	    if(iTrack1->vertexChi2()>10) continue;
   	    if(!(iTrack1->trackHighPurity())) continue;
-  	    if(iTrack1->numberOfHits()<5) continue;
-  	    if(iTrack1->numberOfPixelHits()<1) continue;
+  	    if(iTrack1->numberOfHits()<6) continue;
+  	    if(iTrack1->numberOfPixelHits()<2) continue;
   	    if(iTrack1->dxy(bestVtx.position())/iTrack1->dxyError() < 2.0) continue;
         if ( IsTheSame(*iTrack1, muontt1.at(i).track()) || IsTheSame(*iTrack1,muontt2.at(i).track()) ) continue;
   	    reco::TransientTrack track1TT((*theB).build(iTrack1->bestTrack()));
@@ -477,8 +477,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	        if(iTrack2->charge() == 0) continue; //NO neutral objects
   	        //if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
-  	        if(iTrack2->numberOfHits()<5) continue;
-  	        if(iTrack2->numberOfPixelHits()<1) continue;
+  	        if(iTrack2->numberOfHits()<6) continue;
+  	        if(iTrack2->numberOfPixelHits()<2) continue;
   	        if(iTrack2->dxy(bestVtx.position())/iTrack2->dxyError() < 1.0) continue;
   	        if ( IsTheSame(*iTrack2, muontt1.at(i).track()) || IsTheSame(*iTrack2,muontt2.at(i).track()) ) continue;
             reco::TransientTrack track2TT((*theB).build(iTrack2->bestTrack()));
