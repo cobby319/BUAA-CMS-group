@@ -61,10 +61,6 @@ void ntuple::Loop()
 
       auto smallestchi2 = std::min_element(Pi_vertexchisq2->begin(), Pi_vertexchisq2->end());
       int piN =std::distance(Pi_vertexchisq2->begin(), smallestchi2);
-      if(jentry % 10000 ==0) {
-         cout <<  "selected piN-1 is " << piN -1 << "and selected chi2 at piN-1 is "<< Pi_vertexchisq2->at(piN-1)<<endl;
-         cout <<  "piN  is " << piN << "and selected chi2 at piN is "<< Pi_vertexchisq2->at(piN)<< endl;
-         }
       auto minchi2J = std::min_element(J_vertexchi2->begin(), J_vertexchi2->end());
       int jpsiN =std::distance(J_vertexchi2->begin(), minchi2J) ;
       //cout <<  "selected jpsi is " << jpsiN << endl;
