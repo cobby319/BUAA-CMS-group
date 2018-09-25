@@ -60,18 +60,21 @@ void ntuple::Loop()
       mon.fillHisto("Num_J/Psi","tot",nJ,weight);;
 
       auto smallestchi2 = std::min_element(Pi_vertexchisq2->begin(), Pi_vertexchisq2->end());
-      int piN =std::distance(Pi_vertexchisq2->begin(), smallestchi2);
-      //cout <<  "selected pi is " << piN << endl;
-      auto largestlxy = std::max_element(J_lxy->begin(), J_lxy->end());
-      int jpsiN =std::distance(J_lxy->begin(), largestlxy);
+      int piN =std::distance(Pi_vertexchisq2->begin(), smallestchi2) -1;
+      if(jentry % 10000 ==0) {
+         cout <<  "selected piN-1 is " << piN -1 << "and selected chi2 at piN-1 is "<< Pi_vertexchisq2->at(piN-1)<<endl;
+         cout <<  "piN  is " << piN << "and selected chi2 at piN is "<< Pi_vertexchisq2->at(piN)<< endl;
+         }
+      auto minchi2J = std::min_element(J_vertexchi2->begin(), J_vertexchi2->end());
+      int jpsiN =std::distance(J_vertexchi2->begin(), minchi2J) -1;
       //cout <<  "selected jpsi is " << jpsiN << endl;
       TLorentzVector jpsi, pion1,pion2;
       float Pion_mass = 0.13957061;
       jpsi.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN)); 
       pion1.SetPtEtaPhiM(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass);
       pion2.SetPtEtaPhiM(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass);
-      mon.fillHisto("M_J/Psi","tot",jpsi.M(),weight);
-      mon.fillHisto("pT_J/Psi","tot",jpsi.Pt(),weight);
+      mon.fillHisto("M_JPsi","tot",jpsi.M(),weight);
+      mon.fillHisto("pT_JPsi","tot",jpsi.Pt(),weight);
       mon.fillHisto("Deta JpsiPi1","tot",jpsi.Eta()-pion1.Eta(),weight); 
       mon.fillHisto("Deta JpsiPi2","tot",jpsi.Eta()-pion2.Eta(),weight); 
       mon.fillHisto("Dphi JpsiPi1","tot",jpsi.Phi()-pion1.Phi(),weight); 
@@ -92,18 +95,18 @@ void ntuple::Loop()
       if (pipi_mass>0.81 && pipi_mass<0.97) continue;
       if (pipi_mass>1.01 && pipi_mass<1.03) continue;
       if (pipi_mass<0.35) continue;
-      mon.fillHisto("M_J/PsiPi+Pi- 3-8","total",jpipi_mass,weight);
-      if (jpipi_mass>4.0 &&jpipi_mass<5.0)   mon.fillHisto("M_J/PsiPi+Pi- 4-5","total",jpipi_mass,weight);
+      mon.fillHisto("M_JPsiPiPi3-8","total",jpipi_mass,weight);
+      if (jpipi_mass>4.0 &&jpipi_mass<5.0)   mon.fillHisto("M_JPsiPiPi4-5","total",jpipi_mass,weight);
       mon.fillHisto("M_JpsiPi1&M_JpsiPi2","total",(jpsi+pion1).M(),(jpsi+pion2).M(),weight);
 
      // if (jpipi_mass>4.1 &&jpipi_mass<5)  cout <<  "jpp mass is  " << jpipi_mass << endl;
-      if (jpipi_mass>4.2 &&jpipi_mass<4.25)         mon.fillHisto("M_J/PsiPicut4.20-4.25","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.25 &&jpipi_mass<4.3)         mon.fillHisto("M_J/PsiPicut4.25-4.30","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.3 &&jpipi_mass<4.4)          mon.fillHisto("M_J/PsiPicut4.30-4.40","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.4 &&jpipi_mass<4.7)          mon.fillHisto("M_J/PsiPicut4.40-4.70","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.7 &&jpipi_mass<5.0)          mon.fillHisto("M_J/PsiPicut4.70-5.00","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.00 &&jpipi_mass<4.20)        mon.fillHisto("M_J/PsiPicut4.00-4.20","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.24 &&jpipi_mass<4.28)        mon.fillHisto("M_J/PsiPicut4.24-4.28","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.1 &&jpipi_mass<4.2)         mon.fillHisto("M_JPsiPicut4.1-4.2","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.2 &&jpipi_mass<4.25)         mon.fillHisto("M_JPsiPicut4.2-4.25","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.25 &&jpipi_mass<4.3)          mon.fillHisto("M_JPsiPicut4.25-4.3","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.3 &&jpipi_mass<4.4)          mon.fillHisto("M_JPsiPicut4.3-4.4","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.4 &&jpipi_mass<4.7)          mon.fillHisto("M_JPsiPicut4.4-4.7","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.7 &&jpipi_mass<5.0)        mon.fillHisto("M_JPsiPicut4.7-5.0","total",(jpsi+pion1).M(),weight);
+      //if (jpipi_mass>4.24 &&jpipi_mass<4.28)        mon.fillHisto("M_JPsiPicut4.24-4.28","total",(jpsi+pion1).M(),weight);
 
       // if (Cut(ientry) < 0) continue;
    }

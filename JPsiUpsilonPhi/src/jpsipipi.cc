@@ -460,7 +460,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        //std::cout << "negative chisq from psi fit" << endl;
 	        continue;
 	      }
-	    if(psi_vFit_vertex_noMC->chiSquared()>6.) continue;
+	    if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
 	    float dx1 = psi_vFit_vertex_noMC->position().x()-bestVtx.x();
 	    float dy1 = psi_vFit_vertex_noMC->position().y()-bestVtx.y();
 	    float JpsiPi_dxy = TMath::Sqrt(dx1*dx1+dy1*dy1);
