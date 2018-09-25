@@ -57,10 +57,11 @@ void ntuple::Loop()
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       if(jentry % 10000 ==0) cout << jentry << " of " << nentries << endl;
       double weight = 1.;
-      mon.fillHisto("Num_J/Psi","tot",nJ,weight);;
+      mon.fillHisto("Num_JPsi","tot",nJ,weight);;
 
       auto smallestchi2 = std::min_element(Pi_vertexchisq2->begin(), Pi_vertexchisq2->end());
       int piN =std::distance(Pi_vertexchisq2->begin(), smallestchi2);
+      cout <<  "piN  is " << piN << endl;
       auto minchi2J = std::min_element(J_vertexchi2->begin(), J_vertexchi2->end());
       int jpsiN =std::distance(J_vertexchi2->begin(), minchi2J) ;
       //cout <<  "selected jpsi is " << jpsiN << endl;
