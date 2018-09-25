@@ -66,7 +66,7 @@ void ntuple::Loop()
          cout <<  "piN  is " << piN << "and selected chi2 at piN is "<< Pi_vertexchisq2->at(piN)<< endl;
          }
       auto minchi2J = std::min_element(J_vertexchi2->begin(), J_vertexchi2->end());
-      int jpsiN =std::distance(J_vertexchi2->begin(), minchi2J) -1;
+      int jpsiN =std::distance(J_vertexchi2->begin(), minchi2J) ;
       //cout <<  "selected jpsi is " << jpsiN << endl;
       TLorentzVector jpsi, pion1,pion2;
       float Pion_mass = 0.13957061;
