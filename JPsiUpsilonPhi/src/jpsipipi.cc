@@ -538,10 +538,10 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        float px,py,pz,rx,ry,rz;
 	        px = psi_vFit_noMC2->currentState().globalMomentum().x();
 	        py = psi_vFit_noMC2->currentState().globalMomentum().y();
-	        pz = psi_vFit_noMC2->currentState().globalMomentum().z();
+	        //pz = psi_vFit_noMC2->currentState().globalMomentum().z();
 	        rx = psi_vFit_vertex_noMC2->position().x()-bestVtx.x();
 	        ry = psi_vFit_vertex_noMC2->position().y()-bestVtx.y();
-	        rz = psi_vFit_vertex_noMC2->position().z()-bestVtx.z();
+	        //rz = psi_vFit_vertex_noMC2->position().z()-bestVtx.z();
 	        //float cosine = (px*rx+py*ry+pz*rz)/((px*px+py*py+pz*pz)*(rx*rx+ry*ry+rz*rz));
 	        float cosine = (px*rx+py*ry)/((px*px+py*py)*(rx*rx+ry*ry));
 	        if (cosine < 0.9 ) continue;
