@@ -109,7 +109,7 @@ void ntuple::Loop()
       mon.fillHisto("JPiPi_z","",JPiPi_z->at(piN),weight); 
       mon.fillHisto("Pi_nhits1","",Pi_nhits1->at(piN),weight); 
       mon.fillHisto("Pi_npixelhits1","",Pi_npixelhits1->at(piN),weight); 
-      mon.fillHisto("Pi_nhits2","",Pi_nhits2); 
+      mon.fillHisto("Pi_nhits2","",Pi_nhits2->at(piN),weight); 
       mon.fillHisto("Pi_npixelhits2","",Pi_npixelhits2->at(piN),weight); 
       mon.fillHisto("Pi_eta1","",Pi_eta1->at(piN),weight); 
       mon.fillHisto("Pi_eta2","",Pi_eta2->at(piN),weight); 
