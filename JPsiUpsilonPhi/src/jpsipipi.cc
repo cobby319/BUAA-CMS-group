@@ -387,7 +387,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 		
 		
   	    //if(iTrack1->pt()<0.8)continue;
-  	    //if(iTrack1->eta()>2||iTrack1->eta()<-2)continue;
+  	    if(iTrack1->eta()>2.4||iTrack1->eta()<-2.4)continue;
   	    if(!(iTrack1->bestTrack())) continue;
   	    if(iTrack1->bestTrack()->charge() == 0) continue; //NO neutral objects
   	    //if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
@@ -472,7 +472,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             if((iTrack1->charge())*(iTrack2->charge())==1) continue;
             
             if(iTrack2->pt()<0.8)continue;
-  	        //if(iTrack2->eta()>2||iTrack2->eta()<-2)continue;
+  	        if(iTrack2->eta()>2.4||iTrack2->eta()<-2.4)continue;
   	        if(!(iTrack2->bestTrack())) continue;
   	        if(iTrack2->charge() == 0) continue; //NO neutral objects
   	        //if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
@@ -535,7 +535,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            continue;
 	          }
 	        if(psi_vFit_vertex_noMC2->chiSquared() > psi_vFit_vertex_noMC->chiSquared() + 6.0 ) continue;
-	        float px,py,pz,rx,ry,rz;
+	        float px,py,rx,ry;
 	        px = psi_vFit_noMC2->currentState().globalMomentum().x();
 	        py = psi_vFit_noMC2->currentState().globalMomentum().y();
 	        //pz = psi_vFit_noMC2->currentState().globalMomentum().z();
