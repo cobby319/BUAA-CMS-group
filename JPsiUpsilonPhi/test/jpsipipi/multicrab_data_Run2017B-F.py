@@ -66,7 +66,7 @@ if __name__ == '__main__':
     config = config()
 
     name = '_data'
-    config.General.workArea = 'crab_JpsipipiRun2017'
+    config.General.workArea = 'crab_Charmonium_Run2017'
     config.General.transferLogs = False
     config.General.transferOutputs = True
     config.JobType.pluginName = 'Analysis'
