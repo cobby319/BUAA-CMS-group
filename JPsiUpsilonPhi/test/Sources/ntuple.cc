@@ -127,6 +127,7 @@ void ntuple::Loop()
       mon.fillHisto("Pi_dxyerr2","",Pi_dxyerr2->at(piN),weight); 
       mon.fillHisto("Pi_vertexchisq1","",Pi_vertexchisq1->at(piN),weight); 
       mon.fillHisto("Pi_vertexchisq2","",Pi_vertexchisq2->at(piN),weight); 
+      if(!mu1tight->at(jpsiN) || !mu2tight->at(jpsiN)) continue;
       TLorentzVector jpsi, pion1,pion2;
       float Pion_mass = 0.13957061;
       jpsi.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN)); 
