@@ -3,7 +3,7 @@ import FWCore.ParameterSet.Config as cms
 #this is our version of the patMuonsWithTrigger using MINIAOD
 
 unpackedPatTrigger = cms.EDProducer("PATTriggerObjectStandAloneUnpacker",
-  patTriggerObjectsStandAlone = cms.InputTag( 'slimmedPatTrigger' ),
+  patTriggerObjectsStandAlone = cms.InputTag( 'selectedPatTrigger' ),
   triggerResults              = cms.InputTag( 'TriggerResults::HLT' ),
   unpackFilterLabels          = cms.bool( True )
 )
@@ -11,7 +11,7 @@ unpackedPatTrigger = cms.EDProducer("PATTriggerObjectStandAloneUnpacker",
 ### ==== Then perform a match for all HLT triggers of interest
 PATmuonTriggerMatchHLT = cms.EDProducer( "PATTriggerMatcherDRDPtLessByR",
     src     = cms.InputTag( "slimmedMuons" ),
-    matched = cms.InputTag( "unpackedPatTrigger" ), #slimmedPatTrigger" ), #selectedPatTrigger" ),
+    matched = cms.InputTag( "selectedPatTrigger" ),
     matchedCuts = cms.string(""),
     maxDPtRel = cms.double( 0.5 ),
     maxDeltaR = cms.double( 0.5 ),
