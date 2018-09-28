@@ -128,7 +128,7 @@ void ntuple::Loop()
       mon.fillHisto("Pi_vertexchisq1","",Pi_vertexchisq1->at(piN),weight); 
       mon.fillHisto("Pi_vertexchisq2","",Pi_vertexchisq2->at(piN),weight); 
       //if(!mu1tight->at(jpsiN) || !mu2tight->at(jpsiN)) continue;
-      //if(!mu1loose->at(jpsiN) || !mu2loose->at(jpsiN)) continue;
+      
       //if(Pi_vertexchisq1->at(piN) >6 ) continue;
       //if (Pi_vertexchisq2->at(piN)> 6+Pi_vertexchisq1->at(piN) ) continue;
 
@@ -163,12 +163,13 @@ void ntuple::Loop()
       float cosine = (px*rx+py*ry)/((px*px+py*py)*(rx*rx+ry*ry));
       mon.fillHisto("cosine of P&r","total",cosine,weight);
       float pipi_mass =(pion1+pion2).M();
-      if(deltaRJP1 > 1.0) continue;
-      if(deltaRJP2 > 0.5) continue;
+      if(deltaRJP1 > 1.2) continue;
+      if(deltaRJP2 > 0.8) continue;
       if (pipi_mass>0.81 && pipi_mass<0.97) continue;
       if (pipi_mass>1.01 && pipi_mass<1.03) continue;
       if (pipi_mass<0.35) continue;
-      if (JPiPi_lxy->at(piN) <0.02) continue;
+      if (JPiPi_lxy->at(piN) <0.01) continue;
+      if(!mu1loose->at(jpsiN) || !mu2loose->at(jpsiN)) continue;
       //if (Pi_dxy1->at(piN) <0.008) continue;
       //if (Pi_dxy2->at(piN) <0.008) continue;
       //if(mupNPHits->at(jpsiN) <2) continue;
@@ -177,14 +178,15 @@ void ntuple::Loop()
       //if (Pi_nhits2->at(piN) <6) continue;
       //if (Pi_npixelhits1->at(piN) <2) continue;
       //if (Pi_npixelhits2->at(piN) <2) continue;
-      if(Pi_vertexchisq1->at(piN) >6 ) continue;
-      if (Pi_vertexchisq2->at(piN)>12 ) continue;
+      //if(Pi_vertexchisq1->at(piN) >6 ) continue;
+      //if (Pi_vertexchisq2->at(piN)>12 ) continue;
       if (Pi_eta1->at(piN) >1.5 || Pi_eta1->at(piN) <-1.5) continue;
       if (Pi_eta2->at(piN) >1.5 || Pi_eta2->at(piN) <-1.5) continue;
       mon.fillHisto("M_JPsiPiPi3-8","total",jpipi_mass,weight);
       if (jpipi_mass>4.0 &&jpipi_mass<5.0)   mon.fillHisto("M_JPsiPiPi4-5","total",jpipi_mass,weight);
-      mon.fillHisto("M_JpsiPi1&M_JpsiPi2","total",(jpsi+pion1).M()*(jpsi+pion1).M(),(jpsi+pion2).M()*(jpsi+pion2).M(),weight);
-
+      if (jpipi_mass>4.1 &&jpipi_mass<5.0){
+         mon.fillHisto("M_JpsiPi1&M_JpsiPi2","total",(jpsi+pion1).M()*(jpsi+pion1).M(),(jpsi+pion2).M()*(jpsi+pion2).M(),weight);
+      }
      // if (jpipi_mass>4.1 &&jpipi_mass<5)  cout <<  "jpp mass is  " << jpipi_mass << endl;
       if (jpipi_mass>4.1 &&jpipi_mass<4.2)         mon.fillHisto("M_JPsiPicut4.1-4.2","total",(jpsi+pion1).M(),weight);
       if (jpipi_mass>4.2 &&jpipi_mass<4.25)         mon.fillHisto("M_JPsiPicut4.2-4.25","total",(jpsi+pion1).M(),weight);
