@@ -128,14 +128,14 @@ void ntuple::Loop()
       mon.fillHisto("Pi_vertexchisq1","",Pi_vertexchisq1->at(piN),weight); 
       mon.fillHisto("Pi_vertexchisq2","",Pi_vertexchisq2->at(piN),weight); 
       //if(!mu1tight->at(jpsiN) || !mu2tight->at(jpsiN)) continue;
-      if(!mu1loose->at(jpsiN) || !mu2loose->at(jpsiN)) continue;
-      if(Pi_vertexchisq1->at(piN) >6 ) continue;
-      if (Pi_vertexchisq2->at(piN)> 6+Pi_vertexchisq1->at(piN) ) continue;
-      if (J_lxy->at(jpsiN) <0.008) continue;
-      if (Pi_dxy1->at(piN) <0.008) continue;
-      if (Pi_dxy2->at(piN) <0.008) continue;
-      if (Pi_nhits1->at(piN) <8) continue;
-      if (Pi_nhits2->at(piN) <8) continue;
+      //if(!mu1loose->at(jpsiN) || !mu2loose->at(jpsiN)) continue;
+      //if(Pi_vertexchisq1->at(piN) >6 ) continue;
+      //if (Pi_vertexchisq2->at(piN)> 6+Pi_vertexchisq1->at(piN) ) continue;
+      //if (J_lxy->at(jpsiN) <0.008) continue;
+      //if (Pi_dxy1->at(piN) <0.008) continue;
+      //if (Pi_dxy2->at(piN) <0.008) continue;
+      //if (Pi_nhits1->at(piN) <8) continue;
+      //if (Pi_nhits2->at(piN) <8) continue;
 
       TLorentzVector jpsi, pion1,pion2;
       float Pion_mass = 0.13957061;
