@@ -178,7 +178,7 @@ void ntuple::Loop()
       if (jpipi_mass>4.3 &&jpipi_mass<4.4)          mon.fillHisto("M_JPsiPicut4.3-4.4","total",(jpsi+pion1).M(),weight);
       if (jpipi_mass>4.4 &&jpipi_mass<4.7)          mon.fillHisto("M_JPsiPicut4.4-4.7","total",(jpsi+pion1).M(),weight);
       if (jpipi_mass>4.7 &&jpipi_mass<5.0)        mon.fillHisto("M_JPsiPicut4.7-5.0","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.1 &&jpipi_mass<4.4 && (jpsi+pion1).M() >3.85 &&(jpsi+pion1).M() <3.91){
+      if (jpipi_mass>4.2 &&jpipi_mass<4.3 && (jpsi+pion1).M() >3.86 &&(jpsi+pion1).M() <3.90){
          mon.fillHisto("J_mass","final",J_mass->at(jpsiN),weight); 
          mon.fillHisto("J_px","final",J_px->at(jpsiN),weight); 
          mon.fillHisto("J_py","final",J_py->at(jpsiN),weight); 
@@ -241,6 +241,7 @@ void ntuple::Loop()
          mon.fillHisto("Pi_dxyerr2","final",Pi_dxyerr2->at(piN),weight); 
          mon.fillHisto("Pi_vertexchisq1","final",Pi_vertexchisq1->at(piN),weight); 
          mon.fillHisto("Pi_vertexchisq2","final",Pi_vertexchisq2->at(piN),weight); 
+         mon.fillHisto("pT_JPsi","final",jpsi.Pt(),weight);
       // if (Cut(ientry) < 0) continue;
       }
    }
