@@ -131,12 +131,17 @@ void ntuple::Loop()
       //if(!mu1loose->at(jpsiN) || !mu2loose->at(jpsiN)) continue;
       //if(Pi_vertexchisq1->at(piN) >6 ) continue;
       //if (Pi_vertexchisq2->at(piN)> 6+Pi_vertexchisq1->at(piN) ) continue;
-      //if (J_lxy->at(jpsiN) <0.008) continue;
+      if (JPiPi_lxy->at(jpsiN) <0.005) continue;
       //if (Pi_dxy1->at(piN) <0.008) continue;
       //if (Pi_dxy2->at(piN) <0.008) continue;
-      //if (Pi_nhits1->at(piN) <8) continue;
-      //if (Pi_nhits2->at(piN) <8) continue;
-
+      if(mupNPHits->at(jpsiN) <2) continue;
+      if(mumNPHits->at(jpsiN) <2) continue;
+      if (Pi_nhits1->at(piN) <6) continue;
+      if (Pi_nhits2->at(piN) <6) continue;
+      if (Pi_npixelhits1->at(piN) <2) continue;
+      if (Pi_npixelhits2->at(piN) <2) continue;
+      if (Pi_eta1->at(piN) >1.4 || Pi_eta1->at(piN) <-1.4) continue;
+      if (Pi_eta2->at(piN) >1.4 || Pi_eta2->at(piN) <-1.4) continue;
       TLorentzVector jpsi, pion1,pion2;
       float Pion_mass = 0.13957061;
       jpsi.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN)); 
@@ -146,12 +151,12 @@ void ntuple::Loop()
       //pion2.SetPtEtaPhiM(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass);
       mon.fillHisto("M_JPsi","tot",jpsi.M(),weight);
       mon.fillHisto("pT_JPsi","tot",jpsi.Pt(),weight);
-      if (jpsi.Pt() <15) continue;
-      mon.fillHisto("Deta JpsiPi1","tot",jpsi.Eta()-pion1.Eta(),weight); 
-      mon.fillHisto("Deta JpsiPi2","tot",jpsi.Eta()-pion2.Eta(),weight); 
-      mon.fillHisto("Dphi JpsiPi1","tot",jpsi.Phi()-pion1.Phi(),weight); 
-      mon.fillHisto("Dphi JpsiPi2","tot",jpsi.Phi()-pion2.Phi(),weight); 
-      mon.fillHisto("lxy_jpsipipi","tot",JPiPi_lxy->at(piN),weight); 
+      //if (jpsi.Pt() <10) continue;
+      mon.fillHisto("Deta JpsiPi1","",jpsi.Eta()-pion1.Eta(),weight); 
+      mon.fillHisto("Deta JpsiPi2","",jpsi.Eta()-pion2.Eta(),weight); 
+      mon.fillHisto("Dphi JpsiPi1","",jpsi.Phi()-pion1.Phi(),weight); 
+      mon.fillHisto("Dphi JpsiPi2","",jpsi.Phi()-pion2.Phi(),weight); 
+      mon.fillHisto("lxy_jpsipipi","",JPiPi_lxy->at(piN),weight); 
       float jpipi_mass = (jpsi+pion1+pion2).M();
       float px,py,pz;
       float rx,ry,rz;
@@ -179,6 +184,11 @@ void ntuple::Loop()
       if (jpipi_mass>4.4 &&jpipi_mass<4.7)          mon.fillHisto("M_JPsiPicut4.4-4.7","total",(jpsi+pion1).M(),weight);
       if (jpipi_mass>4.7 &&jpipi_mass<5.0)        mon.fillHisto("M_JPsiPicut4.7-5.0","total",(jpsi+pion1).M(),weight);
       if (jpipi_mass>4.2 &&jpipi_mass<4.3 && (jpsi+pion1).M() >3.86 &&(jpsi+pion1).M() <3.90){
+         mon.fillHisto("Deta JpsiPi1","final",jpsi.Eta()-pion1.Eta(),weight); 
+         mon.fillHisto("Deta JpsiPi2","final",jpsi.Eta()-pion2.Eta(),weight); 
+         mon.fillHisto("Dphi JpsiPi1","final",jpsi.Phi()-pion1.Phi(),weight); 
+         mon.fillHisto("Dphi JpsiPi2","final",jpsi.Phi()-pion2.Phi(),weight); 
+         mon.fillHisto("lxy_jpsipipi","final",JPiPi_lxy->at(piN),weight); 
          mon.fillHisto("J_mass","final",J_mass->at(jpsiN),weight); 
          mon.fillHisto("J_px","final",J_px->at(jpsiN),weight); 
          mon.fillHisto("J_py","final",J_py->at(jpsiN),weight); 
