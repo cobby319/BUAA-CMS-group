@@ -19,10 +19,12 @@ bool SmartSelectionMonitor_hzz::declareHistos_jpsipipi(){
  addHistogram( new TH1F("M_JPsiPiPi3-8",";M_{J/#psi#pi+#pi-};Events",100,3,8));
  addHistogram( new TH1F("M_JPsiPiPi4-5",";M_{J/#psi#pi+#pi-};Events",20,4,5));
  addHistogram( new TH1F("cosine of P&r",";cos#alpha;Events",20,0,1)); 
- addHistogram( new TH1F("Deta JpsiPi1",";#delta #eta;Events",20,-4,4)); 
- addHistogram( new TH1F("Deta JpsiPi2",";#delta #eta;Events",20,-4,4)); 
- addHistogram( new TH1F("Dphi JpsiPi1",";#delta #eta;Events",20,-4,4)); 
- addHistogram( new TH1F("Dphi JpsiPi2",";#delta #eta;Events",20,-4,4)); 
+ addHistogram( new TH1F("Deta_JpsiPi1",";#delta #eta;Events",20,-4,4)); 
+ addHistogram( new TH1F("Deta_JpsiPi2",";#delta #eta;Events",20,-4,4)); 
+ addHistogram( new TH1F("Dphi_JpsiPi1",";#delta #eta;Events",20,-4,4)); 
+ addHistogram( new TH1F("Dphi_JpsiPi2",";#delta #eta;Events",20,-4,4)); 
+ addHistogram( new TH1F("DeltaR_JpsiPi1",";#delta R;Events",20,-4,4)); 
+ addHistogram( new TH1F("DeltaR_JpsiPi2",";#delta R;Events",20,-4,4)); 
  addHistogram( new TH1F("lxy_jpsipipi",";L_{xy};Events",50,0,0.1)); 
  addHistogram( new TH1F("M_JPsiPicut4.1-4.2",";m_{J/psi,Pi};Events",40,3.5,4.3));
  addHistogram( new TH1F("M_JPsiPicut4.2-4.25",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
