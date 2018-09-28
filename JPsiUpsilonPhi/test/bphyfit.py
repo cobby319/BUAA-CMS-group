@@ -1,9 +1,14 @@
 import ROOT as rt
 from ROOT import *
 import os
+import sys
+import re
+
 
 fitMethod = ['1gauss','2gauss']
 fitm = '1gauss'
+if not os.path.exists('1gauss'): 
+    os.makedirs('1gauss')
 histos = {'M_JPsiPicut4.1-4.2_total':'4.1-4.2','M_JPsiPicut4.2-4.25_total':'4.2-4.25','M_JPsiPicut4.25-4.3_total':'4.25-4.3','M_JPsiPicut4.3-4.4_total':'4.3-4.4','M_JPsiPicut4.4-4.7_total':'4.4-4.7','M_JPsiPicut4.7-5.0_total':'4.7-5.0'}
 hval= []
 herrHi =[]
@@ -11,13 +16,14 @@ herrLo =[]
 xval= [4.225,4.275,4.85,4.55,4.35,4.15]
 xerrHi= [0,0,0,0,0,0]
 xerrLo=[0,0,0,0,0,0]
-f =  TFile("Merged_run0925.root")
+
 w = RooWorkspace("w")
 ##This is the initial version
-if True:
+def main():
     if os.path.exists(fitm+"/signalval.txt"): 
         os.remove(fitm+"/signalval.txt")
     sigfile = open(fitm+"/signalval.txt",'a')
+    f =  TFile(path)
     for h in histos:
         if '4.1-4.2' in h:
            bin =4.15
@@ -102,17 +108,27 @@ if True:
         #sigfile.write(str(xval[i])+'\t'+str(hval[i])+'\t'+str(0)+'\t'+str(0)+'\t'+str(-herrLo[i])+'\t'+str(herrHi[i])+'\t')
         sigfile.write('\n')
     sigfile.close()
+    sigfiler = open(fitm+"/signalval.txt",'r')
+    line = sigfiler.readline()
+    while line:
+        print line
+        line = sigfiler.readline()
+    sigfiler.close()
     c2=TCanvas("c2","A Simple Graph with asymmetric error bars",200,10,700,500)
     #graph = rt.TGraphAsymmErrors(6,xval,hval,xerrLo,xerrHi,herrLo,herrHi)
-    graph = rt.TGraphAsymmErrors(fitm+"/signalval.txt", "%lg %lg %lg %lg %lg %lg")
-    print graph.GetErrorYlow(3)
-    graph.SetTitle("Z_{c}(3900) signal events")
-    graph.SetMarkerColor(1)
-    graph.SetMarkerStyle(20)
-    graph.GetXaxis().SetTitle("M_{J/#psi#pi#pi} (GeV)");
-    graph.GetYaxis().SetTitle("Events /50 MeV");
-    graph.GetYaxis().SetRangeUser(0.0,300);
-    graph.Draw("AP")
-    c2.SaveAs(fitm+"/signal3900.pdf")
-
+    #graph = rt.TGraphAsymmErrors(fitm+"/signalval.txt", "%lg %lg %lg %lg %lg %lg")
+    #print graph.GetErrorYlow(3)
+    #graph.SetTitle("Z_{c}(3900) signal events")
+    #graph.SetMarkerColor(1)
+    #graph.SetMarkerStyle(20)
+    #graph.GetXaxis().SetTitle("M_{J/#psi#pi#pi} (GeV)");
+    #graph.GetYaxis().SetTitle("Events /50 MeV");
+    #graph.GetYaxis().SetRangeUser(0.0,300);
+    #graph.Draw("AP")
+    #c2.SaveAs(fitm+"/signal3900.pdf")
+if __name__ == '__main__':
+    path = sys.argv[2]
+    for arg in sys.argv:  
+        print arg
+    main()
 
