@@ -131,11 +131,11 @@ void ntuple::Loop()
       if(!mu1loose->at(jpsiN) || !mu2loose->at(jpsiN)) continue;
       if(Pi_vertexchisq1->at(piN) >6 ) continue;
       if (Pi_vertexchisq2->at(piN)> 6+Pi_vertexchisq1->at(piN) ) continue;
-      if (J_lxy->at(jpsiN) <0.006) continue;
-      if (Pi_dxy1->at(piN) <0.006) continue;
-      if (Pi_dxy2->at(piN) <0.006) continue;
-      if (Pi_nhits1->at(piN) <10) continue;
-      if (Pi_nhits2->at(piN) <10) continue;
+      if (J_lxy->at(jpsiN) <0.003) continue;
+      if (Pi_dxy1->at(piN) <0.003) continue;
+      if (Pi_dxy2->at(piN) <0.003) continue;
+      if (Pi_nhits1->at(piN) <8) continue;
+      if (Pi_nhits2->at(piN) <8) continue;
 
       TLorentzVector jpsi, pion1,pion2;
       float Pion_mass = 0.13957061;
@@ -146,7 +146,7 @@ void ntuple::Loop()
       //pion2.SetPtEtaPhiM(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass);
       mon.fillHisto("M_JPsi","tot",jpsi.M(),weight);
       mon.fillHisto("pT_JPsi","tot",jpsi.Pt(),weight);
-      if (jpsi.Pt() <20) continue;
+      if (jpsi.Pt() <15) continue;
       mon.fillHisto("Deta JpsiPi1","tot",jpsi.Eta()-pion1.Eta(),weight); 
       mon.fillHisto("Deta JpsiPi2","tot",jpsi.Eta()-pion2.Eta(),weight); 
       mon.fillHisto("Dphi JpsiPi1","tot",jpsi.Phi()-pion1.Phi(),weight); 
