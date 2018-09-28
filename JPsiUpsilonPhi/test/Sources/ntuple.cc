@@ -144,7 +144,7 @@ void ntuple::Loop()
 
       mon.fillHisto("M_JPsi","tot",jpsi.M(),weight);
       mon.fillHisto("pT_JPsi","tot",jpsi.Pt(),weight);
-      
+      //if (jpsi.Pt() <10) continue;
       mon.fillHisto("Deta_JpsiPi1","",jpsi.Eta()-pion1.Eta(),weight); 
       mon.fillHisto("Deta_JpsiPi2","",jpsi.Eta()-pion2.Eta(),weight); 
       mon.fillHisto("Dphi_JpsiPi1","",jpsi.Phi()-pion1.Phi(),weight); 
@@ -164,7 +164,6 @@ void ntuple::Loop()
       float cosine = (px*rx+py*ry)/((px*px+py*py)*(rx*rx+ry*ry));
       mon.fillHisto("cosine of P&r","total",cosine,weight);
       float pipi_mass =(pion1+pion2).M();
-      if (jpsi.Pt() >20) continue;
       if(deltaRJP1 > 1.2) continue;
       if(deltaRJP2 > 0.8) continue;
       if (pipi_mass>0.81 && pipi_mass<0.97) continue;
