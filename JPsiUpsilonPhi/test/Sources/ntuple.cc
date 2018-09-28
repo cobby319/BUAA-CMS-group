@@ -130,7 +130,7 @@ void ntuple::Loop()
       //if(!mu1tight->at(jpsiN) || !mu2tight->at(jpsiN)) continue;
       if(!mu1loose->at(jpsiN) || !mu2loose->at(jpsiN)) continue;
       if(Pi_vertexchisq1->at(piN) >6 ) continue;
-      if (Pi_vertexchisq12->at(piN)> 6+Pi_vertexchisq1->at(piN) ) continue;
+      if (Pi_vertexchisq2->at(piN)> 6+Pi_vertexchisq1->at(piN) ) continue;
       if (J_lxy->at(jpsiN) <0.006) continue;
       if (Pi_dxy1->at(piN) <0.006) continue;
       if (Pi_dxy2->at(piN) <0.006) continue;
