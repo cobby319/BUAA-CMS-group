@@ -163,7 +163,8 @@ void ntuple::Loop()
       float cosine = (px*rx+py*ry)/((px*px+py*py)*(rx*rx+ry*ry));
       mon.fillHisto("cosine of P&r","total",cosine,weight);
       float pipi_mass =(pion1+pion2).M();
-
+      if(deltaRJP1 > 0.8) continue;
+      if(deltaRJP2 > 0.5) continue;
       if (pipi_mass>0.81 && pipi_mass<0.97) continue;
       if (pipi_mass>1.01 && pipi_mass<1.03) continue;
       if (pipi_mass<0.35) continue;
