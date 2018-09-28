@@ -131,9 +131,9 @@ void ntuple::Loop()
       if(!mu1loose->at(jpsiN) || !mu2loose->at(jpsiN)) continue;
       if(Pi_vertexchisq1->at(piN) >6 ) continue;
       if (Pi_vertexchisq2->at(piN)> 6+Pi_vertexchisq1->at(piN) ) continue;
-      if (J_lxy->at(jpsiN) <0.003) continue;
-      if (Pi_dxy1->at(piN) <0.003) continue;
-      if (Pi_dxy2->at(piN) <0.003) continue;
+      if (J_lxy->at(jpsiN) <0.008) continue;
+      if (Pi_dxy1->at(piN) <0.008) continue;
+      if (Pi_dxy2->at(piN) <0.008) continue;
       if (Pi_nhits1->at(piN) <8) continue;
       if (Pi_nhits2->at(piN) <8) continue;
 
