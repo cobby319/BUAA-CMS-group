@@ -28,7 +28,7 @@ for hist in histos:
             "output_name": "distribution_PLOTS/test0929_"+hist+".pdf",
             "yaxis_range": [0.1,1000000000],
             "yaxis_moreloglabels":False,
-            "xaxis_label": histos_xlabel[hist]
+            "xaxis_label": histos_xlabel[hist],
             "title": histos[hist]
             #"yaxis_noexponents":True,
             #"output_ic": True,
