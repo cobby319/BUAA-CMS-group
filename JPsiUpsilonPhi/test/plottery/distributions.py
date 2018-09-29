@@ -2,7 +2,7 @@ import ROOT as r
 import os
 import plottery as ply
 
-histos= {'pT_JPsi':'J_pT','DeltaR_JpsiPi1':'JP1_deltaR','DeltaR_JpsiPi2':'JP2_deltaR','JPiPi_lxy':'JPP_lxy'}
+histos= {'pT_JPsi_':'J_pT','DeltaR_JpsiPi1':'JP1_deltaR_','DeltaR_JpsiPi2':'JP2_deltaR_','JPiPi_lxy_':'JPP_lxy'}
 file = r.TFile("../Merged.root")
 for hist in histos:
     h= r.TH1F()
