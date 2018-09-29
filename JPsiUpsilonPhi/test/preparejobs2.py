@@ -80,7 +80,8 @@ def main():
 def harvestJobs():
     global cfgDirectory 
     cfgDirectory = 'OUTPUTS/'+type +'/CONFIGS'
-    os.system("hadd "+cfgDirectory+"/Merged_"+type+".root "+cfgDirectory+"/*.root")
+    os.system("hadd "+cfgDirectory+"/Merged.root "+cfgDirectory+"/*.root")
+    os.system("mv "+cfgDirectory+"/Merged.root .")
 def dotheFit(path):
     os.system("python bphyfit.py "+type+" "+path)
 if __name__ == '__main__':
@@ -93,8 +94,6 @@ if __name__ == '__main__':
     if harvest == "harvest":
         harvestJobs()
     if harvest == "fit":
-        global cfgDirectory 
-        cfgDirectory = 'OUTPUTS/'+type +'/CONFIGS'
-        dotheFit(cfgDirectory+"/Merged_"+type+".root")
+        dotheFit("Merged.root")
 
 
