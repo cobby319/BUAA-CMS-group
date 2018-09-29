@@ -6,7 +6,7 @@ histos= {'pT_JPsi':'J_pT','DeltaR_JpsiPi1':'JP1_deltaR','DeltaR_JpsiPi2':'JP2_de
 file = r.TFile("../Merged.root")
 for hist in histos:
     h= r.TH1F()
-    file.GetObject(hist,h)
+    file.GetObject("histos/"hist,h)
     ply.plot_hist(
         bgs=[h],
         options = {
