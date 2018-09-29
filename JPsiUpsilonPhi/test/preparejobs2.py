@@ -84,6 +84,8 @@ def harvestJobs():
     os.system("mv "+cfgDirectory+"/Merged.root .")
 def dotheFit(path):
     os.system("python bphyfit.py "+type+" "+path)
+def drawDistributions():
+    os.system("python plottery/distributions.py")
 if __name__ == '__main__':
     type = sys.argv[1]
     harvest = sys.argv[2]
@@ -95,5 +97,7 @@ if __name__ == '__main__':
         harvestJobs()
     if harvest == "fit":
         dotheFit("Merged.root")
+    if harvest == "plot":
+        drawDistributions()
 
 
