@@ -22,7 +22,7 @@ for hist in histos:
             "legend_scalex": 0.7,
             "legend_scaley": 1.5,
             "cms_label": "",
-            "lumi_value": "-inf",
+            "lumi_value": "78.77",
             "do_stack": False,
             "yaxis_log": True,
             "output_name": "distribution_PLOTS/test0929_"+hist+".pdf",
