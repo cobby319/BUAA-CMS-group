@@ -2,7 +2,7 @@ import ROOT as r
 import os
 import plottery as ply
 
-histos= ['Pi_pt1','Pi_pt2','Pi_eta1','Pi_eta2','J_mass','pT_JPsi_','DeltaR_JpsiPi1_','DeltaR_JpsiPi2_','JPiPi_lxy_','Deta_JpsiPi1_','Deta_JpsiPi2_','Dphi_JpsiPi1_','Dphi_JpsiPi2_','mumNHits_','mumNPHits_','mupNHits_','mupNPHits_','mu1soft_','mu2soft_','mu1tight_','mu2tight_','mu1loose_','mu2loose_','J_vertexchi2_','Pi_nhits1_','Pi_npixelhits1_','Pi_nhits2_','Pi_npixelhits2_','Pi_vertexchisq1_','Pi_vertexchisq2_']
+histos= ['Pi_pt1_','Pi_pt2_','Pi_eta1_','Pi_eta2_','J_mass_','pT_JPsi_','DeltaR_JpsiPi1_','DeltaR_JpsiPi2_','JPiPi_lxy_','Deta_JpsiPi1_','Deta_JpsiPi2_','Dphi_JpsiPi1_','Dphi_JpsiPi2_','mumNHits_','mumNPHits_','mupNHits_','mupNPHits_','mu1soft_','mu2soft_','mu1tight_','mu2tight_','mu1loose_','mu2loose_','J_vertexchi2_','Pi_nhits1_','Pi_npixelhits1_','Pi_nhits2_','Pi_npixelhits2_','Pi_vertexchisq1_','Pi_vertexchisq2_']
 file = r.TFile("Merged.root")
 if not os.path.exists('distribution_PLOTS'): 
     os.makedirs('distribution_PLOTS')
