@@ -2,7 +2,7 @@ import ROOT as r
 import os
 import plottery as ply
 
-histos= ['pT_JPsi_','DeltaR_JpsiPi1_','DeltaR_JpsiPi2_','JPiPi_lxy_','M_JPsi','"Deta_JpsiPi1','Deta_JpsiPi2','Dphi_JpsiPi1','"Dphi_JpsiPi2','mumNHits','mumNPHits','mupNHits','mupNPHits','mu1soft','mu2soft','mu1tight','mu2tight','mu1loose','mu2loose','J_vertexchi2','Pi_nhits1','Pi_npixelhits1','Pi_nhits2','Pi_npixelhits2','Pi_vertexchisq1','Pi_vertexchisq2']
+histos= ['pT_JPsi_','DeltaR_JpsiPi1_','DeltaR_JpsiPi2_','JPiPi_lxy_','M_JPsi_','"Deta_JpsiPi1_','Deta_JpsiPi2_','Dphi_JpsiPi1_','"Dphi_JpsiPi2_','mumNHits_','mumNPHits_','mupNHits_','mupNPHits_','mu1soft_','mu2soft_','mu1tight_','mu2tight_','mu1loose_','mu2loose_','J_vertexchi2_','Pi_nhits1_','Pi_npixelhits1_','Pi_nhits2_','Pi_npixelhits2_','Pi_vertexchisq1_','Pi_vertexchisq2_']
 file = r.TFile("Merged.root")
 if not os.path.exists('distribution_PLOTS'): 
     os.makedirs('distribution_PLOTS')
