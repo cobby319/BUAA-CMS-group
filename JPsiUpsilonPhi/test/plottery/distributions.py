@@ -13,14 +13,14 @@ for hist in histos:
     file.GetObject("histos/"+hist+"final",h2)
     ply.plot_hist(
         bgs=[h1],
-        colors = [r.kAzure+2],
+        colors = [r.kGreen+3],
         legend_labels = ["Before Selection"],
         sigs = [h2],
         sig_labels = ["Signal Region"],
         options = {
             "legend_scalex": 0.7,
             "legend_scaley": 1.5,
-            "cms_label": "Preliminary",
+            "cms_label": "",
             "lumi_value": "-inf",
             "do_stack": False,
             "yaxis_log": True,
