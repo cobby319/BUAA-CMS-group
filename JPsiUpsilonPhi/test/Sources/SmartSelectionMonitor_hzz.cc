@@ -25,6 +25,9 @@ bool SmartSelectionMonitor_hzz::declareHistos_jpsipipi(){
  addHistogram( new TH1F("Dphi_JpsiPi2",";#delta #eta;Events",80,-4,4)); 
  addHistogram( new TH1F("DeltaR_JpsiPi1",";#delta R;Events",40,0,4)); 
  addHistogram( new TH1F("DeltaR_JpsiPi2",";#delta R;Events",40,0,4)); 
+ addHistogram( new TH1F("Deta_PiPi",";#delta #eta;Events",80,-4,4)); 
+ addHistogram( new TH1F("Dphi_PiPi",";#delta #eta;Events",80,-4,4)); 
+ addHistogram( new TH1F("DeltaR_PiPi",";#delta R;Events",40,0,4)); 
  addHistogram( new TH1F("lxy_jpsipipi",";L_{xy};Events",100,0,0.1)); 
  addHistogram( new TH1F("M_JPsiPicut4.1-4.2",";m_{J/psi,Pi};Events",40,3.5,4.3));
  addHistogram( new TH1F("M_JPsiPicut4.2-4.25",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
@@ -33,7 +36,10 @@ bool SmartSelectionMonitor_hzz::declareHistos_jpsipipi(){
  addHistogram( new TH1F("M_JPsiPicut4.4-4.7",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
  addHistogram( new TH1F("M_JPsiPicut4.7-5.0",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
  addHistogram( new TH2F("M_JpsiPi1&M_JpsiPi2",";m^{2}_{J/psi,Pi1};m^{2}_{J/psi,Pi2}",100,0,50,100,0,50));
- addHistogram( new TH1F("J_mass",";;Events",80,2.9,3.3)); 
+ addHistogram( new TH1F("Pion1_mass",";;Events",50,0,1)); 
+ addHistogram( new TH1F("Pion2_mass",";;Events",50,0,1)); 
+ addHistogram( new TH1F("J_mass",";;Events",80,2.9,3.3));
+ addHistogram( new TH1F("PiPi_mass",";;Events",100,1,5)); 
  addHistogram( new TH1F("J_px",  ";;Events",200,-100,100)); 
  addHistogram( new TH1F("J_py",  ";;Events",200,-100,100)); 
  addHistogram( new TH1F("J_pz",  ";;Events",200,-100,100)); 
