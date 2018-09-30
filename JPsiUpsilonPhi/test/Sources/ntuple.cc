@@ -185,6 +185,9 @@ void ntuple::Loop()
          mon.fillHisto("Dphi_JpsiPi2","final",jpsi.Phi()-pion2.Phi(),weight); 
          mon.fillHisto("DeltaR_JpsiPi1","final",deltaRJP1,weight); 
          mon.fillHisto("DeltaR_JpsiPi2","final",deltaRJP2,weight); 
+         mon.fillHisto("Deta_PiPi","final",pion1.Eta()-pion2.Eta(),weight); 
+         mon.fillHisto("Dphi_PiPi","final",pion1.Phi()-pion2.Phi(),weight); 
+         mon.fillHisto("DeltaR_PiPi","final",deltaRpipi,weight); 
          mon.fillHisto("lxy_jpsipipi","final",JPiPi_lxy->at(piN),weight); 
          mon.fillHisto("J_mass","final",J_mass->at(jpsiN),weight); 
          mon.fillHisto("J_px","final",J_px->at(jpsiN),weight); 
