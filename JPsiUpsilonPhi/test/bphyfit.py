@@ -56,14 +56,14 @@ def main():
         nsig = RooRealVar("nsig","signal",100,0.,400.)
         #nsig2 = RooRealVar("nsig2","signal",100,0.,400.)
 
-        nbkg1 = RooRealVar("non-prompt bkg","bkg1",10000,0.,60000)
-        nbkg2 = RooRealVar("prompt bkg","bkg2",10000,0.,60000)
+        nbkg1 = RooRealVar("bkg1","non-prompt bkg",10000,0.,30000)
+        nbkg2 = RooRealVar("bkg2","prompt bkg",10000,0.,30000)
         #getattr(w,'import')(nsig)
         #a5 =  RooRealVar("a5","a5",-20000,20000);
         #a6 =  RooRealVar("a6","a6",-20000,20000);
         #w.factory("Chebychev::ch(mass[3.9,3.5,4.3],RooArgList(a1,a2,a3,a4,a5,a6))")
-        bkg1 = RooChebychev("non-prompt bkg","bkg1",w.var('mass'),RooArgList(c1,c2,c3,c4))
-        bkg2 = RooChebychev("prompt bkg","bkg2",w.var('mass'),RooArgList(a1,a2,a3,a4))
+        bkg1 = RooChebychev("bkg1","non-prompt bkg",w.var('mass'),RooArgList(c1,c2,c3,c4))
+        bkg2 = RooChebychev("bkg2","prompt bkg",w.var('mass'),RooArgList(a1,a2,a3,a4))
         #nsig =  RooRealVar("nsig","nsig",0,20000)
         #nbkg =  RooRealVar("nbkg","nbkg",0,50000)
         #esig =  RooExtendPdf('esig','esig',w.pdf('bwgauss1'),nsig)
