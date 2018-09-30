@@ -51,7 +51,7 @@ def main():
         c2 =  RooRealVar("a2","a2",-1,1);
         c3 =  RooRealVar("a3","a3",-1,1);
         c4 =  RooRealVar("a4","a4",-1,1);
-        nsig = RooRealVar("nsig","signal",100,0.,1000.)
+        nsig = RooRealVar("nsig","signal",300,0.,1000.)
         nbkg = RooRealVar("nbkg","bkg",10000,0.,50000)
         #getattr(w,'import')(nsig)
         #a5 =  RooRealVar("a5","a5",-20000,20000);
