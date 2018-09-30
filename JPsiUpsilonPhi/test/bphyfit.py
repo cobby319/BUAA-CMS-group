@@ -25,8 +25,8 @@ def main():
     sigfile = open(fitm+"/signalval.txt",'a')
     f =  TFile(path)
     for h in histos:
-        w.factory("Voigtian::bwgauss1(mass[3.9,3.6,4.04],mean3900[3.886,3.86,3.92],width3900[0.0282],sigma3900[0.011,0.009,0.013])")
-        w.factory("Voigtian::bwgauss2(mass[3.9,3.6,4.04],mean3980[3.986,3.96,4.02],width3980[0.03,0.02,0.04],sigma3980[0.011,0.009,0.013])")
+        w.factory("Voigtian::bwgauss1(mass[3.9,3.6,4.04],mean3900[3.886,3.86,3.92],width3900[0.0282],sigma3900[0.010,0.008,0.012])")
+        #w.factory("Voigtian::bwgauss2(mass[3.9,3.6,4.04],mean3980[3.986,3.96,4.02],width3980[0.03,0.02,0.04],sigma3980[0.011,0.009,0.013])")
         if '4.1-4.2' in h:
             bin =4.15
             w.var('mass').setRange(3.6,4.04)
@@ -49,20 +49,27 @@ def main():
         c2 =  RooRealVar("a2","a2",-1,1);
         c3 =  RooRealVar("a3","a3",-1,1);
         c4 =  RooRealVar("a4","a4",-1,1);
+        a1 =  RooRealVar("a1","a1",-1,1);
+        a2 =  RooRealVar("a2","a2",-1,1);
+        a3 =  RooRealVar("a3","a3",-1,1);
+        a4 =  RooRealVar("a4","a4",-1,1);
         nsig = RooRealVar("nsig","signal",100,0.,400.)
-        nsig2 = RooRealVar("nsig2","signal",100,0.,400.)
-        nbkg = RooRealVar("nbkg","bkg",10000,0.,60000)
+        #nsig2 = RooRealVar("nsig2","signal",100,0.,400.)
+
+        nbkg1 = RooRealVar("non-prompt bkg","bkg1",10000,0.,60000)
+        nbkg2 = RooRealVar("prompt bkg","bkg2",10000,0.,60000)
         #getattr(w,'import')(nsig)
         #a5 =  RooRealVar("a5","a5",-20000,20000);
         #a6 =  RooRealVar("a6","a6",-20000,20000);
         #w.factory("Chebychev::ch(mass[3.9,3.5,4.3],RooArgList(a1,a2,a3,a4,a5,a6))")
-        ch = RooChebychev("ch","ch",w.var('mass'),RooArgList(c1,c2,c3,c4))
+        bkg1 = RooChebychev("non-prompt bkg","bkg1",w.var('mass'),RooArgList(c1,c2,c3,c4))
+        bkg2 = RooChebychev("prompt bkg","bkg2",w.var('mass'),RooArgList(a1,a2,a3,a4))
         #nsig =  RooRealVar("nsig","nsig",0,20000)
         #nbkg =  RooRealVar("nbkg","nbkg",0,50000)
         #esig =  RooExtendPdf('esig','esig',w.pdf('bwgauss1'),nsig)
         #ebkg =  RooExtendPdf('ebkg','ebkg',ch,nbkg)
         #getattr(w,'import')(ch)
-        model= RooAddPdf("model","model", RooArgList(w.pdf('bwgauss1'),w.pdf('bwgauss2'),ch),RooArgList(nsig,nsig2,nbkg))
+        model= RooAddPdf("model","model", RooArgList(w.pdf('bwgauss1'),bkg1,bkg2),RooArgList(nsig,nbkg1,nbkg2))
         getattr(w,'import')(model)
         h1 =  TH1F()
         f.GetObject('histos/'+h,h1)
@@ -94,9 +101,9 @@ def main():
         data.plotOn(xframe)
         w.pdf("model").plotOn(xframe)
         w.pdf("model").paramOn(xframe2,rt.RooFit.Layout(0.1, 0.99,0.9))
-        w.pdf("model").plotOn(xframe,rt.RooFit.Components("ch"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kBlue),rt.RooFit.Name("bkg."))
-        w.pdf("model").plotOn(xframe,rt.RooFit.Components("bwgauss1"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kRed),rt.RooFit.Name("sig1."))
-        w.pdf("model").plotOn(xframe,rt.RooFit.Components("bwgauss2"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kRed-2),rt.RooFit.Name("sig2."))
+        w.pdf("model").plotOn(xframe,rt.RooFit.Components("bkg1"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kBlue),rt.RooFit.Name("non-prompt bkg"))
+        w.pdf("model").plotOn(xframe,rt.RooFit.Components("bkg2"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kGreen),rt.RooFit.Name("prompt bkg"))
+        w.pdf("model").plotOn(xframe,rt.RooFit.Components("bwgauss1"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kRed-2),rt.RooFit.Name("sig1."))
         c1=TCanvas("c1","c1",800,400)
         c1.Divide(2)
         c1.cd(1)
