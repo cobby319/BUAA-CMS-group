@@ -251,46 +251,48 @@ void ntuple::Loop()
          mon.fillHisto("pT_JPsi","final",jpsi.Pt(),weight);
       // if (Cut(ientry) < 0) continue;
       }
+   
+      mon.fillHisto("M_JPsiPiPi3-8","total",jpipi_mass,weight);
+      if (jpipi_mass>4.0 &&jpipi_mass<5.0)   mon.fillHisto("M_JPsiPiPi4-5","total",jpipi_mass,weight);
+      if (jpipi_mass>4.1 &&jpipi_mass<5.0){
+         mon.fillHisto("M_JpsiPi1&M_JpsiPi2","total",(jpsi+pion1).M()*(jpsi+pion1).M(),(jpsi+pion2).M()*(jpsi+pion2).M(),weight);
+         }
+      if(deltaRJP1 > 1.2) continue;
+      if(deltaRJP2 > 0.6)continue;
+      if (pipi_mass>0.81 && pipi_mass<0.97) continue;
+      if (pipi_mass>1.01 && pipi_mass<1.03) continue;
+      if (pipi_mass<0.35) continue;
+      //if (JPiPi_lxy->at(piN) <0.01) continue;
+      if(!mu1loose->at(jpsiN) || !mu2loose->at(jpsiN)) continue;
+      //if (Pi_dxy1->at(piN) <0.008) continue;
+      //if (Pi_dxy2->at(piN) <0.008) continue;
+      if(mupNHits->at(jpsiN) <8) continue;
+      if(mumNHits->at(jpsiN) <8) continue;
+      if(mupNPHits->at(jpsiN) <1) continue;
+      if(mumNPHits->at(jpsiN) <1) continue;
+      if (jpsi.Pt() <8) continue;
+      if(Pi_pt1->at(piN) >10 ) continue;
+      if(Pi_pt2->at(piN) >10)
+      //if (Pi_nhits1->at(piN) <6) continue;
+      //if (Pi_nhits2->at(piN) <6) continue;
+      //if (Pi_npixelhits1->at(piN) <2) continue;
+      //if (Pi_npixelhits2->at(piN) <2) continue;
+      //if(Pi_vertexchisq1->at(piN) >6 ) continue;
+      if (Pi_vertexchisq2->at(piN)>15 ) continue;
+      if (Pi_eta1->at(piN) >2 || Pi_eta1->at(piN) <-2) continue;
+      if (Pi_eta2->at(piN) >2 || Pi_eta2->at(piN) <-2) continue;
+        // if (jpipi_mass>4.1 &&jpipi_mass<5)  cout <<  "jpp mass is  " << jpipi_mass << endl;
+      if (jpipi_mass>4.1 &&jpipi_mass<4.2)         mon.fillHisto("M_JPsiPicut4.1-4.2","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.2 &&jpipi_mass<4.25)         mon.fillHisto("M_JPsiPicut4.2-4.25","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.25 &&jpipi_mass<4.3)          mon.fillHisto("M_JPsiPicut4.25-4.3","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.3 &&jpipi_mass<4.4)          mon.fillHisto("M_JPsiPicut4.3-4.4","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.4 &&jpipi_mass<4.7)          mon.fillHisto("M_JPsiPicut4.4-4.7","total",(jpsi+pion1).M(),weight);
+      if (jpipi_mass>4.7 &&jpipi_mass<5.0)        mon.fillHisto("M_JPsiPicut4.7-5.0","total",(jpsi+pion1).M(),weight);
    }
-   mon.fillHisto("M_JPsiPiPi3-8","total",jpipi_mass,weight);
-   if (jpipi_mass>4.0 &&jpipi_mass<5.0)   mon.fillHisto("M_JPsiPiPi4-5","total",jpipi_mass,weight);
-   if (jpipi_mass>4.1 &&jpipi_mass<5.0){
-       mon.fillHisto("M_JpsiPi1&M_JpsiPi2","total",(jpsi+pion1).M()*(jpsi+pion1).M(),(jpsi+pion2).M()*(jpsi+pion2).M(),weight);
-   }
-   if(deltaRJP1 > 1.2) continue;
-   if(deltaRJP2 > 0.6)continue;
-   if (pipi_mass>0.81 && pipi_mass<0.97) continue;
-   if (pipi_mass>1.01 && pipi_mass<1.03) continue;
-   if (pipi_mass<0.35) continue;
-   //if (JPiPi_lxy->at(piN) <0.01) continue;
-   if(!mu1loose->at(jpsiN) || !mu2loose->at(jpsiN)) continue;
-   //if (Pi_dxy1->at(piN) <0.008) continue;
-   //if (Pi_dxy2->at(piN) <0.008) continue;
-   if(mupNHits->at(jpsiN) <8) continue;
-   if(mumNHits->at(jpsiN) <8) continue;
-   if(mupNPHits->at(jpsiN) <1) continue;
-   if(mumNPHits->at(jpsiN) <1) continue;
-   if (jpsi.Pt() <8) continue;
-   if(Pi_pt1->at(piN) >10 ) continue;
-   if(Pi_pt2->at(piN) >10)
-   //if (Pi_nhits1->at(piN) <6) continue;
-   //if (Pi_nhits2->at(piN) <6) continue;
-   //if (Pi_npixelhits1->at(piN) <2) continue;
-   //if (Pi_npixelhits2->at(piN) <2) continue;
-   //if(Pi_vertexchisq1->at(piN) >6 ) continue;
-   if (Pi_vertexchisq2->at(piN)>15 ) continue;
-   if (Pi_eta1->at(piN) >2 || Pi_eta1->at(piN) <-2) continue;
-   if (Pi_eta2->at(piN) >2 || Pi_eta2->at(piN) <-2) continue;
-     // if (jpipi_mass>4.1 &&jpipi_mass<5)  cout <<  "jpp mass is  " << jpipi_mass << endl;
-   if (jpipi_mass>4.1 &&jpipi_mass<4.2)         mon.fillHisto("M_JPsiPicut4.1-4.2","total",(jpsi+pion1).M(),weight);
-   if (jpipi_mass>4.2 &&jpipi_mass<4.25)         mon.fillHisto("M_JPsiPicut4.2-4.25","total",(jpsi+pion1).M(),weight);
-   if (jpipi_mass>4.25 &&jpipi_mass<4.3)          mon.fillHisto("M_JPsiPicut4.25-4.3","total",(jpsi+pion1).M(),weight);
-   if (jpipi_mass>4.3 &&jpipi_mass<4.4)          mon.fillHisto("M_JPsiPicut4.3-4.4","total",(jpsi+pion1).M(),weight);
-   if (jpipi_mass>4.4 &&jpipi_mass<4.7)          mon.fillHisto("M_JPsiPicut4.4-4.7","total",(jpsi+pion1).M(),weight);
-   if (jpipi_mass>4.7 &&jpipi_mass<5.0)        mon.fillHisto("M_JPsiPicut4.7-5.0","total",(jpsi+pion1).M(),weight);
    TFile* outFile=TFile::Open(outputFile_,"recreate");
    TDirectoryFile *dir = new TDirectoryFile("histos","histos","",outFile);
    gDirectory->cd("histos");
    mon.Write();
    outFile->Close();
+   
 }
