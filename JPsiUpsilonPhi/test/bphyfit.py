@@ -25,7 +25,7 @@ def main():
     sigfile = open(fitm+"/signalval.txt",'a')
     f =  TFile(path)
     for h in histos:
-        w.factory("Voigtian::bwgauss1(mass[3.9,3.6,4.04],mean3900[3.886,3.86,3.92],width3900[0.0282],sigma3900[0.011,0.010,0.012])")
+        w.factory("Voigtian::bwgauss1(mass[3.9,3.6,4.04],mean3900[3.886,3.86,3.92],width3900[0.0282],sigma3900[0.011,0.006,0.012])")
         if '4.1-4.2' in h:
             bin =4.15
             w.var('mass').setRange(3.6,4.04)
@@ -48,8 +48,8 @@ def main():
         c2 =  RooRealVar("a2","a2",-1,1);
         c3 =  RooRealVar("a3","a3",-1,1);
         c4 =  RooRealVar("a4","a4",-1,1);
-        nsig = RooRealVar("nsig","signal",300,0.,1000.)
-        nbkg = RooRealVar("nbkg","bkg",10000,0.,50000)
+        nsig = RooRealVar("nsig","signal",100,0.,400.)
+        nbkg = RooRealVar("nbkg","bkg",10000,0.,60000)
         #getattr(w,'import')(nsig)
         #a5 =  RooRealVar("a5","a5",-20000,20000);
         #a6 =  RooRealVar("a6","a6",-20000,20000);
