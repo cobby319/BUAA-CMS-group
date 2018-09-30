@@ -66,7 +66,7 @@ def main():
         data =  RooDataHist("data","mydata", RooArgList(w.var('mass')),h1)
         print data
         result = w.pdf("model").fitTo(data,rt.RooFit.Save())
-        print("EDM = ", r.edm())
+        print("EDM = ", result.edm())
         result.Print("v")
         paralist = result.floatParsFinal()
         signal3900 = paralist.at(paralist.index('fsig'))
