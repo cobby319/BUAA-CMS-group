@@ -25,30 +25,26 @@ def main():
     sigfile = open(fitm+"/signalval.txt",'a')
     f =  TFile(path)
     for h in histos:
+        w.factory("Voigtian::bwgauss1(mass[3.9,3.6,4.04],mean3900[3.886,3.86,3.91],width3900[0.0282,0.0281,0.0283],sigma3900[0.011,0.009,0.013])")
+        w.factory("Voigtian::bwgauss2(mass[3.9,3.6,4.05],mean3730[3.73,3.7,3.76],width3730[0.0282,0.026,0.03],sigma3730[0.011,0.001,0.013])")
         if '4.1-4.2' in h:
-           bin =4.15
-           w.factory("Voigtian::bwgauss1(mass[3.9,3.6,4.04],mean3900[3.886,3.86,3.91],width3900[0.0282,0.0281,0.0283],sigma3900[0.011,0.009,0.013])")
-           w.factory("Voigtian::bwgauss2(mass[3.9,3.6,4.05],mean3730[3.73,3.7,3.76],width3730[0.0282,0.026,0.03],sigma3730[0.011,0.001,0.013])")
+            bin =4.15
+            w.var('mass').setRange(3.6,4.04)
         if '4.2-4.25' in h:
-           bin = 4.225
-           w.factory("Voigtian::bwgauss1(mass[3.9,3.62,4.06],mean3900[3.886,3.86,3.91],width3900[0.0282,0.0281,0.0283],sigma3900[0.011,0.009,0.013])")
-           w.factory("Voigtian::bwgauss2(mass[3.9,3.62,4.06],mean3730[3.73,3.7,3.76],width3730[0.0282,0.026,0.03],sigma3730[0.011,0.001,0.013])")  
+            bin = 4.225
+            w.var('mass').setRange(3.62,4.06)
         if '4.25-4.3' in h:
-           bin = 4.275
-           w.factory("Voigtian::bwgauss1(mass[3.9,3.62,4.1],mean3900[3.886,3.86,3.91],width3900[0.0282,0.0281,0.0283],sigma3900[0.011,0.009,0.013])")
-           w.factory("Voigtian::bwgauss2(mass[3.9,3.62,4.1],mean3730[3.73,3.7,3.76],width3730[0.0282,0.026,0.03],sigma3730[0.011,0.001,0.013])") 
+            bin = 4.275
+            w.var('mass').setRange(3.63,4.1)
         if '4.3-4.4' in h:
-           bin = 4.35
-           w.factory("Voigtian::bwgauss1(mass[3.9,3.62,4.18],mean3900[3.886,3.86,3.91],width3900[0.0282,0.00281,0.0383],sigma3900[0.011,0.003,0.1])")
-           w.factory("Voigtian::bwgauss2(mass[3.9,3.62,4.18],mean3730[3.73,3.7,3.76],width3730[0.0282,0.026,0.03],sigma3730[0.011,0.001,0.013])") 
+            bin = 4.35
+            w.var('mass').setRange(3.66,4.18)
         if '4.4-4.7' in h:
-           bin = 4.55
-           w.factory("Voigtian::bwgauss1(mass[3.9,3.66,4.4],mean3900[3.886,3.86,3.91],width3900[0.0282,0.0281,0.0283],sigma3900[0.011,0.009,0.013])")
-           w.factory("Voigtian::bwgauss2(mass[3.9,3.66,4.4],mean3730[3.73,3.7,3.76],width3730[0.0282,0.026,0.03],sigma3730[0.011,0.001,0.013])") 
+            bin = 4.55
+            w.var('mass').setRange(3.74,4.4)
         if '4.7-5.0' in h:
-           bin =4.85
-           w.factory("Voigtian::bwgauss1(mass[3.9,3.66,4.4],mean3900[3.886,3.86,3.91],width3900[0.0282,0.0281,0.0283],sigma3900[0.011,0.009,0.013])")
-           w.factory("Voigtian::bwgauss2(mass[3.9,3.66,4.4],mean3730[3.73,3.7,3.76],width3730[0.0282,0.026,0.03],sigma3730[0.011,0.001,0.013])")
+            bin =4.85
+            w.var('mass').setRange(3.8,4.4)
         c1 =  RooRealVar("a1","a1",-20000,20000);
         c2 =  RooRealVar("a2","a2",-20000,20000);
         c3 =  RooRealVar("a3","a3",-20000,20000);
@@ -59,9 +55,9 @@ def main():
         ch = RooChebychev("ch","ch",w.var('mass'),RooArgList(c1,c2,c3,c4))
         getattr(w,'import')(ch)
         if fitm is '2gauss' :
-           w.factory("SUM::modelsum(nsig3900[20,0,2000]*bwgauss1,nsig3730[20,0,2000]*bwgauss2,nbkg[1000,0,50000]*ch)")
+            w.factory("SUM::modelsum(nsig3900[20,0,2000]*bwgauss1,nsig3730[20,0,2000]*bwgauss2,nbkg[1000,0,50000]*ch)")
         if fitm is '1gauss' :
-           w.factory("SUM::modelsum(nsig3900[20,0,5000]*bwgauss1,nbkg[1000,0,20000]*ch)")
+            w.factory("SUM::modelsum(nsig3900[20,0,5000]*bwgauss1,nbkg[1000,0,20000]*ch)")
         h1 =  TH1F()
         f.GetObject('histos/'+h,h1)
         print h1
@@ -95,7 +91,7 @@ def main():
         w.pdf("modelsum").plotOn(xframe,rt.RooFit.Components("ch"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kBlue),rt.RooFit.Name("bkg."))
         w.pdf("modelsum").plotOn(xframe,rt.RooFit.Components("bwgauss1"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kRed),rt.RooFit.Name("sig1."))
         if '2' in fitm :
-           w.pdf("modelsum").plotOn(xframe,rt.RooFit.Components("bwgauss2"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kRed-1),rt.RooFit.Name("sig2."))
+            w.pdf("modelsum").plotOn(xframe,rt.RooFit.Components("bwgauss2"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kRed-1),rt.RooFit.Name("sig2."))
         c1=TCanvas("c1","c1",800,400)
         c1.Divide(2)
         c1.cd(1)
