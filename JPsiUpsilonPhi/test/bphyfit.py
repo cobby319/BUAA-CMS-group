@@ -26,12 +26,11 @@ def main():
     f =  TFile(path)
     for h in histos:
         w.factory("Voigtian::bwgauss1(mass[3.9,3.6,4.04],mean3900[3.886,3.86,3.91],width3900[0.0282,0.0281,0.0283],sigma3900[0.011,0.009,0.013])")
-        w.factory("Voigtian::bwgauss2(mass[3.9,3.6,4.05],mean3730[3.73,3.7,3.76],width3730[0.0282,0.026,0.03],sigma3730[0.011,0.001,0.013])")
         if '4.1-4.2' in h:
             bin =4.15
             w.var('mean3900').setRange(3.86,3.95)
             w.var('mass').setRange(3.6,4.04)
-            w.var('sigma3900').setRange(0.005,0.05)
+            w.var('sigma3900').setRange(0.005,0.02)
         if '4.2-4.25' in h:
             bin = 4.225
             w.var('mass').setRange(3.62,4.06)
@@ -52,25 +51,24 @@ def main():
         c2 =  RooRealVar("a2","a2",-20000,20000);
         c3 =  RooRealVar("a3","a3",-20000,20000);
         c4 =  RooRealVar("a4","a4",-20000,20000);
+        fsig = RooRealVar("fsig","signal fraction",0.5,0.,1.)
         #a5 =  RooRealVar("a5","a5",-20000,20000);
         #a6 =  RooRealVar("a6","a6",-20000,20000);
         #w.factory("Chebychev::ch(mass[3.9,3.5,4.3],RooArgList(a1,a2,a3,a4,a5,a6))")
         ch = RooChebychev("ch","ch",w.var('mass'),RooArgList(c1,c2,c3,c4))
         getattr(w,'import')(ch)
-        if fitm is '2gauss' :
-            w.factory("SUM::modelsum(nsig3900[20,0,2000]*bwgauss1,nsig3730[20,0,2000]*bwgauss2,nbkg[1000,0,50000]*ch)")
-        if fitm is '1gauss' :
-            w.factory("SUM::modelsum(nsig3900[20,0,5000]*bwgauss1,nbkg[1000,0,50000]*ch)")
+        model= RooAddPdf("model","model", RooArgList(w.pdf('bwgauss1'),ch),fsig)
+        getattr(w,'import')(model)
         h1 =  TH1F()
         f.GetObject('histos/'+h,h1)
         print h1
         data =  RooDataHist("data","mydata", RooArgList(w.var('mass')),h1)
         print data
-        result = w.pdf("modelsum").fitTo(data,rt.RooFit.Save())
+        result = w.pdf("model").fitTo(data,rt.RooFit.Save())
         print result
         result.Print()
         paralist = result.floatParsFinal()
-        signal3900 = paralist.at(paralist.index('nsig3900'))
+        signal3900 = paralist.at(paralist.index('fsig'))
         print signal3900
         hval.append(signal3900.getValV())
         herrHi.append(signal3900.getErrorHi())
@@ -89,12 +87,10 @@ def main():
         xframe2.SetLabelColor(0,"Y")
         xframe2.SetXTitle("")
         data.plotOn(xframe)
-        w.pdf("modelsum").plotOn(xframe)
-        w.pdf("modelsum").paramOn(xframe2,rt.RooFit.Layout(0.1, 0.99,0.9))
-        w.pdf("modelsum").plotOn(xframe,rt.RooFit.Components("ch"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kBlue),rt.RooFit.Name("bkg."))
-        w.pdf("modelsum").plotOn(xframe,rt.RooFit.Components("bwgauss1"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kRed),rt.RooFit.Name("sig1."))
-        if '2' in fitm :
-            w.pdf("modelsum").plotOn(xframe,rt.RooFit.Components("bwgauss2"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kRed-1),rt.RooFit.Name("sig2."))
+        w.pdf("model").plotOn(xframe)
+        w.pdf("model").paramOn(xframe2,rt.RooFit.Layout(0.1, 0.99,0.9))
+        w.pdf("model").plotOn(xframe,rt.RooFit.Components("ch"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kBlue),rt.RooFit.Name("bkg."))
+        w.pdf("model").plotOn(xframe,rt.RooFit.Components("bwgauss1"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kRed),rt.RooFit.Name("sig1."))
         c1=TCanvas("c1","c1",800,400)
         c1.Divide(2)
         c1.cd(1)
