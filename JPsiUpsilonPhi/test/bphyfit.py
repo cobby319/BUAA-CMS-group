@@ -29,7 +29,7 @@ def main():
         if '4.1-4.2' in h:
             bin =4.15
             w.var('mean3900').setRange(3.86,3.95)
-            w.var('mass').setRange(3.6,4.04)
+            w.var('mass').setRange('',3.6,4.04)
             w.var('sigma3900').setRange(0.005,0.02)
         if '4.2-4.25' in h:
             bin = 4.225
@@ -51,18 +51,19 @@ def main():
         c2 =  RooRealVar("a2","a2",-20000,20000);
         c3 =  RooRealVar("a3","a3",-20000,20000);
         c4 =  RooRealVar("a4","a4",-20000,20000);
-        fsig = RooRealVar("fsig","signal fraction",0.5,0.,1.)
-        getattr(w,'import')(fsig)
+        nsig = RooRealVar("nsig","signal",100,0.,2000.)
+        nbkg = RooRealVar("nbkg","bkg",10000,0.,50000)
+        #getattr(w,'import')(nsig)
         #a5 =  RooRealVar("a5","a5",-20000,20000);
         #a6 =  RooRealVar("a6","a6",-20000,20000);
         #w.factory("Chebychev::ch(mass[3.9,3.5,4.3],RooArgList(a1,a2,a3,a4,a5,a6))")
         ch = RooChebychev("ch","ch",w.var('mass'),RooArgList(c1,c2,c3,c4))
-        nsig =  RooRealVar("nsig","nsig",0,20000)
-        nbkg =  RooRealVar("nbkg","nbkg",0,50000)
-        esig =  RooExtendPdf('esig','esig',w.pdf('bwgauss1'),nsig)
-        ebkg =  RooExtendPdf('ebkg','ebkg',ch,nbkg)
+        #nsig =  RooRealVar("nsig","nsig",0,20000)
+        #nbkg =  RooRealVar("nbkg","nbkg",0,50000)
+        #esig =  RooExtendPdf('esig','esig',w.pdf('bwgauss1'),nsig)
+        #ebkg =  RooExtendPdf('ebkg','ebkg',ch,nbkg)
         #getattr(w,'import')(ch)
-        model= RooAddPdf("model","model", RooArgList(esig,ebkg),RooArgList(w.var('fsig')))
+        model= RooAddPdf("model","model", RooArgList(w.pdf('bwgauss1'),ch),RooArgList(nsig,nbkg)
         getattr(w,'import')(model)
         h1 =  TH1F()
         f.GetObject('histos/'+h,h1)
@@ -73,7 +74,7 @@ def main():
         print("EDM = ", result.edm())
         result.Print("v")
         paralist = result.floatParsFinal()
-        signal3900 = paralist.at(paralist.index('fsig'))
+        signal3900 = paralist.at(paralist.index('nsig'))
         print signal3900
         hval.append(signal3900.getValV())
         herrHi.append(signal3900.getErrorHi())
