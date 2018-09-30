@@ -29,7 +29,9 @@ def main():
         w.factory("Voigtian::bwgauss2(mass[3.9,3.6,4.05],mean3730[3.73,3.7,3.76],width3730[0.0282,0.026,0.03],sigma3730[0.011,0.001,0.013])")
         if '4.1-4.2' in h:
             bin =4.15
+            w.var('mean3900').setRange(3.86,3.95)
             w.var('mass').setRange(3.6,4.04)
+            w.var('sigma3900').setRange(0.005,0.05)
         if '4.2-4.25' in h:
             bin = 4.225
             w.var('mass').setRange(3.62,4.06)
@@ -38,7 +40,8 @@ def main():
             w.var('mass').setRange(3.63,4.1)
         if '4.3-4.4' in h:
             bin = 4.35
-            w.var('mass').setRange(3.66,4.18)
+            w.var('mass').setRange(3.72,4.18)
+            w.var('sigma3900').setRange(0.005,0.05)
         if '4.4-4.7' in h:
             bin = 4.55
             w.var('mass').setRange(3.74,4.4)
@@ -57,7 +60,7 @@ def main():
         if fitm is '2gauss' :
             w.factory("SUM::modelsum(nsig3900[20,0,2000]*bwgauss1,nsig3730[20,0,2000]*bwgauss2,nbkg[1000,0,50000]*ch)")
         if fitm is '1gauss' :
-            w.factory("SUM::modelsum(nsig3900[20,0,5000]*bwgauss1,nbkg[1000,0,20000]*ch)")
+            w.factory("SUM::modelsum(nsig3900[20,0,5000]*bwgauss1,nbkg[1000,0,50000]*ch)")
         h1 =  TH1F()
         f.GetObject('histos/'+h,h1)
         print h1
