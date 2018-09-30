@@ -52,12 +52,13 @@ def main():
         c3 =  RooRealVar("a3","a3",-20000,20000);
         c4 =  RooRealVar("a4","a4",-20000,20000);
         fsig = RooRealVar("fsig","signal fraction",0.5,0.,1.)
+        getattr(w,'import')(fsig)
         #a5 =  RooRealVar("a5","a5",-20000,20000);
         #a6 =  RooRealVar("a6","a6",-20000,20000);
         #w.factory("Chebychev::ch(mass[3.9,3.5,4.3],RooArgList(a1,a2,a3,a4,a5,a6))")
         ch = RooChebychev("ch","ch",w.var('mass'),RooArgList(c1,c2,c3,c4))
         getattr(w,'import')(ch)
-        model= RooAddPdf("model","model", RooArgList(w.pdf('bwgauss1'),ch),fsig)
+        model= RooAddPdf("model","model", RooArgList(w.pdf('bwgauss1'),ch),w.var('fsig'))
         getattr(w,'import')(model)
         h1 =  TH1F()
         f.GetObject('histos/'+h,h1)
