@@ -29,7 +29,7 @@ def main():
         if '4.1-4.2' in h:
             bin =4.15
             w.var('mean3900').setRange(3.86,3.95)
-            w.var('mass').setRange('',3.6,4.04)
+            w.var('mass').setRange(3.6,4.04)
             w.var('sigma3900').setRange(0.005,0.02)
         if '4.2-4.25' in h:
             bin = 4.225
