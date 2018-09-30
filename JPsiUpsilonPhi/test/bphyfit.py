@@ -47,11 +47,11 @@ def main():
         if '4.7-5.0' in h:
             bin =4.85
             w.var('mass').setRange(3.8,4.4)
-        c1 =  RooRealVar("a1","a1",-20000,20000);
-        c2 =  RooRealVar("a2","a2",-20000,20000);
-        c3 =  RooRealVar("a3","a3",-20000,20000);
-        c4 =  RooRealVar("a4","a4",-20000,20000);
-        nsig = RooRealVar("nsig","signal",100,0.,2000.)
+        c1 =  RooRealVar("a1","a1",-1,1);
+        c2 =  RooRealVar("a2","a2",-1,1);
+        c3 =  RooRealVar("a3","a3",-1,1);
+        c4 =  RooRealVar("a4","a4",-1,1);
+        nsig = RooRealVar("nsig","signal",100,0.,300.)
         nbkg = RooRealVar("nbkg","bkg",10000,0.,50000)
         #getattr(w,'import')(nsig)
         #a5 =  RooRealVar("a5","a5",-20000,20000);
