@@ -25,7 +25,7 @@ def main():
     sigfile = open(fitm+"/signalval.txt",'a')
     f =  TFile(path)
     for h in histos:
-        w.factory("Voigtian::bwgauss1(mass[3.9,3.6,4.04],mean3900[3.886,3.86,3.91],width3900[0.0282,0.0281,0.0283],sigma3900[0.011,0.010,0.012])")
+        w.factory("Voigtian::bwgauss1(mass[3.9,3.6,4.04],mean3900[3.886,3.86,3.92],width3900[0.0282],sigma3900[0.011,0.010,0.012])")
         if '4.1-4.2' in h:
             bin =4.15
             w.var('mass').setRange(3.6,4.04)
