@@ -47,24 +47,18 @@ def main():
         if '4.7-5.0' in h:
             bin =4.85
             w.var('mass').setRange(3.8,4.4)
-        c1 =  RooRealVar("a1","a1",-2,2);
-        c2 =  RooRealVar("a2","a2",-2,2);
-        c3 =  RooRealVar("a3","a3",-2,2);
-        c4 =  RooRealVar("a4","a4",-2,2);
-        #fsig = RooRealVar("fsig","signal fraction",0.5,0.,1.)
-        nsig= RooRealVar("nsig","number of signal events",53,0,1e3) ;
-        nbkg= RooRealVar("nbkg","number of background events",103,0,5e4) ;
-
-        #getattr(w,'import')(fsig)
-        getattr(w,'import')(nsig)
-        getattr(w,'import')(nbkg)
+        c1 =  RooRealVar("a1","a1",-20000,20000);
+        c2 =  RooRealVar("a2","a2",-20000,20000);
+        c3 =  RooRealVar("a3","a3",-20000,20000);
+        c4 =  RooRealVar("a4","a4",-20000,20000);
+        fsig = RooRealVar("fsig","signal fraction",0.5,0.,1.)
+        getattr(w,'import')(fsig)
         #a5 =  RooRealVar("a5","a5",-20000,20000);
         #a6 =  RooRealVar("a6","a6",-20000,20000);
         #w.factory("Chebychev::ch(mass[3.9,3.5,4.3],RooArgList(a1,a2,a3,a4,a5,a6))")
         ch = RooChebychev("ch","ch",w.var('mass'),RooArgList(c1,c2,c3,c4))
         #getattr(w,'import')(ch)
-        #model= RooAddPdf("model","model", RooArgList(w.pdf('bwgauss1'),ch),RooArgList(w.var('fsig')))
-        model= RooAddPdf("model","model",RooArgList(w.pdf('bwgauss1'),ch),RooArgList(w.var('nsig'),w.var('nbkg'))) ;
+        model= RooAddPdf("model","model", RooArgList(w.pdf('bwgauss1'),ch),RooArgList(w.var('fsig')))
         getattr(w,'import')(model)
         h1 =  TH1F()
         f.GetObject('histos/'+h,h1)
@@ -75,7 +69,7 @@ def main():
         print result
         result.Print()
         paralist = result.floatParsFinal()
-        signal3900 = paralist.at(paralist.index('nsig'))
+        signal3900 = paralist.at(paralist.index('fsig'))
         print signal3900
         hval.append(signal3900.getValV())
         herrHi.append(signal3900.getErrorHi())
@@ -97,7 +91,7 @@ def main():
         w.pdf("model").plotOn(xframe)
         w.pdf("model").paramOn(xframe2,rt.RooFit.Layout(0.1, 0.99,0.9))
         w.pdf("model").plotOn(xframe,rt.RooFit.Components("ch"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kBlue),rt.RooFit.Name("bkg."))
-        w.pdf("model").plotOn(xframe,rt.RooFit.Components("bwgauss1"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kRed),rt.RooFit.Name("sig."))
+        w.pdf("model").plotOn(xframe,rt.RooFit.Components("bwgauss1"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kRed),rt.RooFit.Name("sig1."))
         c1=TCanvas("c1","c1",800,400)
         c1.Divide(2)
         c1.cd(1)
