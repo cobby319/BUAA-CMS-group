@@ -65,7 +65,7 @@ def main():
         print h1
         data =  RooDataHist("data","mydata", RooArgList(w.var('mass')),h1)
         print data
-        result = w.pdf("model").fitTo(data,rt.RooFit.Save())
+        result = w.pdf("model").fitTo(data)#,rt.RooFit.Save())
         print result
         result.Print()
         paralist = result.floatParsFinal()
