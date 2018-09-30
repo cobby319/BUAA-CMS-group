@@ -260,8 +260,8 @@ void ntuple::Loop()
       if (jpipi_mass>4.1 &&jpipi_mass<5.0){
          mon.fillHisto("M_JpsiPi1&M_JpsiPi2","total",(jpsi+pion1).M()*(jpsi+pion1).M(),(jpsi+pion2).M()*(jpsi+pion2).M(),weight);
          }
-      if(Pion1_mass <0.1) continue;
-      if(Pion2_mass <0.1) continue;
+      if((pion1).M() <0.1) continue;
+      if((pion2).M() <0.1) continue;
       if(deltaRJP1 > 1.2) continue;
       if(deltaRJP2 > 1.2) continue;
       if(deltaRpipi > 1.8) continue;
