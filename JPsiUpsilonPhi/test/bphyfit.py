@@ -57,7 +57,7 @@ def main():
         #a6 =  RooRealVar("a6","a6",-20000,20000);
         #w.factory("Chebychev::ch(mass[3.9,3.5,4.3],RooArgList(a1,a2,a3,a4,a5,a6))")
         ch = RooChebychev("ch","ch",w.var('mass'),RooArgList(c1,c2,c3,c4))
-        getattr(w,'import')(ch)
+        #getattr(w,'import')(ch)
         model= RooAddPdf("model","model", RooArgList(w.pdf('bwgauss1'),ch),RooArgList(w.var('fsig')))
         getattr(w,'import')(model)
         h1 =  TH1F()
@@ -65,7 +65,7 @@ def main():
         print h1
         data =  RooDataHist("data","mydata", RooArgList(w.var('mass')),h1)
         print data
-        result = w.pdf("model").fitTo(data)#,rt.RooFit.Save())
+        result = w.pdf("model").fitTo(data,rt.RooFit.Save())
         print result
         result.Print()
         paralist = result.floatParsFinal()
