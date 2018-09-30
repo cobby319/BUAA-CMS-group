@@ -63,7 +63,7 @@ def main():
         #esig =  RooExtendPdf('esig','esig',w.pdf('bwgauss1'),nsig)
         #ebkg =  RooExtendPdf('ebkg','ebkg',ch,nbkg)
         #getattr(w,'import')(ch)
-        model= RooAddPdf("model","model", RooArgList(w.pdf('bwgauss1'),ch),RooArgList(nsig,nbkg)
+        model= RooAddPdf("model","model", RooArgList(w.pdf('bwgauss1'),ch),RooArgList(nsig,nbkg))
         getattr(w,'import')(model)
         h1 =  TH1F()
         f.GetObject('histos/'+h,h1)
