@@ -260,8 +260,11 @@ void ntuple::Loop()
       if (jpipi_mass>4.1 &&jpipi_mass<5.0){
          mon.fillHisto("M_JpsiPi1&M_JpsiPi2","total",(jpsi+pion1).M()*(jpsi+pion1).M(),(jpsi+pion2).M()*(jpsi+pion2).M(),weight);
          }
+      if(Pion1_mass <0.1) continue;
+      if(Pion2_mass <0.1) continue;
       if(deltaRJP1 > 1.2) continue;
-      if(deltaRJP2 > 0.6)continue;
+      if(deltaRJP2 > 1.2) continue;
+      if(deltaRpipi > 1.8) continue;
       if (pipi_mass>0.81 && pipi_mass<0.97) continue;
       if (pipi_mass>1.01 && pipi_mass<1.03) continue;
       if (pipi_mass<0.35) continue;
@@ -274,14 +277,14 @@ void ntuple::Loop()
       if(mupNPHits->at(jpsiN) <1) continue;
       if(mumNPHits->at(jpsiN) <1) continue;
       if (jpsi.Pt() <8) continue;
-      if(Pi_pt1->at(piN) >10 ) continue;
-      if(Pi_pt2->at(piN) >10)
+      //if(Pi_pt1->at(piN) >10 ) continue;
+      //if(Pi_pt2->at(piN) >10)
       //if (Pi_nhits1->at(piN) <6) continue;
       //if (Pi_nhits2->at(piN) <6) continue;
       //if (Pi_npixelhits1->at(piN) <2) continue;
       //if (Pi_npixelhits2->at(piN) <2) continue;
       //if(Pi_vertexchisq1->at(piN) >6 ) continue;
-      if (Pi_vertexchisq2->at(piN)>15 ) continue;
+      if (Pi_vertexchisq2->at(piN)>14 ) continue;
       if (Pi_eta1->at(piN) >2 || Pi_eta1->at(piN) <-2) continue;
       if (Pi_eta2->at(piN) >2 || Pi_eta2->at(piN) <-2) continue;
         // if (jpipi_mass>4.1 &&jpipi_mass<5)  cout <<  "jpp mass is  " << jpipi_mass << endl;

@@ -36,10 +36,10 @@ bool SmartSelectionMonitor_hzz::declareHistos_jpsipipi(){
  addHistogram( new TH1F("M_JPsiPicut4.4-4.7",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
  addHistogram( new TH1F("M_JPsiPicut4.7-5.0",";m_{J/psi,Pi};Events",40,3.5,4.3)); 
  addHistogram( new TH2F("M_JpsiPi1&M_JpsiPi2",";m^{2}_{J/psi,Pi1};m^{2}_{J/psi,Pi2}",100,0,50,100,0,50));
- addHistogram( new TH1F("Pion1_mass",";;Events",50,0,1)); 
- addHistogram( new TH1F("Pion2_mass",";;Events",50,0,1)); 
- addHistogram( new TH1F("J_mass",";;Events",80,2.9,3.3));
- addHistogram( new TH1F("PiPi_mass",";;Events",100,1,5)); 
+ addHistogram( new TH1F("Pion1_mass",";;Events",100,0,0.5)); 
+ addHistogram( new TH1F("Pion2_mass",";;Events",100,0,0.5)); 
+ addHistogram( new TH1F("J_mass",";;Events",100,2.9,3.3));
+ addHistogram( new TH1F("PiPi_mass",";;Events",100,0,2)); 
  addHistogram( new TH1F("J_px",  ";;Events",200,-100,100)); 
  addHistogram( new TH1F("J_py",  ";;Events",200,-100,100)); 
  addHistogram( new TH1F("J_pz",  ";;Events",200,-100,100)); 
@@ -72,11 +72,11 @@ bool SmartSelectionMonitor_hzz::declareHistos_jpsipipi(){
  addHistogram( new TH1F("mu2loose",";;Events",2,0,2)); 
  addHistogram( new TH1F("J_lxy",";;Events",100,0,0.1)); 
  addHistogram( new TH1F("J_lxyErr",";;Events",100,0,0.005)); 
- addHistogram( new TH1F("J_vertexchi2",";;Events",20,0,4)); 
+ addHistogram( new TH1F("J_vertexchi2",";;Events",100,0,10)); 
  addHistogram( new TH1F("Pi_dJP",";;Events",10,-0.1,0.1)); 
  addHistogram( new TH1F("JPi_lxy",";;Events",100,0,0.1)); 
  addHistogram( new TH1F("JPi_lxyErr",";;Events",100,0,0.0002)); 
- addHistogram( new TH1F("JPiPi_lxy",";;Events",100,0,0.1)); 
+ addHistogram( new TH1F("JPiPi_lxy",";;Events",100,0,0.2)); 
  addHistogram( new TH1F("JPiPi_lxyErr",";;Events",100,0,0.0002)); 
  addHistogram( new TH1F("JPiPi_x",";;Events",100,-0.05,0.05)); 
  addHistogram( new TH1F("JPiPi_y",";;Events",100,-0.05,0.05)); 
