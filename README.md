@@ -32,13 +32,14 @@ B Physics test
 The recipe for analysis
 
 ```
-cmsrel CMSSW_9_2_3_patch2
-cd CMSSW_9_2_3_patch2/src
+cmsrel CMSSW_8_0_26_patch1
+cd CMSSW_8_0_26_patch1/src
 cmsenv
 
-git clone https://github.com/cobby319/BUAA-CMS-group.git
+git clone https://github.com/cobby319/BUAA-CMS-group.git -b b-phy-test
 scram b -j 12
 
-cd BUAA-CMS-group/JPsiUpsilonPhi/test
-cmsRun miniAODmuonsRootupler.py
+cd BUAA-CMS-group/JPsiUpsilonPhi/test/jpsipipi
+vi test2016.py # you need change Line.24 input = cms.untracked.int32(-1), like 5000
+cmsRun test2016.py
 ```
