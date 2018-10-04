@@ -215,7 +215,8 @@ namespace objectSelection
           selJpsi.clear();
           TLorentzVector Jpsi_tmp;
           Jpsi_tmp.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN));
-          selJpsi.push_back(Jpsi_tmp,jpsiN);
+          TLorentzVectorWithIndex Jpsi_tmpWithIndex = TLorentzVectorWithIndex(Jpsi_tmp,jpsiN);
+          selJpsi.push_back(Jpsi_tmpWithIndex);
         }
       }
       return selJpsi.size() > 0;
@@ -292,7 +293,7 @@ namespace objectSelection
                    std::vector<float>   *J_Prob,
                    std::vector<float>   *JPi_Prob,
                    std::vector<float>   *JPiPi_Prob){
-    for(unsigned int i = 0 ; i<J_mass->size() ; i++){
+    for(unsigned int i = 0 ; i<Pi_pt1->size() ; i++){
       bool passDeltaRJP1 = false;
       bool passDeltaRJP2 = false;
       bool passDeltaRPP  = false;
@@ -324,8 +325,8 @@ namespace objectSelection
       TLorentzVectorWithIndex pion1WithIndex = TLorentzVectorWithIndex(pion1,i);
       TLorentzVectorWithIndex pion2WithIndex = TLorentzVectorWithIndex(pion2,i);
       if(passDeltaRJP1 && passDeltaRJP2 && passDeltaRPP &&passPiPimassregion && passVertexNormalizedChi2 && passEta && passPt &&passIsNotOtherObject) {
-        selPion1.push_back(pion1WithIndex,i);
-        selPion2.push_back(pion2WithIndex,i);
+        selPion1.push_back(pion1WithIndex);
+        selPion2.push_back(pion2WithIndex);
       }
       if(selPion1.size()>1){
           auto maxprob = std::max_element(JPiPi_Prob, JPiPi_Prob + i);
@@ -336,8 +337,10 @@ namespace objectSelection
           TLorentzVector pion2_tmp;
           pion1_tmp.SetPtEtaPhiM(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass);
           pion2_tmp.SetPtEtaPhiM(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass);
-          selPion1.push_back(pion1_tmp,piN);
-          selPion2.push_back(pion2_tmp,piN);
+          TLorentzVectorWithIndex pion1_tmpWithIndex = TLorentzVectorWithIndex(pion1_tmp,i);
+          TLorentzVectorWithIndex pion2_tmpWithIndex = TLorentzVectorWithIndex(pion2_tmp,i);
+          selPion1.push_back(pion1_tmpWithIndex);
+          selPion2.push_back(pion2_tmpWithIndex);
       }
     }
     return selPion1.size()>0 ;
