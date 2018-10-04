@@ -343,15 +343,15 @@ namespace objectSelection
           int piN =std::distance(JPiPi_Prob, maxprob) ;
           selPion1.clear();
           selPion2.clear();
-          TLorentzVector pion1_tmp;
-          TLorentzVector pion2_tmp;
-          pion1_tmp.SetPtEtaPhiM(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass);
-          pion2_tmp.SetPtEtaPhiM(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass);
-          TLorentzVectorWithIndex pion1_tmpWithIndex = TLorentzVectorWithIndex(pion1_tmp,i);
-          TLorentzVectorWithIndex pion2_tmpWithIndex = TLorentzVectorWithIndex(pion2_tmp,i);
+          //TLorentzVector pion1_tmp;
+          //TLorentzVector pion2_tmp;
+          //pion1_tmp.SetPtEtaPhiM(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass);
+          //pion2_tmp.SetPtEtaPhiM(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass);
+          //TLorentzVectorWithIndex pion1_tmpWithIndex = ;
+         // TLorentzVectorWithIndex pion2_tmpWithIndex = ;
           std::cout <<"push_back extra pions"<<std::endl;
-          selPion1.push_back(pion1_tmpWithIndex);
-          selPion2.push_back(pion2_tmpWithIndex);
+          selPion1.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass, piN));
+          selPion2.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass, piN));
       }
     }
     return selPion1.size()>0 ;
