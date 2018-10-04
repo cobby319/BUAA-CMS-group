@@ -449,7 +449,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    if(iTrack1->charge() == 0) continue; //NO neutral objects
   	    //if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	    
-  	    if(iTrack1->vertexNormalizedChi2()>10) continue;
+  	    //if(iTrack1->vertexNormalizedChi2()>10) continue;
   	    if(!(iTrack1->trackHighPurity())) continue;
   	    if(iTrack1->numberOfHits()<5) continue;
   	    if(iTrack1->numberOfPixelHits()<1) continue;
@@ -541,7 +541,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	        if(!(iTrack2->trackHighPurity())) continue;
   	        if(iTrack2->numberOfHits()<5) continue;
   	        if(iTrack2->numberOfPixelHits()<1) continue;
-  	        if(iTrack2->vertexNormalizedChi2()>10) continue;
+  	        //if(iTrack2->vertexNormalizedChi2()>10) continue;
   	        if(iTrack2->dxy(bestVtx.position())/iTrack2->dxyError() < 1.0) continue;
   	        if ( IsTheSame(*iTrack2, muontt1.at(i).track()) || IsTheSame(*iTrack2,muontt2.at(i).track()) ) continue;
             reco::TransientTrack track2TT((*theB).build(iTrack2->bestTrack()));
@@ -651,10 +651,10 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             Pi2_numberOfSourceCandidatePtrs->push_back(iTrack2->numberOfSourceCandidatePtrs());
             Pi1_hcalFraction->push_back(iTrack1->hcalFraction());
             Pi2_hcalFraction->push_back(iTrack2->hcalFraction());
-            Pi1_vertexNdof->push_back(iTrack1->vertexNdof());
-            Pi2_vertexNdof->push_back(iTrack2->vertexNdof());
-            Pi1_vertexNchi2->push_back(iTrack1->vertexNormalizedChi2());
-            Pi2_vertexNchi2->push_back(iTrack2->vertexNormalizedChi2());
+            Pi1_vertexNdof->push_back(iTrack1->bestTrack()->ndof());
+            Pi2_vertexNdof->push_back(iTrack2->bestTrack()->ndof());
+            Pi1_vertexNchi2->push_back(iTrack1->bestTrack()->normalizedChi2());
+            Pi2_vertexNchi2->push_back(iTrack2->bestTrack()->normalizedChi2());
             
             Pi1_numberOfMothers->push_back(iTrack1->numberOfMothers());
             Pi2_numberOfMothers->push_back(iTrack2->numberOfMothers());
@@ -688,8 +688,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             //Pi2_lambdaError->push_back(0);
             //Pi1_qoverp->push_back(0);
             //Pi2_qoverp->push_back(0);
-            Pi1_qoverpError->push_back(0);
-            Pi2_qoverpError->push_back(0);
+            //Pi1_qoverpError->push_back(0);
+            //Pi2_qoverpError->push_back(0);
             //Pi1_validTkFraction->push_back(0);
             //Pi2_validTkFraction->push_back(0);
             Pi1_numberOfValidHitsOnTrack->push_back(0);
@@ -705,8 +705,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             Pi2_lambdaError->push_back(iTrack2->bestTrack()->lambdaError());
             Pi1_qoverp->push_back(iTrack1->bestTrack()->qoverp());
             Pi2_qoverp->push_back(iTrack2->bestTrack()->qoverp());
-            //Pi1_qoverpError->push_back(iTrack1->bestTrack()->qoverpError());
-            //Pi2_qoverpError->push_back(iTrack2->bestTrack()->qoverpError());
+            Pi1_qoverpError->push_back(iTrack1->bestTrack()->qoverpError());
+            Pi2_qoverpError->push_back(iTrack2->bestTrack()->qoverpError());
             Pi1_validTkFraction->push_back(iTrack1->bestTrack()->validFraction());
             Pi2_validTkFraction->push_back(iTrack2->bestTrack()->validFraction());
             //Pi1_numberOfValidHitsOnTrack->push_back(iTrack1->bestTrack()->found());
@@ -960,10 +960,10 @@ jpsipipi::beginJob()
   tree_->Branch("Pi2_isConvertedPhoton",&Pi2_isConvertedPhoton);
   tree_->Branch("Pi1_isElectron",&Pi1_isElectron);
   tree_->Branch("Pi2_isElectron",&Pi2_isElectron);
-  tree_->Branch("Pi1_isMuon ",&Pi1_isMuon );
+  tree_->Branch("Pi1_isMuon",&Pi1_isMuon );
   tree_->Branch("Pi2_isMuon",&Pi2_isMuon);
   tree_->Branch("Pi1_isPhoton",&Pi1_isPhoton);
-  tree_->Branch("Pi2_isPhoton ",&Pi2_isPhoton );
+  tree_->Branch("Pi2_isPhoton",&Pi2_isPhoton );
   tree_->Branch("Pi1_isGlobalMuon",&Pi1_isGlobalMuon);
   tree_->Branch("Pi2_isGlobalMuon",&Pi2_isGlobalMuon);
   tree_->Branch("Pi1_isJet",&Pi1_isJet);
