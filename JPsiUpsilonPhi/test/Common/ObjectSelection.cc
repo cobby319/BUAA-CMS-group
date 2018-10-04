@@ -313,7 +313,7 @@ namespace objectSelection
       pipiInPhiMass = (pion1+pion2).M() >1.01  && (pion1+pion2).M() <1.03 ;
       pipiInXMass =  (pion1+pion2).M() >0.81  && (pion1+pion2).M() <0.97 ;
       pipiInLowMass = (pion1+pion2).M() <0.35;
-      passPiPimassregion = !pipiInXMass && !pipiInLowMass && pipiInPhiMass;
+      passPiPimassregion = !pipiInXMass && !pipiInLowMass && !pipiInPhiMass;
       pion1.SetPtEtaPhiM(Pi_pt1->at(i),Pi_eta1->at(i),Pi_phi1->at(i),Pion_mass);
       pion2.SetPtEtaPhiM(Pi_pt2->at(i),Pi_eta2->at(i),Pi_phi2->at(i),Pion_mass);
       passDeltaRJP1 = selJpsi.at(0).DeltaR(pion1) < 1.2;
@@ -322,7 +322,7 @@ namespace objectSelection
       passVertexNormalizedChi2 = Pi1_vertexNchi2->at(i) < 10.0 && Pi2_vertexNchi2->at(i) <10.0;
       passEta = Pi_eta1->at(i) <2.0 && Pi_eta1->at(i) >-2.0 && Pi_eta2->at(i) <2.0 &&Pi_eta2->at(i) >-2.0;
       passPt =  Pi_pt1->at(i) > 0.8 && Pi_pt2->at(i) >0.8;
-      passIsNotOtherObject = ! (Pi1_isGlobalMuon || Pi2_isGlobalMuon);
+      passIsNotOtherObject = true;//! (Pi1_isGlobalMuon || Pi2_isGlobalMuon);
       TLorentzVectorWithIndex pion1WithIndex = TLorentzVectorWithIndex(pion1,i);
       TLorentzVectorWithIndex pion2WithIndex = TLorentzVectorWithIndex(pion2,i);
       std::cout <<"passDeltaRJP1             is "<< passDeltaRJP1<<std::endl;
