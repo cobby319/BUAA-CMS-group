@@ -78,12 +78,12 @@ if __name__ == '__main__':
 #    config.JobType.pyCfgParams = ['DataProcessing=rerecodata']
 #    config.JobType.pyCfgParams = ['DataProcessing=promptdata']
     config.Data.inputDBS = 'global'
-    config.Data.splitting = 'Automatic'
-    #config.Data.splitting = 'LumiBased'
-    #config.Data.unitsPerJob = 200
+    #config.Data.splitting = 'Automatic'
+    config.Data.splitting = 'LumiBased'
+    config.Data.unitsPerJob = 800
     config.Data.publication = False
     config.Data.ignoreLocality = False
-    config.Data.lumiMask = 'Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt'
+    config.Data.lumiMask = 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions16/13TeV/Final/Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON.txt'
 #    config.Data.lumiMask = '/user/wenxing/FINAL_code_170407/CMSSW_8_0_26_patch1/src/UserCode/IIHETree/test/resubmit_DoubleEG.json'
 #    config.Data.lumiMask = '/user/wenxing/FINAL_code_170407/CMSSW_8_0_26_patch1/src/UserCode/IIHETree/test/resubmit_SingleEG.json'
     config.Site.storageSite = 'T2_BE_IIHE'
