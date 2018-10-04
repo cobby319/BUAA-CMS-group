@@ -2,6 +2,7 @@
 #include "../Includes/ntuple.h"
 #include "../Includes/SmartSelectionMonitor.h"
 #include "../Includes/SmartSelectionMonitor_hzz.h"
+#include "../Common/ObjectSelection.h"
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
@@ -208,7 +209,8 @@ void ntuple::Loop()
                    mu2loose,
                    J_lxy,
                    J_lxyErr,
-                   J_vertexchi2);
+                   J_vertexchi2,
+                   J_Prob);
       if (!NJpsi) continue;
       bool NPiPi= objectSelection::selectPions(
             selPion1,
