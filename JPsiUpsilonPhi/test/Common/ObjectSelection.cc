@@ -210,8 +210,8 @@ namespace objectSelection
         TLorentzVectorWithIndex JpsiWithIndex = TLorentzVectorWithIndex(Jpsi,i);
         if (passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits) {selJpsi.push_back(JpsiWithIndex);std::cout <<"push_back jpsi"<<std::endl;}
         if (selJpsi.size() >1 ) {
-          auto maxprob = std::max_element(J_Prob, J_Prob+i);
-          int jpsiN =std::distance(J_Prob, maxprob) ;
+          auto maxprob = std::max_element(J_Prob->begin(), J_Prob->begin()+i);
+          int jpsiN =std::distance(J_Prob->begin(), maxprob) ;
           selJpsi.clear();
           TLorentzVector Jpsi_tmp;
           Jpsi_tmp.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN));
@@ -332,11 +332,11 @@ namespace objectSelection
         selPion2.push_back(pion2WithIndex);
       }
       if(selPion1.size()>1){
-          auto maxprob = std::max_element(JPiPi_Prob, JPiPi_Prob + i);
-          int piN =std::distance(JPiPi_Prob, maxprob) ;
+          auto maxprob = std::max_element(JPiPi_Prob->begin(), JPiPi_Prob->begin() + i);
+          int piN =std::distance(JPiPi_Prob->begin(), maxprob) ;
           std::cout <<"a little test"<<std::endl;
-          selPion1.erase(selPion1.begin(),selPion1.begin()+1);
-          selPion2.erase(selPion2.begin(),selPion2.begin()+1);
+          selPion1.clear();
+          selPion2.clear();
           //TLorentzVector pion1_tmp;
           //TLorentzVector pion2_tmp;
           //pion1_tmp.SetPtEtaPhiM(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass);
