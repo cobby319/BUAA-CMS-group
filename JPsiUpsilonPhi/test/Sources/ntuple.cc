@@ -283,8 +283,8 @@ void ntuple::Loop()
             JPi_Prob,
             JPiPi_Prob);
       if (!NPiPi) continue;
-      int jpsiN = selJpsi.GetIndex();
-      int piN = selPion1.GetIndex(); 
+      int jpsiN = selJpsi.begin().GetIndex();
+      int piN = selPion1.begin().GetIndex(); 
       TLorentzVector jpsi, pion1,pion2;
       float Pion_mass = 0.13957061;
       jpsi.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN)); 

@@ -581,7 +581,7 @@ void ntuple::Init(TTree *tree)
    fChain->SetBranchAddress("Pi_dxyerr2", &Pi_dxyerr2, &b_Pi_dxyerr2);
    fChain->SetBranchAddress("Pi_vertexchisq1", &Pi_vertexchisq1, &b_Pi_vertexchisq1);
    fChain->SetBranchAddress("Pi_vertexchisq2", &Pi_vertexchisq2, &b_Pi_vertexchisq2);
-   fChain->SetBranchAddress("Pi1_numberOfSourceCandidatePtrs".&Pi1_numberOfSourceCandidatePtrs,&b_Pi1_numberOfSourceCandidatePtrs);
+   fChain->SetBranchAddress("Pi1_numberOfSourceCandidatePtrs",&Pi1_numberOfSourceCandidatePtrs,&b_Pi1_numberOfSourceCandidatePtrs);
    fChain->SetBranchAddress("Pi2_numberOfSourceCandidatePtrs",&Pi2_numberOfSourceCandidatePtrs,&b_Pi2_numberOfSourceCandidatePtrs);
    fChain->SetBranchAddress("Pi1_hcalFraction",&Pi1_hcalFraction,&b_Pi1_hcalFraction);
    fChain->SetBranchAddress("Pi2_hcalFraction",&Pi2_hcalFraction,&b_Pi2_hcalFraction);
