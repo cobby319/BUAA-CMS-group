@@ -206,17 +206,17 @@ namespace objectSelection
         passJpsiPt = Jpsi.Pt() >10 ;
         passMuonHits = mupNHits->at(i) >6 && mumNHits->at(i) >6;
         passMuonPixelHits = mupNPHits->at(i) >0 &&  mumNPHits->at(i) >0;
-        if (passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits) selJpsi->push_back(Jpsi,i);
-        if (selJpsi->size() >1 ) {
+        if (passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits) selJpsi.push_back(Jpsi,i);
+        if (selJpsi.size() >1 ) {
           auto maxprob = std::max_element(J_Prob->begin(), J_Prob->at(i));
           int jpsiN =std::distance(J_Prob->begin(), maxprob) ;
-          selJpsi->clear();
+          selJpsi.clear();
           TLorentzVector Jpsi_tmp;
           Jpsi_tmp.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN));
-          selJpsi->push_back(Jpsi_tmp,jpsiN);
+          selJpsi.push_back(Jpsi_tmp,jpsiN);
         }
       }
-      return selJpsi->size() > 0;
+      return selJpsi.size() > 0;
     }
 
   bool selectPions(std::vector<TLorentzVectorWithIndex> & selPion1,
@@ -312,31 +312,31 @@ namespace objectSelection
       passPiPimassregion = !pipiInXMass && !pipiInLowMass && pipiInPhiMass;
       pion1.SetPtEtaPhiM(Pi_pt1->at(i),Pi_eta1->at(i),Pi_phi1->at(i),Pion_mass);
       pion2.SetPtEtaPhiM(Pi_pt2->at(i),Pi_eta2->at(i),Pi_phi2->at(i),Pion_mass);
-      passDeltaRJP1 = selJpsi->begin().DeltaR(pion1) < 1.2;
-      passDeltaRJP2 = selJpsi->begin().DeltaR(pion2) < 1.2;
+      passDeltaRJP1 = selJpsi.at(0).DeltaR(pion1) < 1.2;
+      passDeltaRJP2 = selJpsi.at(0).DeltaR(pion2) < 1.2;
       passDeltaRPP  = pion1.DeltaR(pion2) <1.8;
       passVertexNormalizedChi2 = Pi1_vertexNchi2->at(i) < 10.0 && Pi2_vertexNchi2->at(i) <10.0;
       passEta = Pi_eta1->at(i) <2.0 && Pi_eta1->at(i) >-2.0 && Pi_eta2->at(i) <2.0 &&Pi_eta2->at(i) >-2.0;
       passPt =  Pi_pt1->at(i) > 0.8 && Pi_pt2->at(i) >0.8;
       passIsNotOtherObject = ! (Pi1_isGlobalMuon || Pi2_isGlobalMuon);
       if(passDeltaRJP1 && passDeltaRJP2 && passDeltaRPP &&passPiPimassregion && passVertexNormalizedChi2 && passEta && passPt &&passIsNotOtherObject) {
-        selPion1->push_back(pion1,i);
-        selPion2->push_back(pion2,i);
+        selPion1.push_back(pion1,i);
+        selPion2.push_back(pion2,i);
       }
-      if(selPion1->size()>1){
+      if(selPion1.size()>1){
           auto maxprob = std::max_element(JPiPi_Prob->begin(), JPiPi_Prob->at(i));
           int piN =std::distance(JPiPi_Prob->begin(), maxprob) ;
-          selPion1->clear();
-          selPion2->clear();
+          selPion1.clear();
+          selPion2.clear();
           TLorentzVector pion1_tmp;
           TLorentzVector pion2_tmp;
           pion1_tmp.SetPtEtaPhiM(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass);
           pion2_tmp.SetPtEtaPhiM(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass);
-          selPion1->push_back(pion1_tmp,piN);
-          selPion2->push_back(pion2_tmp,piN);
+          selPion1.push_back(pion1_tmp,piN);
+          selPion2.push_back(pion2_tmp,piN);
       }
     }
-    return selPion1->size()>0 ;
+    return selPion1.size()>0 ;
   }
 
 }
