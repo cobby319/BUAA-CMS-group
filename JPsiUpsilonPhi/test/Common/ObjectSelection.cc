@@ -194,7 +194,8 @@ namespace objectSelection
                    std::vector<bool>   *mu2loose,
                    std::vector<float>   *J_lxy,
                    std::vector<float>   *J_lxyErr,
-                   std::vector<float>   *J_vertexchi2){
+                   std::vector<float>   *J_vertexchi2,
+                   std::vector<float>   *J_Prob){
       for(unsigned int i = 0 ; i<J_mass->size() ; i++){
         bool passMuonLooseID   = false;
         bool passJpsiPt        = false;
@@ -206,7 +207,8 @@ namespace objectSelection
         passJpsiPt = Jpsi.Pt() >10 ;
         passMuonHits = mupNHits->at(i) >6 && mumNHits->at(i) >6;
         passMuonPixelHits = mupNPHits->at(i) >0 &&  mumNPHits->at(i) >0;
-        if (passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits) selJpsi.push_back(Jpsi,i);
+        TLorentzVectorWithIndex JpsiWithIndex = TLorentzVectorWithIndex(Jpsi,i);
+        if (passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits) selJpsi.push_back(JpsiWithIndex);
         if (selJpsi.size() >1 ) {
           auto maxprob = std::max_element(J_Prob->begin(), J_Prob->at(i));
           int jpsiN =std::distance(J_Prob->begin(), maxprob) ;
@@ -319,9 +321,11 @@ namespace objectSelection
       passEta = Pi_eta1->at(i) <2.0 && Pi_eta1->at(i) >-2.0 && Pi_eta2->at(i) <2.0 &&Pi_eta2->at(i) >-2.0;
       passPt =  Pi_pt1->at(i) > 0.8 && Pi_pt2->at(i) >0.8;
       passIsNotOtherObject = ! (Pi1_isGlobalMuon || Pi2_isGlobalMuon);
+      TLorentzVectorWithIndex pion1WithIndex = TLorentzVectorWithIndex(pion1,i);
+      TLorentzVectorWithIndex pion2WithIndex = TLorentzVectorWithIndex(pion2,i);
       if(passDeltaRJP1 && passDeltaRJP2 && passDeltaRPP &&passPiPimassregion && passVertexNormalizedChi2 && passEta && passPt &&passIsNotOtherObject) {
-        selPion1.push_back(pion1,i);
-        selPion2.push_back(pion2,i);
+        selPion1.push_back(pion1WithIndex,i);
+        selPion2.push_back(pion2WithIndex,i);
       }
       if(selPion1.size()>1){
           auto maxprob = std::max_element(JPiPi_Prob->begin(), JPiPi_Prob->at(i));
