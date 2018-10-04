@@ -682,12 +682,12 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             Pi2_massConstraint->push_back(iTrack2->massConstraint());
 
 
-            Pi1_lambda->push_back(0);
-            Pi2_lambda->push_back(0);
-            Pi1_lambdaError->push_back(0);
-            Pi2_lambdaError->push_back(0);
-            Pi1_qoverp->push_back(0);
-            Pi2_qoverp->push_back(0);
+            //Pi1_lambda->push_back(0);
+            //Pi2_lambda->push_back(0);
+            //Pi1_lambdaError->push_back(0);
+            //Pi2_lambdaError->push_back(0);
+            //Pi1_qoverp->push_back(0);
+            //Pi2_qoverp->push_back(0);
             Pi1_qoverpError->push_back(0);
             Pi2_qoverpError->push_back(0);
             //Pi1_validTkFraction->push_back(0);
@@ -699,12 +699,12 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             Pi1_innerOk->push_back(0);
             Pi2_innerOk->push_back(0);
             
-            //Pi1_lambda->push_back(iTrack1->bestTrack()->lambda());
-            //Pi2_lambda->push_back(iTrack2->bestTrack()->lambda());
-            //Pi1_lambdaError->push_back(iTrack1->bestTrack()->lambdaError());
-            //Pi2_lambdaError->push_back(iTrack2->bestTrack()->lambdaError());
-            //Pi1_qoverp->push_back(iTrack1->bestTrack()->qoverp());
-            //Pi2_qoverp->push_back(iTrack2->bestTrack()->qoverp());
+            Pi1_lambda->push_back(iTrack1->bestTrack()->lambda());
+            Pi2_lambda->push_back(iTrack2->bestTrack()->lambda());
+            Pi1_lambdaError->push_back(iTrack1->bestTrack()->lambdaError());
+            Pi2_lambdaError->push_back(iTrack2->bestTrack()->lambdaError());
+            Pi1_qoverp->push_back(iTrack1->bestTrack()->qoverp());
+            Pi2_qoverp->push_back(iTrack2->bestTrack()->qoverp());
             //Pi1_qoverpError->push_back(iTrack1->bestTrack()->qoverpError());
             //Pi2_qoverpError->push_back(iTrack2->bestTrack()->qoverpError());
             Pi1_validTkFraction->push_back(iTrack1->bestTrack()->validFraction());
