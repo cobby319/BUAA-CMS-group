@@ -445,7 +445,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 		
   	    //if(iTrack1->pt()<0.8)continue;
   	    if(iTrack1->eta()>2.4||iTrack1->eta()<-2.4)continue;
-  	    if(!(iTrack1->pseudoTrack())) continue;
+  	    if(!(iTrack1->bestTrack())) continue;
   	    if(iTrack1->charge() == 0) continue; //NO neutral objects
   	    //if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	    
@@ -535,7 +535,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             
             //if(iTrack2->pt()<0.8)continue;
   	        //if(iTrack2->eta()>2.4||iTrack2->eta()<-2.4)continue;
-  	        if(!(iTrack2->pseudoTrack())) continue;
+  	        if(!(iTrack2->bestTrack())) continue;
   	        if(iTrack2->charge() == 0) continue; //NO neutral objects
   	        //if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
@@ -653,28 +653,28 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             Pi2_vertexNdof->push_back(iTrack2->vertexNdof());
             Pi1_vertexNchi2->push_back(iTrack1->vertexNormalizedChi2());
             Pi2_vertexNchi2->push_back(iTrack2->vertexNormalizedChi2());
-            Pi1_lambda->push_back(iTrack1->pseudoTrack()->lambda());
-            Pi2_lambda->push_back(iTrack2->pseudoTrack()->lambda());
-            Pi1_lambdaError->push_back(iTrack1->pseudoTrack()->lambdaError());
-            Pi2_lambdaError->push_back(iTrack2->pseudoTrack()->lambdaError());
-            Pi1_qoverp->push_back(iTrack1->pseudoTrack()->qoverp());
-            Pi2_qoverp->push_back(iTrack2->pseudoTrack()->qoverp());
-            Pi1_qoverpError->push_back(iTrack1->pseudoTrack()->qoverpError());
-            Pi2_qoverpError->push_back(iTrack2->pseudoTrack()->qoverpError());
-            Pi1_validTkFraction->push_back(iTrack1->pseudoTrack()->validFraction());
-            Pi2_validTkFraction->push_back(iTrack2->pseudoTrack()->validFraction());
+            Pi1_lambda->push_back(iTrack1->pseudoTrack().lambda());
+            Pi2_lambda->push_back(iTrack2->pseudoTrack().lambda());
+            Pi1_lambdaError->push_back(iTrack1->pseudoTrack().lambdaError());
+            Pi2_lambdaError->push_back(iTrack2->pseudoTrack().lambdaError());
+            Pi1_qoverp->push_back(iTrack1->pseudoTrack().qoverp());
+            Pi2_qoverp->push_back(iTrack2->pseudoTrack().qoverp());
+            Pi1_qoverpError->push_back(iTrack1->pseudoTrack().qoverpError());
+            Pi2_qoverpError->push_back(iTrack2->pseudoTrack().qoverpError());
+            Pi1_validTkFraction->push_back(iTrack1->pseudoTrack().validFraction());
+            Pi2_validTkFraction->push_back(iTrack2->pseudoTrack().validFraction());
             Pi1_numberOfMothers->push_back(iTrack1->numberOfMothers());
             Pi2_numberOfMothers->push_back(iTrack2->numberOfMothers());
-            Pi1_numberOfSourceCandidatePtrs->push_back(iTrack1->umberOfSourceCandidatePtrs());
-            Pi2_numberOfSourceCandidatePtrs->push_back(iTrack2->umberOfSourceCandidatePtrs());
+            Pi1_numberOfSourceCandidatePtrs->push_back(iTrack1->numberOfSourceCandidatePtrs());
+            Pi2_numberOfSourceCandidatePtrs->push_back(iTrack2->numberOfSourceCandidatePtrs());
             Pi1_pdgId->push_back(iTrack1->pdgId());
             Pi2_pdgId->push_back(iTrack2->pdgId());
-            Pi1_numberOfValidHitsOnTrack->push_back(iTrack1->pseudoTrack()->found());
-            Pi2_numberOfValidHitsOnTrack->push_back(iTrack2->pseudoTrack()->found());
-            Pi1_innerDetId->push_back(iTrack1->pseudoTrack()->innerDetId());
-            Pi2_innerDetId->push_back(iTrack2->pseudoTrack()->innerDetId());
-            Pi1_innerOk->push_back(iTrack1->pseudoTrack()->innerOk());
-            Pi2_innerOk->push_back(iTrack2->pseudoTrack()->innerOk());
+            Pi1_numberOfValidHitsOnTrack->push_back(iTrack1->pseudoTrack().found());
+            Pi2_numberOfValidHitsOnTrack->push_back(iTrack2->pseudoTrack().found());
+            Pi1_innerDetId->push_back(iTrack1->pseudoTrack().innerDetId());
+            Pi2_innerDetId->push_back(iTrack2->pseudoTrack().innerDetId());
+            Pi1_innerOk->push_back(iTrack1->pseudoTrack().innerOk());
+            Pi2_innerOk->push_back(iTrack2->pseudoTrack().innerOk());
             Pi1_isCaloMuon->push_back(iTrack1->isCaloMuon());
             Pi2_isCaloMuon->push_back(iTrack2->isCaloMuon());
             Pi1_isConvertedPhoton->push_back(iTrack1->isConvertedPhoton());
