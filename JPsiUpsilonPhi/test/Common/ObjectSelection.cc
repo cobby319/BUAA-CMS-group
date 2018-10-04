@@ -208,7 +208,7 @@ namespace objectSelection
         passMuonHits = mupNHits->at(i) >6 && mumNHits->at(i) >6;
         passMuonPixelHits = mupNPHits->at(i) >0 &&  mumNPHits->at(i) >0;
         TLorentzVectorWithIndex JpsiWithIndex = TLorentzVectorWithIndex(Jpsi,i);
-        if (passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits) selJpsi.push_back(JpsiWithIndex);
+        if (passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits) {selJpsi.push_back(JpsiWithIndex);std::cout <<"push_back jpsi"<<std::endl;}
         if (selJpsi.size() >1 ) {
           auto maxprob = std::max_element(J_Prob, J_Prob+i);
           int jpsiN =std::distance(J_Prob, maxprob) ;
@@ -217,6 +217,7 @@ namespace objectSelection
           Jpsi_tmp.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN));
           TLorentzVectorWithIndex Jpsi_tmpWithIndex = TLorentzVectorWithIndex(Jpsi_tmp,jpsiN);
           selJpsi.push_back(Jpsi_tmpWithIndex);
+          std::cout <<"push_back extrajpsi"<<std::endl;
         }
       }
       return selJpsi.size() > 0;
@@ -325,6 +326,7 @@ namespace objectSelection
       TLorentzVectorWithIndex pion1WithIndex = TLorentzVectorWithIndex(pion1,i);
       TLorentzVectorWithIndex pion2WithIndex = TLorentzVectorWithIndex(pion2,i);
       if(passDeltaRJP1 && passDeltaRJP2 && passDeltaRPP &&passPiPimassregion && passVertexNormalizedChi2 && passEta && passPt &&passIsNotOtherObject) {
+        std::cout <<"push_back pions"<<std::endl;
         selPion1.push_back(pion1WithIndex);
         selPion2.push_back(pion2WithIndex);
       }
@@ -339,6 +341,7 @@ namespace objectSelection
           pion2_tmp.SetPtEtaPhiM(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass);
           TLorentzVectorWithIndex pion1_tmpWithIndex = TLorentzVectorWithIndex(pion1_tmp,i);
           TLorentzVectorWithIndex pion2_tmpWithIndex = TLorentzVectorWithIndex(pion2_tmp,i);
+          std::cout <<"push_back extra pions"<<std::endl;
           selPion1.push_back(pion1_tmpWithIndex);
           selPion2.push_back(pion2_tmpWithIndex);
       }
