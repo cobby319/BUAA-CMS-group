@@ -325,6 +325,14 @@ namespace objectSelection
       passIsNotOtherObject = ! (Pi1_isGlobalMuon || Pi2_isGlobalMuon);
       TLorentzVectorWithIndex pion1WithIndex = TLorentzVectorWithIndex(pion1,i);
       TLorentzVectorWithIndex pion2WithIndex = TLorentzVectorWithIndex(pion2,i);
+      std::cout <<"passDeltaRJP1             is "<< passDeltaRJP1<<std::endl;
+      std::cout <<"passDeltaRJP2             is "<< passDeltaRJP2<<std::endl;
+      std::cout <<"passDeltaRPP              is "<<passDeltaRPP <<std::endl;
+      std::cout <<"passPiPimassregion        is "<< passPiPimassregion<<std::endl;
+      std::cout <<"passVertexNormalizedChi2  is "<< passVertexNormalizedChi2<<std::endl;
+      std::cout <<"passEta                   is "<<passEta  <<std::endl;
+      std::cout <<"passPt                    is "<<passPt <<std::endl;
+      std::cout <<"passIsNotOtherObject      is "<<passIsNotOtherObject<<std::endl;
       if(passDeltaRJP1 && passDeltaRJP2 && passDeltaRPP &&passPiPimassregion && passVertexNormalizedChi2 && passEta && passPt &&passIsNotOtherObject) {
         std::cout <<"push_back pions"<<std::endl;
         selPion1.push_back(pion1WithIndex);
