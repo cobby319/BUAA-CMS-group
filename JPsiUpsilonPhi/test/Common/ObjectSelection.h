@@ -63,7 +63,7 @@ namespace objectSelection
 
   bool selectPions(std::vector<TLorentzVectorWithIndex> & selPion1,
                    std::vector<TLorentzVectorWithIndex> & selPion2,
-                   TLorentzVector Jpsi,
+                   std::vector<TLorentzVectorWithIndex> & selJpsi,
                    std::vector<float>   *JPiPi_lxy,
                    std::vector<float>   *JPiPi_lxyErr,
                    std::vector<float>   *JPiPi_x,
