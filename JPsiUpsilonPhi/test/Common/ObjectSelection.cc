@@ -325,14 +325,7 @@ namespace objectSelection
       passIsNotOtherObject = true;//! (Pi1_isGlobalMuon || Pi2_isGlobalMuon);
       TLorentzVectorWithIndex pion1WithIndex = TLorentzVectorWithIndex(pion1,i);
       TLorentzVectorWithIndex pion2WithIndex = TLorentzVectorWithIndex(pion2,i);
-      std::cout <<"passDeltaRJP1             is "<< passDeltaRJP1<<std::endl;
-      std::cout <<"passDeltaRJP2             is "<< passDeltaRJP2<<std::endl;
-      std::cout <<"passDeltaRPP              is "<<passDeltaRPP <<std::endl;
-      std::cout <<"passPiPimassregion        is "<< passPiPimassregion<<std::endl;
-      std::cout <<"passVertexNormalizedChi2  is "<< passVertexNormalizedChi2<<std::endl;
-      std::cout <<"passEta                   is "<<passEta  <<std::endl;
-      std::cout <<"passPt                    is "<<passPt <<std::endl;
-      std::cout <<"passIsNotOtherObject      is "<<passIsNotOtherObject<<std::endl;
+
       if(passDeltaRJP1 && passDeltaRJP2 && passDeltaRPP &&passPiPimassregion && passVertexNormalizedChi2 && passEta && passPt &&passIsNotOtherObject) {
         std::cout <<"push_back pions"<<std::endl;
         selPion1.push_back(pion1WithIndex);
@@ -341,8 +334,9 @@ namespace objectSelection
       if(selPion1.size()>1){
           auto maxprob = std::max_element(JPiPi_Prob, JPiPi_Prob + i);
           int piN =std::distance(JPiPi_Prob, maxprob) ;
-          selPion1.clear();
-          selPion2.clear();
+          std::cout <<"a little test"<<std::endl;
+          selPion1.erase(selPion1.begin(),selPion1.begin()+1);
+          selPion2.erase(selPion2.begin(),selPion2.begin()+1);
           //TLorentzVector pion1_tmp;
           //TLorentzVector pion2_tmp;
           //pion1_tmp.SetPtEtaPhiM(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass);
