@@ -212,7 +212,7 @@ void ntuple::Loop()
                    J_vertexchi2,
                    J_Prob);
       if (!NJpsi) continue;
-      std::cout <<"NJpsi is "<<NJpsi <<" begin select pions"<<std::endl;
+      //std::cout <<"NJpsi is "<<NJpsi <<" begin select pions"<<std::endl;
       bool NPiPi= objectSelection::selectPions(
             selPion1,
             selPion2,

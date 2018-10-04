@@ -217,7 +217,7 @@ namespace objectSelection
           Jpsi_tmp.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN));
           TLorentzVectorWithIndex Jpsi_tmpWithIndex = TLorentzVectorWithIndex(Jpsi_tmp,jpsiN);
           selJpsi.push_back(Jpsi_tmpWithIndex);
-          std::cout <<"push_back extrajpsi"<<std::endl;
+          //std::cout <<"push_back extrajpsi"<<std::endl;
         }
       }
       return selJpsi.size() > 0;
@@ -327,14 +327,14 @@ namespace objectSelection
       TLorentzVectorWithIndex pion2WithIndex = TLorentzVectorWithIndex(pion2,i);
 
       if(passDeltaRJP1 && passDeltaRJP2 && passDeltaRPP &&passPiPimassregion && passVertexNormalizedChi2 && passEta && passPt &&passIsNotOtherObject) {
-        std::cout <<"push_back pions"<<std::endl;
+        //std::cout <<"push_back pions"<<std::endl;
         selPion1.push_back(pion1WithIndex);
         selPion2.push_back(pion2WithIndex);
       }
       if(selPion1.size()>1){
           auto maxprob = std::max_element(JPiPi_Prob->begin(), JPiPi_Prob->begin() + i);
           int piN =std::distance(JPiPi_Prob->begin(), maxprob) ;
-          std::cout <<"a little test"<<std::endl;
+          //std::cout <<"a little test"<<std::endl;
           selPion1.clear();
           selPion2.clear();
           //TLorentzVector pion1_tmp;
@@ -343,7 +343,7 @@ namespace objectSelection
           //pion2_tmp.SetPtEtaPhiM(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass);
           //TLorentzVectorWithIndex pion1_tmpWithIndex = ;
          // TLorentzVectorWithIndex pion2_tmpWithIndex = ;
-          std::cout <<"push_back extra pions"<<std::endl;
+          //std::cout <<"push_back extra pions"<<std::endl;
           selPion1.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass, piN));
           selPion2.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass, piN));
       }
