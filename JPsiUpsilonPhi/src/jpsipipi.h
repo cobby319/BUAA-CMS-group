@@ -143,6 +143,56 @@ private:
   std::vector<float>       *JPiPi_y;
   std::vector<float>       *JPiPi_z;
 
+  std::vector<float>       *Pi1_hcalFraction
+  std::vector<float>       *Pi2_hcalFraction
+  std::vector<float>       *Pi1_vertexNdof
+  std::vector<float>       *Pi2_vertexNdof
+  std::vector<float>       *Pi1_vertexNchi2
+  std::vector<float>       *Pi2_vertexNchi2
+  std::vector<float>       *Pi1_lambda
+  std::vector<float>       *Pi2_lambda
+  std::vector<float>       *Pi1_lambdaError
+  std::vector<float>       *Pi2_lambdaError
+  std::vector<float>       *Pi1_qoverp
+  std::vector<float>       *Pi2_qoverp
+  std::vector<float>       *Pi1_qoverpError
+  std::vector<float>       *Pi2_qoverpError
+  std::vector<float>       *Pi1_validTkFraction
+  std::vector<float>       *Pi2_validTkFraction
+  std::vector<int>         *Pi1_numberOfMothers
+  std::vector<int>         *Pi2_numberOfMothers
+  std::vector<int>         *Pi1_numberOfSourceCandidatePtrs
+  std::vector<int>         *Pi2_numberOfSourceCandidatePtrs
+  std::vector<int>         *Pi1_pdgId
+  std::vector<int>         *Pi2_pdgId
+  std::vector<int>         *Pi1_numberOfValidHitsOnTrack
+  std::vector<int>         *Pi2_numberOfValidHitsOnTrack
+  std::vector<int>         *Pi1_innerDetId
+  std::vector<int>         *Pi2_innerDetId
+  std::vector<bool>        *Pi1_innerOk
+  std::vector<bool>        *Pi2_innerOk
+  std::vector<bool>        *Pi1_isCaloMuon
+  std::vector<bool>        *Pi2_isCaloMuon
+  std::vector<bool>        *Pi1_isConvertedPhoton
+  std::vector<bool>        *Pi2_isConvertedPhoton
+  std::vector<bool>        *Pi1_isElectron
+  std::vector<bool>        *Pi2_isElectron
+  std::vector<bool>        *Pi1_isMuon 
+  std::vector<bool>        *Pi2_isMuon
+  std::vector<bool>        *Pi1_isPhoton
+  std::vector<bool>        *Pi2_isPhoton 
+  std::vector<bool>        *Pi1_isGlobalMuon
+  std::vector<bool>        *Pi2_isGlobalMuon
+  std::vector<bool>        *Pi1_isJet
+  std::vector<bool>        *Pi2_isJet
+  std::vector<bool>        *Pi1_isLonglived
+  std::vector<bool>        *Pi2_isLonglived
+  std::vector<bool>        *Pi1_massConstraint
+  std::vector<bool>        *Pi2_massConstraint
+  std::vector<float>       *J_Prob
+  std::vector<float>       *JPi_Prob
+  std::vector<float>       *JPiPi_Prob
+
 
 
 };

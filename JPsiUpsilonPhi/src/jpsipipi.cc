@@ -129,7 +129,56 @@ jpsipipi::jpsipipi(const edm::ParameterSet& iConfig)
   Pi_vertexchisq2(0),
   JPiPi_x(0),
   JPiPi_y(0),
-  JPiPi_z(0)
+  JPiPi_z(0),
+  Pi1_hcalFraction(0),
+  Pi2_hcalFraction(0),
+  Pi1_vertexNdof(0),
+  Pi2_vertexNdof(0),
+  Pi1_vertexNchi2(0),
+  Pi2_vertexNchi2(0),
+  Pi1_lambda(0),
+  Pi2_lambda(0),
+  Pi1_lambdaError(0),
+  Pi2_lambdaError(0),
+  Pi1_qoverp(0),
+  Pi2_qoverp(0),
+  Pi1_qoverpError(0),
+  Pi2_qoverpError(0),
+  Pi1_validTkFraction(0),
+  Pi2_validTkFraction(0),
+  Pi1_numberOfMothers(0),
+  Pi2_numberOfMothers(0),
+  Pi1_numberOfSourceCandidatePtrs(0),
+  Pi2_numberOfSourceCandidatePtrs(0),
+  Pi1_pdgId(0),
+  Pi2_pdgId(0),
+  Pi1_numberOfValidHitsOnTrack(0),
+  Pi2_numberOfValidHitsOnTrack(0),
+  Pi1_innerDetId(0),
+  Pi2_innerDetId(0),
+  Pi1_innerOk(0),
+  Pi2_innerOk(0),
+  Pi1_isCaloMuon(0),
+  Pi2_isCaloMuon(0),
+  Pi1_isConvertedPhoton(0),
+  Pi2_isConvertedPhoton(0),
+  Pi1_isElectron(0),
+  Pi2_isElectron(0),
+  Pi1_isMuon (0),
+  Pi2_isMuon(0),
+  Pi1_isPhoton(0),
+  Pi2_isPhoton (0),
+  Pi1_isGlobalMuon(0),
+  Pi2_isGlobalMuon(0),
+  Pi1_isJet(0),
+  Pi2_isJet(0),
+  Pi1_isLonglived(0),
+  Pi2_isLonglived(0),
+  Pi1_massConstraint(0),
+  Pi2_massConstraint(0),
+  J_Prob(0),
+JPi_Prob(0),
+JPiPi_Prob(0)
 
 
  {
@@ -223,8 +272,8 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	      continue;
 	    }
 
-	  if(iMuon1->track()->pt()<2.0) continue;
-	  if(iMuon2->track()->pt()<2.0) continue;
+	  if(iMuon1->track()->pt()<4.0) continue;
+	  if(iMuon2->track()->pt()<4.0) continue;
 
 	  if(!(glbTrackM->quality(reco::TrackBase::highPurity))) continue;
 	  if(!(glbTrackP->quality(reco::TrackBase::highPurity))) continue;	 
@@ -316,7 +365,14 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  
 	  //some loose cuts go here
 	  
-	  if(psi_vFit_vertex_noMC->chiSquared()>10.) continue;
+	  //if(psi_vFit_vertex_noMC->chiSquared()>20.) continue;
+	  double J_Prob_tmp   = TMath::Prob(psi_vFit_vertex_noMC->chiSquared(),(int)psi_vFit_vertex_noMC->degreesOfFreedom());
+	   
+	   if(J_Prob_tmp<0.01)
+	     {
+	       continue;
+	     }
+
 	  if(psi_vFit_noMC->currentState().mass()<2.92 || psi_vFit_noMC->currentState().mass()>3.25) continue;
 	  float dx = psi_vFit_vertex_noMC->position().x()-bestVtx.x();
 	  float dy = psi_vFit_vertex_noMC->position().y()-bestVtx.y();
@@ -326,6 +382,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if (J_dxy/J_dxyerr<5.0) continue;
 	  muontt1.push_back(muon1TT);
 	  muontt2.push_back(muon2TT);
+	  J_Prob->push_back(J_Prob_tmp);
 	  J_vertexchi2->push_back(psi_vFit_vertex_noMC->chiSquared());
       J_lxy->push_back(J_dxy);
 	  J_lxyErr->push_back(J_dxyerr);
@@ -388,11 +445,11 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 		
   	    //if(iTrack1->pt()<0.8)continue;
   	    if(iTrack1->eta()>2.4||iTrack1->eta()<-2.4)continue;
-  	    if(!(iTrack1->bestTrack())) continue;
-  	    if(iTrack1->bestTrack()->charge() == 0) continue; //NO neutral objects
+  	    if(!(iTrack1->pseudoTrack())) continue;
+  	    if(iTrack1->charge() == 0) continue; //NO neutral objects
   	    //if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	    
-  	    if(iTrack1->vertexChi2()>10) continue;
+  	    if(iTrack1->vertexNormalizedChi2()>10) continue;
   	    if(!(iTrack1->trackHighPurity())) continue;
   	    if(iTrack1->numberOfHits()<5) continue;
   	    if(iTrack1->numberOfPixelHits()<1) continue;
@@ -412,7 +469,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
        //ParticleMass Jpsi_mass = 3.0969;
         ParticleMass Pion_mass = 0.13957061;
 	    //float Jpsi_sigma = 0.000006 ;
-	    float Pion_sigma = 0.00000024;
+	    float Pion_sigma = Pion_mass*1.e-6;
 	    //float psi_sigma = psi_mass*1.e-6;
 	    float chi = 0.;
 	    float ndf = 0.;
@@ -426,7 +483,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	     // JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
 	      JpsiPi_fit.push_back(pFactory.particle(muontt1.at(i),muon_mass,chi,ndf,muon_sigma));
 	      JpsiPi_fit.push_back(pFactory.particle(muontt2.at(i),muon_mass,chi,ndf,muon_sigma));
-	      JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
+	      JpsiPi_fit.push_back(pFactory.particle(track1TT,     Pion_mass,chi,ndf,Pion_sigma));
 	    }
 	    catch(...) { 
 	      std::cout<<" Exception caught ... continuing 1 "<<std::endl; 
@@ -460,7 +517,12 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        //std::cout << "negative chisq from psi fit" << endl;
 	        continue;
 	      }
-	    if(psi_vFit_vertex_noMC->chiSquared()>12.) continue;
+	    //if(psi_vFit_vertex_noMC->chiSquared()>15.) continue;
+	     double Prob_tmp  = TMath::Prob(psi_vFit_vertex_noMC->chiSquared(),(int)psi_vFit_vertex_noMC->degreesOfFreedom());
+		   if(Prob_tmp<0.01)
+		     {
+		       continue;
+		     }
 	    float dx1 = psi_vFit_vertex_noMC->position().x()-bestVtx.x();
 	    float dy1 = psi_vFit_vertex_noMC->position().y()-bestVtx.y();
 	    float JpsiPi_dxy = TMath::Sqrt(dx1*dx1+dy1*dy1);
@@ -471,14 +533,15 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	    {
             if((iTrack1->charge())*(iTrack2->charge())==1) continue;
             
-            if(iTrack2->pt()<0.8)continue;
-  	        if(iTrack2->eta()>2.4||iTrack2->eta()<-2.4)continue;
-  	        if(!(iTrack2->bestTrack())) continue;
+            //if(iTrack2->pt()<0.8)continue;
+  	        //if(iTrack2->eta()>2.4||iTrack2->eta()<-2.4)continue;
+  	        if(!(iTrack2->pseudoTrack())) continue;
   	        if(iTrack2->charge() == 0) continue; //NO neutral objects
   	        //if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
   	        if(iTrack2->numberOfHits()<5) continue;
   	        if(iTrack2->numberOfPixelHits()<1) continue;
+  	        if(iTrack2->vertexNormalizedChi2()>10) continue;
   	        if(iTrack2->dxy(bestVtx.position())/iTrack2->dxyError() < 1.0) continue;
   	        if ( IsTheSame(*iTrack2, muontt1.at(i).track()) || IsTheSame(*iTrack2,muontt2.at(i).track()) ) continue;
             reco::TransientTrack track2TT((*theB).build(iTrack2->pseudoTrack()));
@@ -499,8 +562,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	         // JpsiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
 	          JpsiPiPi_fit.push_back(pFactory.particle(muontt1.at(i),muon_mass,chi,ndf,muon_sigma));
 	          JpsiPiPi_fit.push_back(pFactory.particle(muontt2.at(i),muon_mass,chi,ndf,muon_sigma));
-	          JpsiPiPi_fit.push_back(pFactory.particle(track1TT,Pion_mass,iTrack1->vertexChi2(),iTrack1->vertexNdof(),Pion_sigma));
-	          JpsiPiPi_fit.push_back(pFactory.particle(track2TT,Pion_mass,iTrack2->vertexChi2(),iTrack2->vertexNdof(),Pion_sigma));
+	          JpsiPiPi_fit.push_back(pFactory.particle(track1TT,     Pion_mass,chi,ndf,Pion_sigma));
+	          JpsiPiPi_fit.push_back(pFactory.particle(track2TT,     Pion_mass,chi,ndf,Pion_sigma));
 	        }
 	        catch(...) { 
 	          std::cout<<" Exception caught ... continuing 1 "<<std::endl; 
@@ -534,7 +597,12 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	            //std::cout << "negative chisq from psi fit" << endl;
 	            continue;
 	          }
-	        if(psi_vFit_vertex_noMC2->chiSquared() > psi_vFit_vertex_noMC->chiSquared() + 6.0 ) continue;
+	        //if(psi_vFit_vertex_noMC2->chiSquared() > psi_vFit_vertex_noMC->chiSquared() + 6.0 ) continue;
+	        double Prob_tmp2  = TMath::Prob(psi_vFit_vertex_noMC2->chiSquared(),(int)psi_vFit_vertex_noMC2->degreesOfFreedom());
+		   if(Prob_tmp2<0.01)
+		     {
+		       continue;
+		     }
 	        float px,py,rx,ry;
 	        px = psi_vFit_noMC2->currentState().globalMomentum().x();
 	        py = psi_vFit_noMC2->currentState().globalMomentum().y();
@@ -548,7 +616,8 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             float JpsiPiPi_dxy = TMath::Sqrt(rx*rx+ry*ry);
 	        float JpsiPiPi_dxyerr = psi_vFit_vertex_noMC2->error().rerr(pvertex);
 	        //if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2) continue;
-
+            JPi_Prob->push_back(Prob_tmp);
+            JPiPi_Prob->push_back(Prob_tmp2);
 	        Pi_nhits1->push_back(iTrack1->numberOfHits());
             Pi_npixelhits1->push_back(iTrack1->numberOfPixelHits());
             Pi_nhits2->push_back(iTrack2->numberOfHits());
@@ -577,6 +646,54 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             JPiPi_x->push_back( psi_vFit_vertex_noMC2->position().x()-bestVtx.x());
             JPiPi_y->push_back( psi_vFit_vertex_noMC2->position().y()-bestVtx.y());
             JPiPi_z->push_back( psi_vFit_vertex_noMC2->position().z()-bestVtx.z());
+
+            Pi1_hcalFraction->push_back(iTrack1->hcalFraction());
+            Pi2_hcalFraction->push_back(iTrack2->hcalFraction());
+            Pi1_vertexNdof->push_back(iTrack1->vertexNdof());
+            Pi2_vertexNdof->push_back(iTrack2->vertexNdof());
+            Pi1_vertexNchi2->push_back(iTrack1->vertexNormalizedChi2());
+            Pi2_vertexNchi2->push_back(iTrack2->vertexNormalizedChi2());
+            Pi1_lambda->push_back(iTrack1->pseudoTrack()->lambda());
+            Pi2_lambda->push_back(iTrack2->pseudoTrack()->lambda());
+            Pi1_lambdaError->push_back(iTrack1->pseudoTrack()->lambdaError());
+            Pi2_lambdaError->push_back(iTrack2->pseudoTrack()->lambdaError());
+            Pi1_qoverp->push_back(iTrack1->pseudoTrack()->qoverp());
+            Pi2_qoverp->push_back(iTrack2->pseudoTrack()->qoverp());
+            Pi1_qoverpError->push_back(iTrack1->pseudoTrack()->qoverpError());
+            Pi2_qoverpError->push_back(iTrack2->pseudoTrack()->qoverpError());
+            Pi1_validTkFraction->push_back(iTrack1->pseudoTrack()->validFraction());
+            Pi2_validTkFraction->push_back(iTrack2->pseudoTrack()->validFraction());
+            Pi1_numberOfMothers->push_back(iTrack1->numberOfMothers());
+            Pi2_numberOfMothers->push_back(iTrack2->numberOfMothers());
+            Pi1_numberOfSourceCandidatePtrs->push_back(iTrack1->umberOfSourceCandidatePtrs());
+            Pi2_numberOfSourceCandidatePtrs->push_back(iTrack2->umberOfSourceCandidatePtrs());
+            Pi1_pdgId->push_back(iTrack1->pdgId());
+            Pi2_pdgId->push_back(iTrack2->pdgId());
+            Pi1_numberOfValidHitsOnTrack->push_back(iTrack1->pseudoTrack()->found());
+            Pi2_numberOfValidHitsOnTrack->push_back(iTrack2->pseudoTrack()->found());
+            Pi1_innerDetId->push_back(iTrack1->pseudoTrack()->innerDetId());
+            Pi2_innerDetId->push_back(iTrack2->pseudoTrack()->innerDetId());
+            Pi1_innerOk->push_back(iTrack1->pseudoTrack()->innerOk());
+            Pi2_innerOk->push_back(iTrack2->pseudoTrack()->innerOk());
+            Pi1_isCaloMuon->push_back(iTrack1->isCaloMuon());
+            Pi2_isCaloMuon->push_back(iTrack2->isCaloMuon());
+            Pi1_isConvertedPhoton->push_back(iTrack1->isConvertedPhoton());
+            Pi2_isConvertedPhoton->push_back(iTrack2->isConvertedPhoton());
+            Pi1_isElectron->push_back(iTrack1->isElectron());
+            Pi2_isElectron->push_back(iTrack2->isElectron());
+            Pi1_isMuon ->push_back(iTrack1->isMuon());
+            Pi2_isMuon->push_back(iTrack2->isMuon());
+            Pi1_isPhoton->push_back(iTrack1->isPhoton());
+            Pi2_isPhoton ->push_back(iTrack2->isPhoton());
+            Pi1_isGlobalMuon->push_back(iTrack1->isGlobalMuon());
+            Pi2_isGlobalMuon->push_back(iTrack2->isGlobalMuon());
+            Pi1_isJet->push_back(iTrack1->isJet());
+            Pi2_isJet->push_back(iTrack2->isJet());
+            Pi1_isLonglived->push_back(iTrack1->longLived());
+            Pi2_isLonglived->push_back(iTrack2->longLived());
+            Pi1_massConstraint->push_back(iTrack1->massConstraint());
+            Pi2_massConstraint->push_back(iTrack2->massConstraint());
+
 	        nPiPair++;
 	        JpsiPiPi_fit.clear();
 
@@ -648,6 +765,55 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
    JPiPi_x->clear();
    JPiPi_y->clear();
    JPiPi_z->clear();
+   Pi1_hcalFraction->clear();
+   Pi2_hcalFraction->clear();
+   Pi1_vertexNdof->clear();
+   Pi2_vertexNdof->clear();
+   Pi1_vertexNchi2->clear();
+   Pi2_vertexNchi2->clear();
+   Pi1_lambda->clear();
+   Pi2_lambda->clear();
+   Pi1_lambdaError->clear();
+   Pi2_lambdaError->clear();
+   Pi1_qoverp->clear();
+   Pi2_qoverp->clear();
+   Pi1_qoverpError->clear();
+   Pi2_qoverpError->clear();
+   Pi1_validTkFraction->clear();
+   Pi2_validTkFraction->clear();
+   Pi1_numberOfMothers->clear();
+   Pi2_numberOfMothers->clear();
+   Pi1_numberOfSourceCandidatePtrs->clear();
+   Pi2_numberOfSourceCandidatePtrs->clear();
+   Pi1_pdgId->clear();
+   Pi2_pdgId->clear();
+   Pi1_numberOfValidHitsOnTrack->clear();
+   Pi2_numberOfValidHitsOnTrack->clear();
+   Pi1_innerDetId->clear();
+   Pi2_innerDetId->clear();
+   Pi1_innerOk->clear();
+   Pi2_innerOk->clear();
+   Pi1_isCaloMuon->clear();
+   Pi2_isCaloMuon->clear();
+   Pi1_isConvertedPhoton->clear();
+   Pi2_isConvertedPhoton->clear();
+   Pi1_isElectron->clear();
+   Pi2_isElectron->clear();
+   Pi1_isMuon ->clear();
+   Pi2_isMuon->clear();
+   Pi1_isPhoton->clear();
+   Pi2_isPhoton ->clear();
+   Pi1_isGlobalMuon->clear();
+   Pi2_isGlobalMuon->clear();
+   Pi1_isJet->clear();
+   Pi2_isJet->clear();
+   Pi1_isLonglived->clear();
+   Pi2_isLonglived->clear();
+   Pi1_massConstraint->clear();
+   Pi2_massConstraint->clear();
+   J_Prob->clear();
+   JPi_Prob->clear();
+   JPiPi_Prob->clear();
 
 }
 bool jpsipipi::IsTheSame(const pat::GenericParticle& tk, const reco::Track  mu){
@@ -738,6 +904,55 @@ jpsipipi::beginJob()
   tree_->Branch("JPiPi_x",&JPiPi_x);
   tree_->Branch("JPiPi_y",&JPiPi_y);
   tree_->Branch("JPiPi_z",&JPiPi_z);
+  tree_->Branch("Pi1_hcalFraction",&Pi1_hcalFraction);
+  tree_->Branch("Pi2_hcalFraction",&Pi2_hcalFraction);
+  tree_->Branch("Pi1_vertexNdof",&Pi1_vertexNdof);
+  tree_->Branch("Pi2_vertexNdof",&Pi2_vertexNdof);
+  tree_->Branch("Pi1_vertexNchi2",&Pi1_vertexNchi2);
+  tree_->Branch("Pi2_vertexNchi2",&Pi2_vertexNchi2);
+  tree_->Branch("Pi1_lambda",&Pi1_lambda);
+  tree_->Branch("Pi2_lambda",&Pi2_lambda);
+  tree_->Branch("Pi1_lambdaError",&Pi1_lambdaError);
+  tree_->Branch("Pi2_lambdaError",&Pi2_lambdaError);
+  tree_->Branch("Pi1_qoverp",&Pi1_qoverp);
+  tree_->Branch("Pi2_qoverp",&Pi2_qoverp);
+  tree_->Branch("Pi1_qoverpError",&Pi1_qoverpError);
+  tree_->Branch("Pi2_qoverpError",&Pi2_qoverpError);
+  tree_->Branch("Pi1_validTkFraction",&Pi1_validTkFraction);
+  tree_->Branch("Pi2_validTkFraction",&Pi2_validTkFraction);
+  tree_->Branch("Pi1_numberOfMothers",&Pi1_numberOfMothers);
+  tree_->Branch("Pi2_numberOfMothers",&Pi2_numberOfMothers);
+  tree_->Branch("Pi1_numberOfSourceCandidatePtrs",&Pi1_numberOfSourceCandidatePtrs);
+  tree_->Branch("Pi2_numberOfSourceCandidatePtrs",&Pi2_numberOfSourceCandidatePtrs);
+  tree_->Branch("Pi1_pdgId",&Pi1_pdgId);
+  tree_->Branch("Pi2_pdgId",&Pi2_pdgId);
+  tree_->Branch("Pi1_numberOfValidHitsOnTrack",&Pi1_numberOfValidHitsOnTrack);
+  tree_->Branch("Pi2_numberOfValidHitsOnTrack",&Pi2_numberOfValidHitsOnTrack);
+  tree_->Branch("Pi1_innerDetId",&Pi1_innerDetId);
+  tree_->Branch("Pi2_innerDetId",&Pi2_innerDetId);
+  tree_->Branch("Pi1_innerOk",&Pi1_innerOk);
+  tree_->Branch("Pi2_innerOk",&Pi2_innerOk);
+  tree_->Branch("Pi1_isCaloMuon",&Pi1_isCaloMuon);
+  tree_->Branch("Pi2_isCaloMuon",&Pi2_isCaloMuon);
+  tree_->Branch("Pi1_isConvertedPhoton",&Pi1_isConvertedPhoton);
+  tree_->Branch("Pi2_isConvertedPhoton",&Pi2_isConvertedPhoton);
+  tree_->Branch("Pi1_isElectron",&Pi1_isElectron);
+  tree_->Branch("Pi2_isElectron",&Pi2_isElectron);
+  tree_->Branch("Pi1_isMuon ",&Pi1_isMuon );
+  tree_->Branch("Pi2_isMuon",&Pi2_isMuon);
+  tree_->Branch("Pi1_isPhoton",&Pi1_isPhoton);
+  tree_->Branch("Pi2_isPhoton ",&Pi2_isPhoton );
+  tree_->Branch("Pi1_isGlobalMuon",&Pi1_isGlobalMuon);
+  tree_->Branch("Pi2_isGlobalMuon",&Pi2_isGlobalMuon);
+  tree_->Branch("Pi1_isJet",&Pi1_isJet);
+  tree_->Branch("Pi2_isJet",&Pi2_isJet);
+  tree_->Branch("Pi1_isLonglived",&Pi1_isLonglived);
+  tree_->Branch("Pi2_isLonglived",&Pi2_isLonglived);
+  tree_->Branch("Pi1_massConstraint",&Pi1_massConstraint);
+  tree_->Branch("Pi2_massConstraint",&Pi2_massConstraint);
+  tree_->Branch("J_Prob",&J_Prob);
+  tree_->Branch("JPi_Prob",&JPi_Prob);
+  tree_->Branch("JPiPi_Prob",&JPiPi_Prob);
 
 }
 
