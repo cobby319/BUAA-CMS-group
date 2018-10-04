@@ -690,32 +690,32 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             Pi2_qoverp->push_back(0);
             Pi1_qoverpError->push_back(0);
             Pi2_qoverpError->push_back(0);
-            Pi1_validTkFraction->push_back(0);
-            Pi2_validTkFraction->push_back(0);
+            //Pi1_validTkFraction->push_back(0);
+            //Pi2_validTkFraction->push_back(0);
             Pi1_numberOfValidHitsOnTrack->push_back(0);
             Pi2_numberOfValidHitsOnTrack->push_back(0);
             Pi1_innerDetId->push_back(0);
             Pi2_innerDetId->push_back(0);
             Pi1_innerOk->push_back(0);
             Pi2_innerOk->push_back(0);
-            /*
-            Pi1_lambda->push_back(iTrack1->bestTrack()->lambda());
-            Pi2_lambda->push_back(iTrack2->bestTrack()->lambda());
-            Pi1_lambdaError->push_back(iTrack1->bestTrack()->lambdaError());
-            Pi2_lambdaError->push_back(iTrack2->bestTrack()->lambdaError());
-            Pi1_qoverp->push_back(iTrack1->bestTrack()->qoverp());
-            Pi2_qoverp->push_back(iTrack2->bestTrack()->qoverp());
-            Pi1_qoverpError->push_back(iTrack1->bestTrack()->qoverpError());
-            Pi2_qoverpError->push_back(iTrack2->bestTrack()->qoverpError());
+            
+            //Pi1_lambda->push_back(iTrack1->bestTrack()->lambda());
+            //Pi2_lambda->push_back(iTrack2->bestTrack()->lambda());
+            //Pi1_lambdaError->push_back(iTrack1->bestTrack()->lambdaError());
+            //Pi2_lambdaError->push_back(iTrack2->bestTrack()->lambdaError());
+            //Pi1_qoverp->push_back(iTrack1->bestTrack()->qoverp());
+            //Pi2_qoverp->push_back(iTrack2->bestTrack()->qoverp());
+            //Pi1_qoverpError->push_back(iTrack1->bestTrack()->qoverpError());
+            //Pi2_qoverpError->push_back(iTrack2->bestTrack()->qoverpError());
             Pi1_validTkFraction->push_back(iTrack1->bestTrack()->validFraction());
             Pi2_validTkFraction->push_back(iTrack2->bestTrack()->validFraction());
-            Pi1_numberOfValidHitsOnTrack->push_back(iTrack1->bestTrack()->found());
-            Pi2_numberOfValidHitsOnTrack->push_back(iTrack2->bestTrack()->found());
-            Pi1_innerDetId->push_back(iTrack1->bestTrack()->innerDetId());
-            Pi2_innerDetId->push_back(iTrack2->bestTrack()->innerDetId());
-            Pi1_innerOk->push_back(iTrack1->bestTrack()->innerOk());
-            Pi2_innerOk->push_back(iTrack2->bestTrack()->innerOk());
-            */
+            //Pi1_numberOfValidHitsOnTrack->push_back(iTrack1->bestTrack()->found());
+            //Pi2_numberOfValidHitsOnTrack->push_back(iTrack2->bestTrack()->found());
+            //Pi1_innerDetId->push_back(iTrack1->bestTrack()->innerDetId());
+            //Pi2_innerDetId->push_back(iTrack2->bestTrack()->innerDetId());
+            //Pi1_innerOk->push_back(iTrack1->bestTrack()->innerOk());
+            //Pi2_innerOk->push_back(iTrack2->bestTrack()->innerOk());
+            
 	        nPiPair++;
 	        JpsiPiPi_fit.clear();
 
