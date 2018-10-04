@@ -160,5 +160,183 @@ namespace objectSelection
     }
     return eventShouldBeCleaned;
   }
+    bool selectJpsi (std::vector<TLorentzVectorWithIndex> & selJpsi,
+                   std::vector<float>  *J_mass,
+                   std::vector<float>  *J_px,
+                   std::vector<float>  *J_py,
+                   std::vector<float>  *J_pz,
+                   std::vector<float>  *J_px1,
+                   std::vector<float>  *J_py1,
+                   std::vector<float>  *J_pz1,
+                   std::vector<int>    *J_charge1,
+                   std::vector<float>  *J_px2,
+                   std::vector<float>  *J_py2,
+                   std::vector<float>  *J_pz2,
+                   std::vector<int>    *J_charge2,
+                   std::vector<float>  *mumC2,
+                   std::vector<int>    *mumNHits,
+                   std::vector<int>    *mumNPHits,
+                   std::vector<float>  *mupC2,
+                   std::vector<int>    *mupNHits,
+                   std::vector<int>    *mupNPHits,
+                   std::vector<float>  *mumdxy,
+                   std::vector<float>  *mupdxy,
+                   std::vector<float>  *mumdz,
+                   std::vector<float>  *mupdz,
+                   std::vector<float>  *muon_dca,
+                   std::vector<bool>   *mu1soft,
+                   std::vector<bool>   *mu2soft,
+                   std::vector<bool>   *mu1tight,
+                   std::vector<bool>   *mu2tight,
+                   std::vector<bool>   *mu1PF,
+                   std::vector<bool>   *mu2PF,
+                   std::vector<bool>   *mu1loose,
+                   std::vector<bool>   *mu2loose,
+                   std::vector<float>   *J_lxy,
+                   std::vector<float>   *J_lxyErr,
+                   std::vector<float>   *J_vertexchi2){
+      for(unsigned int i = 0 ; i<J_mass->size() ; i++){
+        bool passMuonLooseID   = false;
+        bool passJpsiPt        = false;
+        bool passMuonHits      = false;
+        bool passMuonPixelHits = false;
+        TLorentzVector Jpsi ;
+        Jpsi.SetXYZM(J_px->at(i),J_py->at(i),J_pz->at(i),J_mass->at(i));
+        passMuonLooseID = mu1loose->at(i) && mu2loose->at(i);
+        passJpsiPt = Jpsi.Pt() >10 ;
+        passMuonHits = mupNHits->at(i) >6 && mumNHits->at(i) >6;
+        passMuonPixelHits = mupNPHits->at(i) >0 &&  mumNPHits->at(i) >0;
+        if (passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits) selJpsi->push_back(Jpsi,i);
+        if (selJpsi->size() >1 ) {
+          auto maxprob = std::max_element(J_Prob->begin(), J_Prob->at(i));
+          int jpsiN =std::distance(J_Prob->begin(), maxprob) ;
+          selJpsi->clear();
+          TLorentzVector Jpsi_tmp;
+          Jpsi_tmp.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN));
+          selJpsi->push_back(Jpsi_tmp,jpsiN);
+        }
+      }
+      return selJpsi->size() > 0;
+    }
+
+  bool selectPions(std::vector<TLorentzVectorWithIndex> & selPion1,
+                   std::vector<TLorentzVectorWithIndex> & selPion2,
+                   std::vector<TLorentzVectorWithIndex> & selJpsi,
+                   std::vector<float>   *JPiPi_lxy,
+                   std::vector<float>   *JPiPi_lxyErr,
+                   std::vector<float>   *JPiPi_x,
+                   std::vector<float>   *JPiPi_y,
+                   std::vector<float>   *JPiPi_z,
+                   std::vector<int>     *Pi_nhits1,
+                   std::vector<int>     *Pi_npixelhits1,
+                   std::vector<int>     *Pi_nhits2,
+                   std::vector<int>     *Pi_npixelhits2,
+                   std::vector<float>   *Pi_eta1,
+                   std::vector<float>   *Pi_eta2,
+                   std::vector<float>   *Pi_phi1,
+                   std::vector<float>   *Pi_phi2,
+                   std::vector<float>   *Pi_pt1,
+                   std::vector<float>   *Pi_pt2,
+                   std::vector<float>   *Pi_e1,
+                   std::vector<float>   *Pi_e2,
+                   std::vector<int>     *Pi_charge1,
+                   std::vector<int>     *Pi_charge2,
+                   std::vector<float>   *Pi_dxy1,
+                   std::vector<float>   *Pi_dxy2,
+                   std::vector<float>   *Pi_dxyerr1,
+                   std::vector<float>   *Pi_dxyerr2,
+                   std::vector<float>   *Pi_vertexchisq1,
+                   std::vector<float>   *Pi_vertexchisq2,
+                   std::vector<float>   *Pi1_hcalFraction,
+                   std::vector<float>   *Pi2_hcalFraction,
+                   std::vector<float>   *Pi1_vertexNdof,
+                   std::vector<float>   *Pi2_vertexNdof,
+                   std::vector<float>   *Pi1_vertexNchi2,
+                   std::vector<float>   *Pi2_vertexNchi2,
+                   std::vector<float>   *Pi1_lambda,
+                   std::vector<float>   *Pi2_lambda,
+                   std::vector<float>   *Pi1_lambdaError,
+                   std::vector<float>   *Pi2_lambdaError,
+                   std::vector<float>   *Pi1_qoverp,
+                   std::vector<float>   *Pi2_qoverp,
+                   std::vector<float>   *Pi1_qoverpError,
+                   std::vector<float>   *Pi2_qoverpError,
+                   std::vector<float>   *Pi1_validTkFraction,
+                   std::vector<float>   *Pi2_validTkFraction,
+                   std::vector<int>     *Pi1_numberOfMothers,
+                   std::vector<int>     *Pi2_numberOfMothers,
+                   std::vector<int>     *Pi1_pdgId,
+                   std::vector<int>     *Pi2_pdgId,
+                   std::vector<int>     *Pi1_numberOfValidHitsOnTrack,
+                   std::vector<int>     *Pi2_numberOfValidHitsOnTrack,
+                   std::vector<bool>    *Pi1_isCaloMuon,
+                   std::vector<bool>    *Pi2_isCaloMuon,
+                   std::vector<bool>    *Pi1_isConvertedPhoton,
+                   std::vector<bool>    *Pi2_isConvertedPhoton,
+                   std::vector<bool>    *Pi1_isElectron,
+                   std::vector<bool>    *Pi2_isElectron,
+                   std::vector<bool>    *Pi1_isMuon,
+                   std::vector<bool>    *Pi2_isMuon,
+                   std::vector<bool>    *Pi1_isPhoton,
+                   std::vector<bool>    *Pi2_isPhoton ,
+                   std::vector<bool>    *Pi1_isGlobalMuon,
+                   std::vector<bool>    *Pi2_isGlobalMuon,
+                   std::vector<bool>    *Pi1_isJet,
+                   std::vector<bool>    *Pi2_isJet,
+                   std::vector<bool>    *Pi1_isLonglived,
+                   std::vector<bool>    *Pi2_isLonglived,
+                   std::vector<bool>    *Pi1_massConstraint,
+                   std::vector<bool>    *Pi2_massConstraint,
+                   std::vector<float>   *J_Prob,
+                   std::vector<float>   *JPi_Prob,
+                   std::vector<float>   *JPiPi_Prob){
+    for(unsigned int i = 0 ; i<J_mass->size() ; i++){
+      bool passDeltaRJP1 = false;
+      bool passDeltaRJP2 = false;
+      bool passDeltaRPP  = false;
+      bool pipiInPhiMass = false;
+      bool pipiInXMass = false;
+      bool pipiInLowMass =false;
+      bool passPiPimassregion = false;
+      bool passVertexNormalizedChi2 = false;
+      bool passEta =false;
+      bool passPt  = false;
+      bool passIsNotOtherObject = false;
+      TLorentzVector pion1,pion2;
+      float Pion_mass = 0.13957061;
+      pion1.SetPtEtaPhiE(Pi_pt1->at(i),Pi_eta1->at(i),Pi_phi1->at(i),Pi_e1->at(i));
+      pion2.SetPtEtaPhiE(Pi_pt2->at(i),Pi_eta2->at(i),Pi_phi2->at(i),Pi_e2->at(i));
+      pipiInPhiMass = (pion1+pion2).M() >1.01  && (pion1+pion2).M() <1.03 ;
+      pipiInXMass =  (pion1+pion2).M() >0.81  && (pion1+pion2).M() <0.97 ;
+      pipiInLowMass = (pion1+pion2).M() <0.35;
+      passPiPimassregion = !pipiInXMass && !pipiInLowMass && pipiInPhiMass;
+      pion1.SetPtEtaPhiM(Pi_pt1->at(i),Pi_eta1->at(i),Pi_phi1->at(i),Pion_mass);
+      pion2.SetPtEtaPhiM(Pi_pt2->at(i),Pi_eta2->at(i),Pi_phi2->at(i),Pion_mass);
+      passDeltaRJP1 = selJpsi->begin().DeltaR(pion1) < 1.2;
+      passDeltaRJP2 = selJpsi->begin().DeltaR(pion2) < 1.2;
+      passDeltaRPP  = pion1.DeltaR(pion2) <1.8;
+      passVertexNormalizedChi2 = Pi1_vertexNchi2->at(i) < 10.0 && Pi2_vertexNchi2->at(i) <10.0;
+      passEta = Pi_eta1->at(i) <2.0 && Pi_eta1->at(i) >-2.0 && Pi_eta2->at(i) <2.0 &&Pi_eta2->at(i) >-2.0;
+      passPt =  Pi_pt1->at(i) > 0.8 && Pi_pt2->at(i) >0.8;
+      passIsNotOtherObject = ! (Pi1_isGlobalMuon || Pi2_isGlobalMuon);
+      if(passDeltaRJP1 && passDeltaRJP2 && passDeltaRPP &&passPiPimassregion && passVertexNormalizedChi2 && passEta && passPt &&passIsNotOtherObject) {
+        selPion1->push_back(pion1,i);
+        selPion2->push_back(pion2,i);
+      }
+      if(selPion1->size()>1){
+          auto maxprob = std::max_element(JPiPi_Prob->begin(), JPiPi_Prob->at(i));
+          int piN =std::distance(JPiPi_Prob->begin(), maxprob) ;
+          selPion1->clear();
+          selPion2->clear();
+          TLorentzVector pion1_tmp;
+          TLorentzVector pion2_tmp;
+          pion1_tmp.SetPtEtaPhiM(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass);
+          pion2_tmp.SetPtEtaPhiM(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass);
+          selPion1->push_back(pion1_tmp,piN);
+          selPion2->push_back(pion2_tmp,piN);
+      }
+    }
+    return selPion1->size()>0 ;
+  }
 
 }

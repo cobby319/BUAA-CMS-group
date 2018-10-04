@@ -57,81 +57,234 @@ void ntuple::Loop()
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       if(jentry % 10000 ==0) cout << jentry << " of " << nentries << endl;
       double weight = 1.;
-      mon.fillHisto("Num_JPsi","tot",nJ,weight);;
-      mon.fillHisto("Num_PiPi","tot",nPiPair,weight);;
-      auto smallestchi2 = std::min_element(Pi_vertexchisq2->begin(), Pi_vertexchisq2->end());
-      int piN =std::distance(Pi_vertexchisq2->begin(), smallestchi2);
-      //cout <<  "piN  is " << piN << endl;
-      auto minchi2J = std::min_element(J_vertexchi2->begin(), J_vertexchi2->end());
-      int jpsiN =std::distance(J_vertexchi2->begin(), minchi2J) ;
-      //cout <<  "selected jpsi is " << jpsiN << endl;
-      mon.fillHisto("J_mass","",J_mass->at(jpsiN),weight); 
-      mon.fillHisto("J_px","",J_px->at(jpsiN),weight); 
-      mon.fillHisto("J_py","",J_py->at(jpsiN),weight); 
-      mon.fillHisto("J_pz","",J_pz->at(jpsiN),weight); 
-      mon.fillHisto("J_px1","",J_px1->at(jpsiN),weight); 
-      mon.fillHisto("J_py1","",J_py1->at(jpsiN),weight); 
-      mon.fillHisto("J_pz1","",J_pz1->at(jpsiN),weight); 
-      mon.fillHisto("J_charge1","",J_charge1->at(jpsiN),weight); 
-      mon.fillHisto("J_px2","",J_px2->at(jpsiN),weight); 
-      mon.fillHisto("J_py2","",J_py2->at(jpsiN),weight); 
-      mon.fillHisto("J_pz2","",J_pz2->at(jpsiN),weight); 
-      mon.fillHisto("J_charge2","",J_charge2->at(jpsiN),weight); 
-      mon.fillHisto("mumC2","",mumC2->at(jpsiN),weight); 
-      mon.fillHisto("mumNHits","",mumNHits->at(jpsiN),weight); 
-      mon.fillHisto("mumNPHits","",mumNPHits->at(jpsiN),weight); 
-      mon.fillHisto("mupC2","",mupC2->at(jpsiN),weight); 
-      mon.fillHisto("mupNHits","",mupNHits->at(jpsiN),weight); 
-      mon.fillHisto("mupNPHits","",mupNPHits->at(jpsiN),weight); 
-      mon.fillHisto("mumdxy","",mumdxy->at(jpsiN),weight); 
-      mon.fillHisto("mupdxy","",mupdxy->at(jpsiN),weight); 
-      mon.fillHisto("mumdz","",mumdz->at(jpsiN),weight); 
-      mon.fillHisto("mupdz","",mupdz->at(jpsiN),weight); 
-      mon.fillHisto("muon_dca","",muon_dca->at(jpsiN),weight); 
-      mon.fillHisto("mu1soft","",mu1soft->at(jpsiN),weight); 
-      mon.fillHisto("mu2soft","",mu2soft->at(jpsiN),weight); 
-      mon.fillHisto("mu1tight","",mu1tight->at(jpsiN),weight); 
-      mon.fillHisto("mu2tight","",mu2tight->at(jpsiN),weight); 
-      mon.fillHisto("mu1PF","",mu1PF->at(jpsiN),weight); 
-      mon.fillHisto("mu2PF","",mu2PF->at(jpsiN),weight); 
-      mon.fillHisto("mu1loose","",mu1loose->at(jpsiN),weight); 
-      mon.fillHisto("mu2loose","",mu2loose->at(jpsiN),weight); 
-      mon.fillHisto("J_lxy","",J_lxy->at(jpsiN),weight); 
-      mon.fillHisto("J_lxyErr","",J_lxyErr->at(jpsiN),weight); 
-      mon.fillHisto("J_vertexchi2","",J_vertexchi2->at(jpsiN),weight); 
-      mon.fillHisto("Pi_dJP","",Pi_dJP->at(piN),weight); 
-      mon.fillHisto("JPi_lxy","",JPi_lxy->at(piN),weight); 
-      mon.fillHisto("JPi_lxyErr","",JPi_lxyErr->at(piN),weight); 
-      mon.fillHisto("JPiPi_lxy","",JPiPi_lxy->at(piN),weight); 
-      mon.fillHisto("JPiPi_lxyErr","",JPiPi_lxyErr->at(piN),weight); 
-      mon.fillHisto("JPiPi_x","",JPiPi_x->at(piN),weight); 
-      mon.fillHisto("JPiPi_y","",JPiPi_y->at(piN),weight); 
-      mon.fillHisto("JPiPi_z","",JPiPi_z->at(piN),weight); 
-      mon.fillHisto("Pi_nhits1","",Pi_nhits1->at(piN),weight); 
-      mon.fillHisto("Pi_npixelhits1","",Pi_npixelhits1->at(piN),weight); 
-      mon.fillHisto("Pi_nhits2","",Pi_nhits2->at(piN),weight); 
-      mon.fillHisto("Pi_npixelhits2","",Pi_npixelhits2->at(piN),weight); 
-      mon.fillHisto("Pi_eta1","",Pi_eta1->at(piN),weight); 
-      mon.fillHisto("Pi_eta2","",Pi_eta2->at(piN),weight); 
-      mon.fillHisto("Pi_phi1","",Pi_phi1->at(piN),weight); 
-      mon.fillHisto("Pi_phi2","",Pi_phi2->at(piN),weight); 
-      mon.fillHisto("Pi_pt1","",Pi_pt1->at(piN),weight); 
-      mon.fillHisto("Pi_pt2","",Pi_pt2->at(piN),weight); 
-      mon.fillHisto("Pi_e1","",Pi_e1->at(piN),weight); 
-      mon.fillHisto("Pi_e2","",Pi_e2->at(piN),weight); 
-      mon.fillHisto("Pi_charge1","",Pi_charge1->at(piN),weight); 
-      mon.fillHisto("Pi_charge2","",Pi_charge2->at(piN),weight); 
-      mon.fillHisto("Pi_dxy1","",Pi_dxy1->at(piN),weight); 
-      mon.fillHisto("Pi_dxy2","",Pi_dxy2->at(piN),weight); 
-      mon.fillHisto("Pi_dxyerr1","",Pi_dxyerr1->at(piN),weight); 
-      mon.fillHisto("Pi_dxyerr2","",Pi_dxyerr2->at(piN),weight); 
-      mon.fillHisto("Pi_vertexchisq1","",Pi_vertexchisq1->at(piN),weight); 
-      mon.fillHisto("Pi_vertexchisq2","",Pi_vertexchisq2->at(piN),weight); 
-      //if(!mu1tight->at(jpsiN) || !mu2tight->at(jpsiN)) continue;
-      
-      //if(Pi_vertexchisq1->at(piN) >6 ) continue;
-      //if (Pi_vertexchisq2->at(piN)> 6+Pi_vertexchisq1->at(piN) ) continue;
+      std::vector<TLorentzVectorWithIndex>  selPion1;
+      std::vector<TLorentzVectorWithIndex>  selPion2;
+      std::vector<TLorentzVectorWithIndex>  selJpsi;
 
+      for (int jpsiN = 0 ; jpsiN < J_mass->size() ; jpsiN++){
+         for(int piN =0 ; piN <Pi_dJP->size() ; piN ++) {
+            mon.fillHisto("Num_JPsi","tot",nJ,weight);;
+            mon.fillHisto("Num_PiPi","tot",nPiPair,weight);;
+            mon.fillHisto("J_mass","",J_mass->at(jpsiN),weight); 
+            mon.fillHisto("J_px","",J_px->at(jpsiN),weight); 
+            mon.fillHisto("J_py","",J_py->at(jpsiN),weight); 
+            mon.fillHisto("J_pz","",J_pz->at(jpsiN),weight); 
+            mon.fillHisto("J_px1","",J_px1->at(jpsiN),weight); 
+            mon.fillHisto("J_py1","",J_py1->at(jpsiN),weight); 
+            mon.fillHisto("J_pz1","",J_pz1->at(jpsiN),weight); 
+            mon.fillHisto("J_charge1","",J_charge1->at(jpsiN),weight); 
+            mon.fillHisto("J_px2","",J_px2->at(jpsiN),weight); 
+            mon.fillHisto("J_py2","",J_py2->at(jpsiN),weight); 
+            mon.fillHisto("J_pz2","",J_pz2->at(jpsiN),weight); 
+            mon.fillHisto("J_charge2","",J_charge2->at(jpsiN),weight); 
+            mon.fillHisto("mumC2","",mumC2->at(jpsiN),weight); 
+            mon.fillHisto("mumNHits","",mumNHits->at(jpsiN),weight); 
+            mon.fillHisto("mumNPHits","",mumNPHits->at(jpsiN),weight); 
+            mon.fillHisto("mupC2","",mupC2->at(jpsiN),weight); 
+            mon.fillHisto("mupNHits","",mupNHits->at(jpsiN),weight); 
+            mon.fillHisto("mupNPHits","",mupNPHits->at(jpsiN),weight); 
+            mon.fillHisto("mumdxy","",mumdxy->at(jpsiN),weight); 
+            mon.fillHisto("mupdxy","",mupdxy->at(jpsiN),weight); 
+            mon.fillHisto("mumdz","",mumdz->at(jpsiN),weight); 
+            mon.fillHisto("mupdz","",mupdz->at(jpsiN),weight); 
+            mon.fillHisto("muon_dca","",muon_dca->at(jpsiN),weight); 
+            mon.fillHisto("mu1soft","",mu1soft->at(jpsiN),weight); 
+            mon.fillHisto("mu2soft","",mu2soft->at(jpsiN),weight); 
+            mon.fillHisto("mu1tight","",mu1tight->at(jpsiN),weight); 
+            mon.fillHisto("mu2tight","",mu2tight->at(jpsiN),weight); 
+            mon.fillHisto("mu1PF","",mu1PF->at(jpsiN),weight); 
+            mon.fillHisto("mu2PF","",mu2PF->at(jpsiN),weight); 
+            mon.fillHisto("mu1loose","",mu1loose->at(jpsiN),weight); 
+            mon.fillHisto("mu2loose","",mu2loose->at(jpsiN),weight); 
+            mon.fillHisto("J_lxy","",J_lxy->at(jpsiN),weight); 
+            mon.fillHisto("J_lxyErr","",J_lxyErr->at(jpsiN),weight); 
+            mon.fillHisto("J_vertexchi2","",J_vertexchi2->at(jpsiN),weight); 
+            mon.fillHisto("Pi_dJP","",Pi_dJP->at(piN),weight); 
+            mon.fillHisto("JPi_lxy","",JPi_lxy->at(piN),weight); 
+            mon.fillHisto("JPi_lxyErr","",JPi_lxyErr->at(piN),weight); 
+            mon.fillHisto("JPiPi_lxy","",JPiPi_lxy->at(piN),weight); 
+            mon.fillHisto("JPiPi_lxyErr","",JPiPi_lxyErr->at(piN),weight); 
+            mon.fillHisto("JPiPi_x","",JPiPi_x->at(piN),weight); 
+            mon.fillHisto("JPiPi_y","",JPiPi_y->at(piN),weight); 
+            mon.fillHisto("JPiPi_z","",JPiPi_z->at(piN),weight); 
+            mon.fillHisto("Pi_nhits1","",Pi_nhits1->at(piN),weight); 
+            mon.fillHisto("Pi_npixelhits1","",Pi_npixelhits1->at(piN),weight); 
+            mon.fillHisto("Pi_nhits2","",Pi_nhits2->at(piN),weight); 
+            mon.fillHisto("Pi_npixelhits2","",Pi_npixelhits2->at(piN),weight); 
+            mon.fillHisto("Pi_eta1","",Pi_eta1->at(piN),weight); 
+            mon.fillHisto("Pi_eta2","",Pi_eta2->at(piN),weight); 
+            mon.fillHisto("Pi_phi1","",Pi_phi1->at(piN),weight); 
+            mon.fillHisto("Pi_phi2","",Pi_phi2->at(piN),weight); 
+            mon.fillHisto("Pi_pt1","",Pi_pt1->at(piN),weight); 
+            mon.fillHisto("Pi_pt2","",Pi_pt2->at(piN),weight); 
+            mon.fillHisto("Pi_e1","",Pi_e1->at(piN),weight); 
+            mon.fillHisto("Pi_e2","",Pi_e2->at(piN),weight); 
+            mon.fillHisto("Pi_charge1","",Pi_charge1->at(piN),weight); 
+            mon.fillHisto("Pi_charge2","",Pi_charge2->at(piN),weight); 
+            mon.fillHisto("Pi_dxy1","",Pi_dxy1->at(piN),weight); 
+            mon.fillHisto("Pi_dxy2","",Pi_dxy2->at(piN),weight); 
+            mon.fillHisto("Pi_dxyerr1","",Pi_dxyerr1->at(piN),weight); 
+            mon.fillHisto("Pi_dxyerr2","",Pi_dxyerr2->at(piN),weight); 
+            mon.fillHisto("Pi_vertexchisq1","",Pi_vertexchisq1->at(piN),weight); 
+            mon.fillHisto("Pi_vertexchisq2","",Pi_vertexchisq2->at(piN),weight); 
+            //if(!mu1tight->at(jpsiN) || !mu2tight->at(jpsiN)) continue;
+            
+            //if(Pi_vertexchisq1->at(piN) >6 ) continue;
+            //if (Pi_vertexchisq2->at(piN)> 6+Pi_vertexchisq1->at(piN) ) continue;
+      
+            TLorentzVector jpsi, pion1,pion2;
+            float Pion_mass = 0.13957061;
+            jpsi.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN)); 
+            //pion1.SetPtEtaPhiE(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pi_e1->at(piN));
+            //pion2.SetPtEtaPhiE(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pi_e2->at(piN));
+            float deltaRJP1 = jpsi.DeltaR(pion1);
+            float deltaRJP2 = jpsi.DeltaR(pion2);
+            float deltaRpipi = pion1.DeltaR(pion2);    
+            pion1.SetPtEtaPhiM(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass);
+            pion2.SetPtEtaPhiM(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass);
+      
+            mon.fillHisto("M_JPsi","",jpsi.M(),weight);
+            mon.fillHisto("pT_JPsi","",jpsi.Pt(),weight);
+      
+            mon.fillHisto("Deta_JpsiPi1","",jpsi.Eta()-pion1.Eta(),weight); 
+            mon.fillHisto("Deta_JpsiPi2","",jpsi.Eta()-pion2.Eta(),weight); 
+            mon.fillHisto("Dphi_JpsiPi1","",jpsi.Phi()-pion1.Phi(),weight); 
+            mon.fillHisto("Dphi_JpsiPi2","",jpsi.Phi()-pion2.Phi(),weight); 
+            mon.fillHisto("DeltaR_JpsiPi1","",deltaRJP1,weight); 
+            mon.fillHisto("DeltaR_JpsiPi2","",deltaRJP2,weight); 
+      
+            mon.fillHisto("Deta_PiPi","",pion1.Eta()-pion2.Eta(),weight); 
+            mon.fillHisto("Dphi_PiPi","",pion1.Phi()-pion2.Phi(),weight); 
+            mon.fillHisto("DeltaR_PiPi","",deltaRpipi,weight); 
+            mon.fillHisto("lxy_jpsipipi","",JPiPi_lxy->at(piN),weight); 
+            float jpipi_mass = (jpsi+pion1+pion2).M();
+            float px,py,pz;
+            float rx,ry,rz;
+            px = (jpsi+pion1+pion2).Px();
+            py = (jpsi+pion1+pion2).Py();
+            //pz = (jpsi+pion1+pion2).Pz();
+            rx = JPiPi_x->at(piN);
+            ry = JPiPi_y->at(piN);
+            //rz = JPiPi_z->at(piN);
+            float cosine = (px*rx+py*ry)/((px*px+py*py)*(rx*rx+ry*ry));
+            mon.fillHisto("cosine of P&r","total",cosine,weight);
+            float pipi_mass =(pion1+pion2).M();
+            mon.fillHisto("Pion1_mass","",(pion1).M(),weight); 
+            mon.fillHisto("Pion2_mass","",(pion2).M(),weight); 
+            mon.fillHisto("PiPi_mass","",(pion1+pion2).M(),weight); 
+         }
+      }
+      bool NJpsi = objectSelection::selectJpsi (selJpsi,
+                   J_mass,
+                   J_px,
+                   J_py,
+                   J_pz,
+                   J_px1,
+                   J_py1,
+                   J_pz1,
+                   J_charge1,
+                   J_px2,
+                   J_py2,
+                   J_pz2,
+                   J_charge2,
+                   mumC2,
+                   mumNHits,
+                   mumNPHits,
+                   mupC2,
+                   mupNHits,
+                   mupNPHits,
+                   mumdxy,
+                   mupdxy,
+                   mumdz,
+                   mupdz,
+                   muon_dca,
+                   mu1soft,
+                   mu2soft,
+                   mu1tight,
+                   mu2tight,
+                   mu1PF,
+                   mu2PF,
+                   mu1loose,
+                   mu2loose,
+                   J_lxy,
+                   J_lxyErr,
+                   J_vertexchi2);
+      if (!NJpsi) continue;
+      bool NPiPi= objectSelection::selectPions(
+            selPion1,
+            selPion2,
+            selJpsi,
+            JPiPi_lxy,
+            JPiPi_lxyErr,
+            JPiPi_x,
+            JPiPi_y,
+            JPiPi_z,
+            Pi_nhits1,
+            Pi_npixelhits1,
+            Pi_nhits2,
+            Pi_npixelhits2,
+            Pi_eta1,
+            Pi_eta2,
+            Pi_phi1,
+            Pi_phi2,
+            Pi_pt1,
+            Pi_pt2,
+            Pi_e1,
+            Pi_e2,
+            Pi_charge1,
+            Pi_charge2,
+            Pi_dxy1,
+            Pi_dxy2,
+            Pi_dxyerr1,
+            Pi_dxyerr2,
+            Pi_vertexchisq1,
+            Pi_vertexchisq2,
+            Pi1_hcalFraction,
+            Pi2_hcalFraction,
+            Pi1_vertexNdof,
+            Pi2_vertexNdof,
+            Pi1_vertexNchi2,
+            Pi2_vertexNchi2,
+            Pi1_lambda,
+            Pi2_lambda,
+            Pi1_lambdaError,
+            Pi2_lambdaError,
+            Pi1_qoverp,
+            Pi2_qoverp,
+            Pi1_qoverpError,
+            Pi2_qoverpError,
+            Pi1_validTkFraction,
+            Pi2_validTkFraction,
+            Pi1_numberOfMothers,
+            Pi2_numberOfMothers,
+            Pi1_pdgId,
+            Pi2_pdgId,
+            Pi1_numberOfValidHitsOnTrack,
+            Pi2_numberOfValidHitsOnTrack,
+            Pi1_isCaloMuon,
+            Pi2_isCaloMuon,
+            Pi1_isConvertedPhoton,
+            Pi2_isConvertedPhoton,
+            Pi1_isElectron,
+            Pi2_isElectron,
+            Pi1_isMuon,
+            Pi2_isMuon,
+            Pi1_isPhoton,
+            Pi2_isPhoton ,
+            Pi1_isGlobalMuon,
+            Pi2_isGlobalMuon,
+            Pi1_isJet,
+            Pi2_isJet,
+            Pi1_isLonglived,
+            Pi2_isLonglived,
+            Pi1_massConstraint,
+            Pi2_massConstraint,
+            J_Prob,
+            JPi_Prob,
+            JPiPi_Prob);
+      if (!NPiPi) continue;
+      int jpsiN = selJpsi.GetIndex();
+      int piN = selPion1.GetIndex(); 
       TLorentzVector jpsi, pion1,pion2;
       float Pion_mass = 0.13957061;
       jpsi.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN)); 
@@ -142,38 +295,8 @@ void ntuple::Loop()
       float deltaRpipi = pion1.DeltaR(pion2);    
       pion1.SetPtEtaPhiM(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass);
       pion2.SetPtEtaPhiM(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass);
-
-      mon.fillHisto("M_JPsi","",jpsi.M(),weight);
-      mon.fillHisto("pT_JPsi","",jpsi.Pt(),weight);
-
-      mon.fillHisto("Deta_JpsiPi1","",jpsi.Eta()-pion1.Eta(),weight); 
-      mon.fillHisto("Deta_JpsiPi2","",jpsi.Eta()-pion2.Eta(),weight); 
-      mon.fillHisto("Dphi_JpsiPi1","",jpsi.Phi()-pion1.Phi(),weight); 
-      mon.fillHisto("Dphi_JpsiPi2","",jpsi.Phi()-pion2.Phi(),weight); 
-      mon.fillHisto("DeltaR_JpsiPi1","",deltaRJP1,weight); 
-      mon.fillHisto("DeltaR_JpsiPi2","",deltaRJP2,weight); 
-
-      mon.fillHisto("Deta_PiPi","",pion1.Eta()-pion2.Eta(),weight); 
-      mon.fillHisto("Dphi_PiPi","",pion1.Phi()-pion2.Phi(),weight); 
-      mon.fillHisto("DeltaR_PiPi","",deltaRpipi,weight); 
-      mon.fillHisto("lxy_jpsipipi","",JPiPi_lxy->at(piN),weight); 
       float jpipi_mass = (jpsi+pion1+pion2).M();
-      float px,py,pz;
-      float rx,ry,rz;
-      px = (jpsi+pion1+pion2).Px();
-      py = (jpsi+pion1+pion2).Py();
-      //pz = (jpsi+pion1+pion2).Pz();
-      rx = JPiPi_x->at(piN);
-      ry = JPiPi_y->at(piN);
-      //rz = JPiPi_z->at(piN);
-      float cosine = (px*rx+py*ry)/((px*px+py*py)*(rx*rx+ry*ry));
-      mon.fillHisto("cosine of P&r","total",cosine,weight);
       float pipi_mass =(pion1+pion2).M();
-      mon.fillHisto("Pion1_mass","",(pion1).M(),weight); 
-      mon.fillHisto("Pion2_mass","",(pion2).M(),weight); 
-      mon.fillHisto("PiPi_mass","",(pion1+pion2).M(),weight); 
-
-     
 
       if (jpipi_mass>4.1 &&jpipi_mass<5 && (jpsi+pion1).M() >3.86 &&(jpsi+pion1).M() <3.92){
          mon.fillHisto("PiPi_mass","final",(pion1+pion2).M(),weight); 
@@ -260,34 +383,6 @@ void ntuple::Loop()
       if (jpipi_mass>4.1 &&jpipi_mass<5.0){
          mon.fillHisto("M_JpsiPi1&M_JpsiPi2","total",(jpsi+pion1).M()*(jpsi+pion1).M(),(jpsi+pion2).M()*(jpsi+pion2).M(),weight);
          }
-      if((pion1).M() <0.1) continue;
-      if((pion2).M() <0.1) continue;
-      if(deltaRJP1 > 1.2) continue;
-      if(deltaRJP2 > 1.2) continue;
-      if(deltaRpipi > 1.8) continue;
-      if (pipi_mass>0.81 && pipi_mass<0.97) continue;
-      if (pipi_mass>1.01 && pipi_mass<1.03) continue;
-      if (pipi_mass<0.35) continue;
-      //if (JPiPi_lxy->at(piN) <0.01) continue;
-      if(!mu1loose->at(jpsiN) || !mu2loose->at(jpsiN)) continue;
-      //if (Pi_dxy1->at(piN) <0.008) continue;
-      //if (Pi_dxy2->at(piN) <0.008) continue;
-      if(mupNHits->at(jpsiN) <8) continue;
-      if(mumNHits->at(jpsiN) <8) continue;
-      if(mupNPHits->at(jpsiN) <1) continue;
-      if(mumNPHits->at(jpsiN) <1) continue;
-      if (jpsi.Pt() <8) continue;
-      //if(Pi_pt1->at(piN) >10 ) continue;
-      //if(Pi_pt2->at(piN) >10)
-      //if (Pi_nhits1->at(piN) <6) continue;
-      //if (Pi_nhits2->at(piN) <6) continue;
-      //if (Pi_npixelhits1->at(piN) <2) continue;
-      //if (Pi_npixelhits2->at(piN) <2) continue;
-      //if(Pi_vertexchisq1->at(piN) >6 ) continue;
-      if (Pi_vertexchisq2->at(piN)>14 ) continue;
-      if (Pi_eta1->at(piN) >2 || Pi_eta1->at(piN) <-2) continue;
-      if (Pi_eta2->at(piN) >2 || Pi_eta2->at(piN) <-2) continue;
-        // if (jpipi_mass>4.1 &&jpipi_mass<5)  cout <<  "jpp mass is  " << jpipi_mass << endl;
       if (jpipi_mass>4.1 &&jpipi_mass<4.2)         mon.fillHisto("M_JPsiPicut4.1-4.2","total",(jpsi+pion1).M(),weight);
       if (jpipi_mass>4.2 &&jpipi_mass<4.25)         mon.fillHisto("M_JPsiPicut4.2-4.25","total",(jpsi+pion1).M(),weight);
       if (jpipi_mass>4.25 &&jpipi_mass<4.3)          mon.fillHisto("M_JPsiPicut4.25-4.3","total",(jpsi+pion1).M(),weight);
