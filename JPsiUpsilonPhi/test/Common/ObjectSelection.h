@@ -59,7 +59,7 @@ namespace objectSelection
                    std::vector<bool>   *mu2loose,
                    std::vector<float>   *J_lxy,
                    std::vector<float>   *J_lxyErr,
-                   std::vector<float>   *J_vertexchi2
+                   std::vector<float>   *J_vertexchi2,
                    std::vector<float>   *J_Prob);
 
   bool selectPions(std::vector<TLorentzVectorWithIndex> & selPion1,
