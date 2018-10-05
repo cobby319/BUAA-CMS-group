@@ -615,7 +615,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        rz = psi_vFit_vertex_noMC2->position().z()-bestVtx.z();
 	        //float cosine = (px*rx+py*ry+pz*rz)/((px*px+py*py+pz*pz)*(rx*rx+ry*ry+rz*rz));
 	        float cosine = (px*rx+py*ry)/((px*px+py*py)*(rx*rx+ry*ry));
-	        if (cosine < 0.9 ) continue;
+	        //if (cosine < 0.9 ) continue;
             float JpsiPiPi_dxy = TMath::Sqrt(rx*rx+ry*ry);
 	        float JpsiPiPi_dxyerr = psi_vFit_vertex_noMC2->error().rerr(pvertex);
 	        //if (JpsiPiPi_dxy/JpsiPiPi_dxyerr<2) continue;
