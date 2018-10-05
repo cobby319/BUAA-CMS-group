@@ -450,7 +450,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	    if(iTrack1->eta()>2.4||iTrack1->eta()<-2.4)continue;
   	    if(!(iTrack1->bestTrack())) continue;
   	    if(iTrack1->charge() == 0) continue; //NO neutral objects
-  	    if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+  	    //if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	    
   	    //if(iTrack1->vertexNormalizedChi2()>10) continue;
   	    if(!(iTrack1->trackHighPurity())) continue;
@@ -540,7 +540,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	        if(iTrack2->eta()>2.4||iTrack2->eta()<-2.4)continue;
   	        if(!(iTrack2->bestTrack())) continue;
   	        if(iTrack2->charge() == 0) continue; //NO neutral objects
-  	        if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
+  	        //if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
   	        //if(iTrack2->numberOfHits()<5) continue;
   	        //if(iTrack2->numberOfPixelHits()<1) continue;

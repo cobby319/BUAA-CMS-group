@@ -80,7 +80,7 @@ if __name__ == '__main__':
     config.Data.inputDBS = 'global'
     #config.Data.splitting = 'Automatic'
     config.Data.splitting = 'LumiBased'
-    config.Data.unitsPerJob = 800
+    config.Data.unitsPerJob = 500
     config.Data.publication = False
     config.Data.ignoreLocality = False
     config.Data.lumiMask = 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions16/13TeV/Final/Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON.txt'
