@@ -194,7 +194,8 @@ namespace objectSelection
       ///////////////////////////////////
       /* initiating the bool variables */
       ///////////////////////////////////
-      passCosine = cosine >0.95 ;
+      passCosine = cosine >0.90 ;
+      std::cout << "cos is"<< cosine << std::endl;
       passDeltaRJP1 = selJpsi.at(0).DeltaR(pion1) < 1.2;
       passDeltaRJP2 = selJpsi.at(0).DeltaR(pion2) < 1.2;
       passDeltaRPP  = pion1.DeltaR(pion2) <1.8;
@@ -204,7 +205,7 @@ namespace objectSelection
       passIsNotOtherObject =  !(Pi1_isGlobalMuon->at(i) ||  Pi2_isGlobalMuon->at(i) );
       passLambda = Pi1_lambda->at(i) <1.0 && Pi1_lambda->at(i) >-1.0 &&Pi2_lambda->at(i) <1.0 &&Pi2_lambda->at(i) >-1.0;
       passLxy = JPiPi_lxy->at(i) >0.025;
-      passProb = JPiPi_Prob->at(i) >0.1 ;
+      passProb = JPiPi_Prob->at(i) >0.05 ;
       passPdgId = (Pi1_pdgId->at(i) == 211 || Pi1_pdgId->at(i) == -211) && (Pi2_pdgId->at(i) == 211 || Pi2_pdgId->at(i) == -211);
       passPiPidxy = Pi_dxy1->at(i)/Pi_dxyerr1->at(i) >3.0 && Pi_dxy2->at(i)/Pi_dxy2->at(i) >2.0;
       passNhits = Pi_nhits1->at(i) >5 && Pi_nhits2->at(i) >5 ;
