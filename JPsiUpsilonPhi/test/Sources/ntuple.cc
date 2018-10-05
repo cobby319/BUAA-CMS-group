@@ -225,10 +225,10 @@ void ntuple::Loop()
             mon.fillHisto("JPiPi_Prob","",JPiPi_Prob->at(piN),weight);
             if (Pi1_pdgId->at(piN)==211) mon.fillHisto("Pi1_pdgId","",0,weight);
             if (Pi1_pdgId->at(piN)== -211) mon.fillHisto("Pi1_pdgId","",1,weight);
-            if (Pi1_pdgId->at(piN)!=211 && Pi1_pdgId!= -211) mon.fillHisto("Pi1_pdgId","",2,weight);
+            if (Pi1_pdgId->at(piN)!=211 && Pi1_pdgId->at(piN)!= -211) mon.fillHisto("Pi1_pdgId","",2,weight);
             if (Pi2_pdgId->at(piN)==211) mon.fillHisto("Pi2_pdgId","",0,weight);
             if (Pi2_pdgId->at(piN)== -211) mon.fillHisto("Pi2_pdgId","",1,weight);
-            if (Pi2_pdgId->at(piN)!=211 && Pi1_pdgId!= -211) mon.fillHisto("Pi2_pdgId","",2,weight); 
+            if (Pi2_pdgId->at(piN)!=211 && Pi1_pdgId->at(piN)!= -211) mon.fillHisto("Pi2_pdgId","",2,weight); 
 
          }
       }
