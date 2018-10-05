@@ -68,8 +68,10 @@ def main():
         os.makedirs('OUTPUTS/'+type+'/MERGED')
     if not os.path.exists('OUTPUTS/'+type+'/CONFIGS'):
         os.makedirs('OUTPUTS/'+type+'/CONFIGS')
+    if type == "testold":
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium1005')
     if type == "test":
-        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium')
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium') 
     jobsDirectory ='OUTPUTS/'+type+'/JOBS' 
     cfgDirectory = 'OUTPUTS/'+type +'/CONFIGS' 
     datasetFile = open("OUTPUTS/"+type+"/JOBS/catalog_"+type+".txt",'r')

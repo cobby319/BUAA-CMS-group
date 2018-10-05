@@ -293,7 +293,10 @@ namespace objectSelection
                    std::vector<bool>    *Pi2_massConstraint,
                    std::vector<float>   *J_Prob,
                    std::vector<float>   *JPi_Prob,
-                   std::vector<float>   *JPiPi_Prob){
+                   std::vector<float>   *JPiPi_Prob,
+                   std::vector<float>   *JPiPi_px,
+                   std::vector<float>   *JPiPi_py,
+                   std::vector<float>   *JPiPi_pz){
     for(unsigned int i = 0 ; i<Pi_pt1->size() ; i++){
       bool passDeltaRJP1 = false;
       bool passDeltaRJP2 = false;
@@ -310,6 +313,7 @@ namespace objectSelection
       bool passLxy =false;
       bool passProb = false;
       bool passPdgId = false;
+      bool passCosine = false;
       TLorentzVector pion1,pion2;
       float Pion_mass = 0.13957061;
       pion1.SetPtEtaPhiE(Pi_pt1->at(i),Pi_eta1->at(i),Pi_phi1->at(i),Pi_e1->at(i));
@@ -320,6 +324,12 @@ namespace objectSelection
       passPiPimassregion = !pipiInXMass && !pipiInLowMass && !pipiInPhiMass;
       pion1.SetPtEtaPhiM(Pi_pt1->at(i),Pi_eta1->at(i),Pi_phi1->at(i),Pion_mass);
       pion2.SetPtEtaPhiM(Pi_pt2->at(i),Pi_eta2->at(i),Pi_phi2->at(i),Pion_mass);
+      px = JPiPi_px->at(i);
+      py = JPiPi_py->at(i);
+      rx = JPiPi_x->at(i);
+      ry = JPiPi_y->at(i);  
+      float cosine = (px*rx+py*ry)/((px*px+py*py)*(rx*rx+ry*ry));
+      passCosine = cosine >0.9 ;
       passDeltaRJP1 = selJpsi.at(0).DeltaR(pion1) < 1.2;
       passDeltaRJP2 = selJpsi.at(0).DeltaR(pion2) < 1.2;
       passDeltaRPP  = pion1.DeltaR(pion2) <1.8;
@@ -334,7 +344,7 @@ namespace objectSelection
       TLorentzVectorWithIndex pion1WithIndex = TLorentzVectorWithIndex(pion1,i);
       TLorentzVectorWithIndex pion2WithIndex = TLorentzVectorWithIndex(pion2,i);
 
-      if(passPdgId && passProb && passLxy && passDeltaRJP1 && passDeltaRJP2 && passDeltaRPP &&passPiPimassregion && passVertexNormalizedChi2 && passEta && passPt &&passIsNotOtherObject && passLambda) {
+      if(passCosine && passPdgId && passProb && passLxy && passDeltaRJP1 && passDeltaRJP2 && passDeltaRPP &&passPiPimassregion && passVertexNormalizedChi2 && passEta && passPt &&passIsNotOtherObject && passLambda) {
         //std::cout <<"push_back pions"<<std::endl;
         selPion1.push_back(pion1WithIndex);
         selPion2.push_back(pion2WithIndex);

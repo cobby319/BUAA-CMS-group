@@ -497,7 +497,10 @@ void ntuple::Loop()
             Pi2_massConstraint,
             J_Prob,
             JPi_Prob,
-            JPiPi_Prob);
+            JPiPi_Prob,
+            JPiPi_px,
+            JPiPi_py,
+            JPiPi_pz);
       if (!NPiPi) continue;
       int jpsiN = selJpsi.at(0).GetIndex();
       int piN = selPion1.at(0).GetIndex(); 

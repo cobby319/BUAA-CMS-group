@@ -142,6 +142,9 @@ public :
    vector<float>       *J_Prob;
    vector<float>       *JPi_Prob;
    vector<float>       *JPiPi_Prob;
+   vector<float>       *JPiPi_px;
+   vector<float>       *JPiPi_py;
+   vector<float>       *JPiPi_pz;
 
    // List of branches
    TBranch        *b_nJ;   //!
@@ -257,6 +260,9 @@ public :
    TBranch        *b_J_Prob;
    TBranch        *b_JPi_Prob;
    TBranch        *b_JPiPi_Prob;
+   TBranch        *b_JPiPi_px;
+   TBranch        *b_JPiPi_py;
+   TBranch        *b_JPiPi_pz;
 
    ntuple(TString fileName, TString outputFile, int skipFile, int maxFiles,int CatalogOrFile);
    virtual ~ntuple();
@@ -511,6 +517,9 @@ void ntuple::Init(TTree *tree)
    J_Prob = 0;
    JPi_Prob = 0;
    JPiPi_Prob = 0;
+   JPiPi_px = 0;
+   JPiPi_py = 0;
+   JPiPi_pz = 0;
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
@@ -630,6 +639,9 @@ void ntuple::Init(TTree *tree)
    fChain->SetBranchAddress("J_Prob",&J_Prob,&b_J_Prob);
    fChain->SetBranchAddress("JPi_Prob",&JPi_Prob,&b_JPi_Prob);
    fChain->SetBranchAddress("JPiPi_Prob",&JPiPi_Prob,&b_JPiPi_Prob);
+   fChain->SetBranchAddress("JPiPi_px",&JPiPi_px,&b_JPiPi_px);
+   fChain->SetBranchAddress("JPiPi_py",&JPiPi_py,&b_JPiPi_py);
+   fChain->SetBranchAddress("JPiPi_pz",&JPiPi_pz,&b_JPiPi_pz);
    Notify();
 }
 
