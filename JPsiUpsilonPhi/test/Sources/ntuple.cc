@@ -366,7 +366,7 @@ void ntuple::Loop()
                mon.fillHisto("Pi1_isMuon","final",Pi1_isMuon ->at(piN),weight);
                mon.fillHisto("Pi2_isMuon","final",Pi2_isMuon->at(piN),weight);
                mon.fillHisto("Pi1_isPhoton","final",Pi1_isPhoton->at(piN),weight);
-               mon.fillHisto("Pi2_isPhoton ","final",Pi2_isPhoton ->at(piN),weight);
+               mon.fillHisto("Pi2_isPhoton","final",Pi2_isPhoton ->at(piN),weight);
                mon.fillHisto("Pi1_isGlobalMuon","final",Pi1_isGlobalMuon->at(piN),weight);
                mon.fillHisto("Pi2_isGlobalMuon","final",Pi2_isGlobalMuon->at(piN),weight);
                mon.fillHisto("Pi1_isJet","final",Pi1_isJet->at(piN),weight);
@@ -486,7 +486,7 @@ void ntuple::Loop()
             Pi1_isMuon,
             Pi2_isMuon,
             Pi1_isPhoton,
-            Pi2_isPhoton ,
+            Pi2_isPhoton,
             Pi1_isGlobalMuon,
             Pi2_isGlobalMuon,
             Pi1_isJet,
