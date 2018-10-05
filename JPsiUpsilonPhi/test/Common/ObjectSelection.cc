@@ -326,7 +326,7 @@ namespace objectSelection
       passVertexNormalizedChi2 = Pi1_vertexNchi2->at(i) < 10.0 && Pi2_vertexNchi2->at(i) <10.0;
       passEta = Pi_eta1->at(i) <2.0 && Pi_eta1->at(i) >-2.0 && Pi_eta2->at(i) <2.0 &&Pi_eta2->at(i) >-2.0;
       passPt =  Pi_pt1->at(i) > 0.8 && Pi_pt2->at(i) >0.8;
-      passIsNotOtherObject = true;//! (Pi1_isGlobalMuon || Pi2_isGlobalMuon);
+      passIsNotOtherObject =  !(Pi1_isGlobalMuon->at(i) ||  Pi2_isGlobalMuon->at(i) );
       passLambda = Pi1_lambda->at(i) <1.0 && Pi1_lambda->at(i) >-1.0 &&Pi2_lambda->at(i) <1.0 &&Pi2_lambda->at(i) >-1.0;
       passLxy = JPiPi_lxy->at(i) >0.025;
       passProb = JPiPi_Prob->at(i) >0.05 ;
