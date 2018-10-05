@@ -195,7 +195,7 @@ namespace objectSelection
       /* initiating the bool variables */
       ///////////////////////////////////
       passCosine = cosine >0.90 ;
-
+      std::cout << "cosine is"<<cosine << std::endl;
       passDeltaRJP1 = selJpsi.at(0).DeltaR(pion1) < 1.2;
       passDeltaRJP2 = selJpsi.at(0).DeltaR(pion2) < 1.2;
       passDeltaRPP  = pion1.DeltaR(pion2) <1.8;
