@@ -59,7 +59,7 @@ namespace objectSelection
       /* initiating the bool variables */
       ///////////////////////////////////
         passMuonLooseID = mu1loose->at(i) && mu2loose->at(i);
-        passMuonPt = muon1.Pt() >4 && muon2.Pt() >4;
+        passMuonPt = true; //muon1.Pt() >4 && muon2.Pt() >4;
         passJpsiPt = Jpsi.Pt() >5 ;
         passMuonHits = mupNHits->at(i) >5 && mumNHits->at(i) >5;
         passMuonPixelHits = mupNPHits->at(i) >0 &&  mumNPHits->at(i) >0;
