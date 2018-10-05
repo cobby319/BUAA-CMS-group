@@ -330,7 +330,7 @@ namespace objectSelection
       passLambda = Pi1_lambda->at(i) <1.0 && Pi1_lambda->at(i) >-1.0 &&Pi2_lambda->at(i) <1.0 &&Pi2_lambda->at(i) >-1.0;
       passLxy = JPiPi_lxy->at(i) >0.025;
       passProb = JPiPi_Prob->at(i) >0.05 ;
-      passPdgId = (Pi1_pdgId == 211 || Pi1_pdgId == -211) && (Pi2_pdgId == 211 || Pi2_pdgId == -211)
+      passPdgId = (Pi1_pdgId->at(i) == 211 || Pi1_pdgId->at(i) == -211) && (Pi2_pdgId->at(i) == 211 || Pi2_pdgId->at(i) == -211)
       TLorentzVectorWithIndex pion1WithIndex = TLorentzVectorWithIndex(pion1,i);
       TLorentzVectorWithIndex pion2WithIndex = TLorentzVectorWithIndex(pion2,i);
 
