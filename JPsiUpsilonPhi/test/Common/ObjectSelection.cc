@@ -204,7 +204,7 @@ namespace objectSelection
         TLorentzVector Jpsi ;
         Jpsi.SetXYZM(J_px->at(i),J_py->at(i),J_pz->at(i),J_mass->at(i));
         passMuonLooseID = mu1loose->at(i) && mu2loose->at(i);
-        passJpsiPt = Jpsi.Pt() >10 ;
+        passJpsiPt = Jpsi.Pt() >5 ;
         passMuonHits = mupNHits->at(i) >6 && mumNHits->at(i) >6;
         passMuonPixelHits = mupNPHits->at(i) >0 &&  mumNPHits->at(i) >0;
         TLorentzVectorWithIndex JpsiWithIndex = TLorentzVectorWithIndex(Jpsi,i);
@@ -309,6 +309,7 @@ namespace objectSelection
       bool passLambda = false;
       bool passLxy =false;
       bool passProb = false;
+      bool passPdgId = false;
       TLorentzVector pion1,pion2;
       float Pion_mass = 0.13957061;
       pion1.SetPtEtaPhiE(Pi_pt1->at(i),Pi_eta1->at(i),Pi_phi1->at(i),Pi_e1->at(i));
@@ -329,10 +330,11 @@ namespace objectSelection
       passLambda = Pi1_lambda->at(i) <1.0 && Pi1_lambda->at(i) >-1.0 &&Pi2_lambda->at(i) <1.0 &&Pi2_lambda->at(i) >-1.0;
       passLxy = JPiPi_lxy->at(i) >0.025;
       passProb = JPiPi_Prob->at(i) >0.05 ;
+      passPdgId = (Pi1_pdgId == 211 || Pi1_pdgId == -211) && (Pi2_pdgId == 211 || Pi2_pdgId == -211)
       TLorentzVectorWithIndex pion1WithIndex = TLorentzVectorWithIndex(pion1,i);
       TLorentzVectorWithIndex pion2WithIndex = TLorentzVectorWithIndex(pion2,i);
 
-      if(passProb && passLxy && passDeltaRJP1 && passDeltaRJP2 && passDeltaRPP &&passPiPimassregion && passVertexNormalizedChi2 && passEta && passPt &&passIsNotOtherObject && passLambda) {
+      if(passPdgId && passProb && passLxy && passDeltaRJP1 && passDeltaRJP2 && passDeltaRPP &&passPiPimassregion && passVertexNormalizedChi2 && passEta && passPt &&passIsNotOtherObject && passLambda) {
         //std::cout <<"push_back pions"<<std::endl;
         selPion1.push_back(pion1WithIndex);
         selPion2.push_back(pion2WithIndex);
