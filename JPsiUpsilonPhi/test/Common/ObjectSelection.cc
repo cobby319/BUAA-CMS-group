@@ -170,6 +170,8 @@ namespace objectSelection
       bool passProb = false;
       bool passPdgId = false;
       bool passCosine = false;
+      bool passPiPidxy = false;
+      bool passNhits = false;
       ///////////////////////////////////
       /* define variables for selection*/
       ///////////////////////////////////
@@ -192,25 +194,28 @@ namespace objectSelection
       ///////////////////////////////////
       /* initiating the bool variables */
       ///////////////////////////////////
-      passCosine = cosine >0.9 ;
+      passCosine = cosine >0.95 ;
       passDeltaRJP1 = selJpsi.at(0).DeltaR(pion1) < 1.2;
       passDeltaRJP2 = selJpsi.at(0).DeltaR(pion2) < 1.2;
       passDeltaRPP  = pion1.DeltaR(pion2) <1.8;
-      passVertexNormalizedChi2 = Pi1_vertexNchi2->at(i) < 10.0 && Pi2_vertexNchi2->at(i) <10.0;
+      passVertexNormalizedChi2 = true; // Pi1_vertexNchi2->at(i) < 10.0 && Pi2_vertexNchi2->at(i) <10.0;
       passEta = Pi_eta1->at(i) <2.0 && Pi_eta1->at(i) >-2.0 && Pi_eta2->at(i) <2.0 &&Pi_eta2->at(i) >-2.0;
       passPt =  Pi_pt1->at(i) > 0.8 && Pi_pt2->at(i) >0.8;
       passIsNotOtherObject =  !(Pi1_isGlobalMuon->at(i) ||  Pi2_isGlobalMuon->at(i) );
       passLambda = Pi1_lambda->at(i) <1.0 && Pi1_lambda->at(i) >-1.0 &&Pi2_lambda->at(i) <1.0 &&Pi2_lambda->at(i) >-1.0;
       passLxy = JPiPi_lxy->at(i) >0.025;
-      passProb = JPiPi_Prob->at(i) >0.05 ;
+      passProb = JPiPi_Prob->at(i) >0.1 ;
       passPdgId = (Pi1_pdgId->at(i) == 211 || Pi1_pdgId->at(i) == -211) && (Pi2_pdgId->at(i) == 211 || Pi2_pdgId->at(i) == -211);
-
+      passPiPidxy = Pi_dxy1->at(i)/Pi_dxyerr1->at(i) >3.0 && Pi_dxy2->at(i)/pi_dxy2->at(i) >2.0;
+      passNhits = Pi_nhits1->at(i) >5 && Pi_nhits2->at(i) >5 ;
       /////////////////////////////////////
       /*push back if pions pass all cuts */
       /////////////////////////////////////
       TLorentzVectorWithIndex pion1WithIndex = TLorentzVectorWithIndex(pion1,i);
       TLorentzVectorWithIndex pion2WithIndex = TLorentzVectorWithIndex(pion2,i);
-      if( passCosine && 
+      if( passPiPidxy&&
+          passNhits &&
+          passCosine && 
           passPdgId && 
           passProb && 
           passLxy && 
