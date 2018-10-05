@@ -208,7 +208,7 @@ for hist in histos:
             }
         )
 hm2 = r.TH2F()
-file.GetObject("histos/M_JpsiPi1&M_JpsiPi2_total")
+file.GetObject("histos/M_JpsiPi1&M_JpsiPi2_total",hm2)
 ply.plot_hist_2d(
         hm2,
         options = {
