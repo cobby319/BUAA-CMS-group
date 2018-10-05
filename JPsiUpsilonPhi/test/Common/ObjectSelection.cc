@@ -183,10 +183,10 @@ namespace objectSelection
       passPiPimassregion = !pipiInXMass && !pipiInLowMass && !pipiInPhiMass;
       pion1.SetPtEtaPhiM(Pi_pt1->at(i),Pi_eta1->at(i),Pi_phi1->at(i),Pion_mass);
       pion2.SetPtEtaPhiM(Pi_pt2->at(i),Pi_eta2->at(i),Pi_phi2->at(i),Pion_mass);
-      px = JPiPi_px->at(i);
-      py = JPiPi_py->at(i);
-      rx = JPiPi_x->at(i);
-      ry = JPiPi_y->at(i);  
+      float px = JPiPi_px->at(i);
+      float py = JPiPi_py->at(i);
+      float rx = JPiPi_x->at(i);
+      float ry = JPiPi_y->at(i);  
       float cosine = (px*rx+py*ry)/((px*px+py*py)*(rx*rx+ry*ry));
 
       ///////////////////////////////////
