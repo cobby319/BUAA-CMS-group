@@ -514,6 +514,7 @@ void ntuple::Loop()
       mon.fillHisto("M_JPsiPiPi3-8","total",(jpsi+pion1+pion2).M(),weight);
       if ((jpsi+pion1+pion2).M()>4.0 &&(jpsi+pion1+pion2).M()<5.0)   mon.fillHisto("M_JPsiPiPi4-5","total",(jpsi+pion1+pion2).M(),weight);
       mon.fillHisto("M_JpsiPi1&M_JpsiPi2","total",(jpsi+pion1).M()*(jpsi+pion1).M(),(jpsi+pion2).M()*(jpsi+pion2).M(),weight);
+      mon.fillHisto("M_JpsiPi1&M_Pi1Pi2","total",(jpsi+pion1).M()*(jpsi+pion1).M(),(pion1+pion2).M()*(pion1+pion2).M(),weight);
       
       if ((jpsi+pion1+pion2).M()>4.1 &&(jpsi+pion1+pion2).M()<4.2)         mon.fillHisto("M_JPsiPicut4.1-4.2","total",(jpsi+pion1).M(),weight);
       if ((jpsi+pion1+pion2).M()>4.2 &&(jpsi+pion1+pion2).M()<4.25)         mon.fillHisto("M_JPsiPicut4.2-4.25","total",(jpsi+pion1).M(),weight);
