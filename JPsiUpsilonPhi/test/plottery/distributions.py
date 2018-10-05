@@ -207,3 +207,16 @@ for hist in histos:
             #"output_ic": True,
             }
         )
+hm2 = r.TH2F()
+file.GetObject("histos/M_JpsiPi1&M_JpsiPi2_total")
+    ply.plot_hist_2d(
+            hm2,
+            options = {
+                #"zaxis_log": True,
+                "bin_text_smart": True,
+                "output_name": "distribution_PLOTS/dalitz.pdf",
+                #"us_flag": True,
+                "output_ic": True,
+                #"zaxis_noexponents": True,
+                }
+            )
