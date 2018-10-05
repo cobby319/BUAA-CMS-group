@@ -189,13 +189,13 @@ namespace objectSelection
       float py = JPiPi_py->at(i);
       float rx = JPiPi_x->at(i);
       float ry = JPiPi_y->at(i);  
-      float cosine = (px*rx+py*ry)/((px*px+py*py)*(rx*rx+ry*ry));
+      float cosine = (px*rx+py*ry)/(TMath::Sqrt(px*px+py*py)*TMath::Sqrt(rx*rx+ry*ry));
 
       ///////////////////////////////////
       /* initiating the bool variables */
       ///////////////////////////////////
       passCosine = cosine >0.90 ;
-      std::cout << "cos is"<< cosine << std::endl;
+
       passDeltaRJP1 = selJpsi.at(0).DeltaR(pion1) < 1.2;
       passDeltaRJP2 = selJpsi.at(0).DeltaR(pion2) < 1.2;
       passDeltaRPP  = pion1.DeltaR(pion2) <1.8;
@@ -209,6 +209,7 @@ namespace objectSelection
       passPdgId = (Pi1_pdgId->at(i) == 211 || Pi1_pdgId->at(i) == -211) && (Pi2_pdgId->at(i) == 211 || Pi2_pdgId->at(i) == -211);
       passPiPidxy = Pi_dxy1->at(i)/Pi_dxyerr1->at(i) >3.0 && Pi_dxy2->at(i)/Pi_dxy2->at(i) >2.0;
       passNhits = Pi_nhits1->at(i) >5 && Pi_nhits2->at(i) >5 ;
+      std::cout << "Nhits"<< passNhits <<"  PiPidxy" <<passPiPidxy << std::endl;
       /////////////////////////////////////
       /*push back if pions pass all cuts */
       /////////////////////////////////////
