@@ -56,7 +56,7 @@ void ntuple::Loop()
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
-      if(jentry % 10000 ==0) cout << jentry << " of " << nentries << endl;
+      if(jentry % 500 ==0) cout << jentry << " of " << nentries << endl;
       double weight = 1.;
       std::vector<TLorentzVectorWithIndex>  selPion1;
       std::vector<TLorentzVectorWithIndex>  selPion2;
