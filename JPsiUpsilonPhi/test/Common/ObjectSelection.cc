@@ -208,7 +208,7 @@ namespace objectSelection
         passMuonHits = mupNHits->at(i) >6 && mumNHits->at(i) >6;
         passMuonPixelHits = mupNPHits->at(i) >0 &&  mumNPHits->at(i) >0;
         TLorentzVectorWithIndex JpsiWithIndex = TLorentzVectorWithIndex(Jpsi,i);
-        if (passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits) {selJpsi.push_back(JpsiWithIndex);std::cout <<"push_back jpsi"<<std::endl;}
+        if (passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits) {selJpsi.push_back(JpsiWithIndex);}
         if (selJpsi.size() >1 ) {
           auto maxprob = std::max_element(J_Prob->begin(), J_Prob->begin()+i);
           int jpsiN =std::distance(J_Prob->begin(), maxprob) ;
