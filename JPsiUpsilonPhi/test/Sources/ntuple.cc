@@ -363,7 +363,7 @@ void ntuple::Loop()
                mon.fillHisto("Pi2_isConvertedPhoton","final",Pi2_isConvertedPhoton->at(piN),weight);
                mon.fillHisto("Pi1_isElectron","final",Pi1_isElectron->at(piN),weight);
                mon.fillHisto("Pi2_isElectron","final",Pi2_isElectron->at(piN),weight);
-               mon.fillHisto("Pi1_isMuon ","final",Pi1_isMuon ->at(piN),weight);
+               mon.fillHisto("Pi1_isMuon","final",Pi1_isMuon ->at(piN),weight);
                mon.fillHisto("Pi2_isMuon","final",Pi2_isMuon->at(piN),weight);
                mon.fillHisto("Pi1_isPhoton","final",Pi1_isPhoton->at(piN),weight);
                mon.fillHisto("Pi2_isPhoton ","final",Pi2_isPhoton ->at(piN),weight);

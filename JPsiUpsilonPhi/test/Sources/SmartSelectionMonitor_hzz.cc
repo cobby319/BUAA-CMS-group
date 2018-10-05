@@ -133,10 +133,10 @@ bool SmartSelectionMonitor_hzz::declareHistos_jpsipipi(){
  addHistogram( new TH1F("Pi2_isConvertedPhoton",";;Events",2,0,2));
  addHistogram( new TH1F("Pi1_isElectron",";;Events",2,0,2));
  addHistogram( new TH1F("Pi2_isElectron",";;Events",2,0,2));
- addHistogram( new TH1F("Pi1_isMuon ",";;Events",2,0,2));
+ addHistogram( new TH1F("Pi1_isMuon",";;Events",2,0,2));
  addHistogram( new TH1F("Pi2_isMuon",";;Events",2,0,2));
  addHistogram( new TH1F("Pi1_isPhoton",";;Events",2,0,2));
- addHistogram( new TH1F("Pi2_isPhoton ",";;Events",2,0,2));
+ addHistogram( new TH1F("Pi2_isPhoton",";;Events",2,0,2));
  addHistogram( new TH1F("Pi1_isGlobalMuon",";;Events",2,0,2));
  addHistogram( new TH1F("Pi2_isGlobalMuon",";;Events",2,0,2));
  addHistogram( new TH1F("Pi1_isJet",";;Events",2,0,2));
