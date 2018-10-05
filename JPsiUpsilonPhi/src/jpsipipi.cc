@@ -606,7 +606,7 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 		     {
 		       continue;
 		     }
-	        float px,py,rx,ry;
+	        float px,py,pz,rx,ry,rz;
 	        px = psi_vFit_noMC2->currentState().globalMomentum().x();
 	        py = psi_vFit_noMC2->currentState().globalMomentum().y();
 	        pz = psi_vFit_noMC2->currentState().globalMomentum().z();
@@ -649,9 +649,9 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             JPiPi_x->push_back(rx);
             JPiPi_y->push_back(ry);
             JPiPi_z->push_back(rz);
-            JPiPi_px->push_back(px)
-            JPiPi_py->push_back(py)
-            JPiPi_pz->push_back(pz)
+            JPiPi_px->push_back(px);
+            JPiPi_py->push_back(py);
+            JPiPi_pz->push_back(pz);
 
 
             Pi1_numberOfSourceCandidatePtrs->push_back(iTrack1->numberOfSourceCandidatePtrs());
