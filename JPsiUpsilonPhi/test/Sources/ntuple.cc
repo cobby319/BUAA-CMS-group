@@ -377,10 +377,10 @@ void ntuple::Loop()
                mon.fillHisto("JPiPi_Prob","final",JPiPi_Prob->at(piN),weight);
                if (Pi1_pdgId->at(piN)==211) mon.fillHisto("Pi1_pdgId","final",0,weight);
                if (Pi1_pdgId->at(piN)== -211) mon.fillHisto("Pi1_pdgId","final",1,weight);
-               if (Pi1_pdgId->at(piN)!=211 && Pi1_pdgId!= -211) mon.fillHisto("Pi1_pdgId","final",2,weight);
+               if (Pi1_pdgId->at(piN)!=211 && Pi1_pdgId->at(piN)!= -211) mon.fillHisto("Pi1_pdgId","final",2,weight);
                if (Pi2_pdgId->at(piN)==211) mon.fillHisto("Pi2_pdgId","final",0,weight);
                if (Pi2_pdgId->at(piN)== -211) mon.fillHisto("Pi2_pdgId","final",1,weight);
-               if (Pi2_pdgId->at(piN)!=211 && Pi1_pdgId!= -211) mon.fillHisto("Pi2_pdgId","final",2,weight);
+               if (Pi2_pdgId->at(piN)!=211 && Pi1_pdgId->at(piN)!= -211) mon.fillHisto("Pi2_pdgId","final",2,weight);
       // if (Cut(ientry) < 0) continue;
             }
          }
@@ -509,16 +509,16 @@ void ntuple::Loop()
       
    
       mon.fillHisto("M_JPsiPiPi3-8","total",(jpsi+pion1+pion2).M(),weight);
-      if (jpipi_mass>4.0 &&jpipi_mass<5.0)   mon.fillHisto("M_JPsiPiPi4-5","total",(jpsi+pion1+pion2).M(),weight);
-      if (jpipi_mass>4.1 &&jpipi_mass<5.0){
+      if ((jpsi+pion1+pion2).M()>4.0 &&(jpsi+pion1+pion2).M()<5.0)   mon.fillHisto("M_JPsiPiPi4-5","total",(jpsi+pion1+pion2).M(),weight);
+      if ((jpsi+pion1+pion2).M()>4.1 &&(jpsi+pion1+pion2).M()<5.0){
          mon.fillHisto("M_JpsiPi1&M_JpsiPi2","total",(jpsi+pion1).M()*(jpsi+pion1).M(),(jpsi+pion2).M()*(jpsi+pion2).M(),weight);
          }
-      if (jpipi_mass>4.1 &&jpipi_mass<4.2)         mon.fillHisto("M_JPsiPicut4.1-4.2","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.2 &&jpipi_mass<4.25)         mon.fillHisto("M_JPsiPicut4.2-4.25","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.25 &&jpipi_mass<4.3)          mon.fillHisto("M_JPsiPicut4.25-4.3","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.3 &&jpipi_mass<4.4)          mon.fillHisto("M_JPsiPicut4.3-4.4","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.4 &&jpipi_mass<4.7)          mon.fillHisto("M_JPsiPicut4.4-4.7","total",(jpsi+pion1).M(),weight);
-      if (jpipi_mass>4.7 &&jpipi_mass<5.0)        mon.fillHisto("M_JPsiPicut4.7-5.0","total",(jpsi+pion1).M(),weight);
+      if ((jpsi+pion1+pion2).M()>4.1 &&(jpsi+pion1+pion2).M()<4.2)         mon.fillHisto("M_JPsiPicut4.1-4.2","total",(jpsi+pion1).M(),weight);
+      if ((jpsi+pion1+pion2).M()>4.2 &&(jpsi+pion1+pion2).M()<4.25)         mon.fillHisto("M_JPsiPicut4.2-4.25","total",(jpsi+pion1).M(),weight);
+      if ((jpsi+pion1+pion2).M()>4.25 &&(jpsi+pion1+pion2).M()<4.3)          mon.fillHisto("M_JPsiPicut4.25-4.3","total",(jpsi+pion1).M(),weight);
+      if ((jpsi+pion1+pion2).M()>4.3 &&(jpsi+pion1+pion2).M()<4.4)          mon.fillHisto("M_JPsiPicut4.3-4.4","total",(jpsi+pion1).M(),weight);
+      if ((jpsi+pion1+pion2).M()>4.4 &&(jpsi+pion1+pion2).M()<4.7)          mon.fillHisto("M_JPsiPicut4.4-4.7","total",(jpsi+pion1).M(),weight);
+      if ((jpsi+pion1+pion2).M()>4.7 &&(jpsi+pion1+pion2).M()<5.0)        mon.fillHisto("M_JPsiPicut4.7-5.0","total",(jpsi+pion1).M(),weight);
    }
    TFile* outFile=TFile::Open(outputFile_,"recreate");
    TDirectoryFile *dir = new TDirectoryFile("histos","histos","",outFile);
