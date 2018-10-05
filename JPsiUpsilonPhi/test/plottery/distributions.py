@@ -214,9 +214,23 @@ ply.plot_hist_2d(
         options = {
             #"zaxis_log": True,
             #"bin_text_smart": True,
-            "output_name": "distribution_PLOTS/dalitz.pdf",
+            "output_name": "distribution_PLOTS/dalitz_jp1jp2.pdf",
             #"us_flag": True,
             "output_ic": True,
             #"zaxis_noexponents": True,
             }
         )
+hm3 = r.TH2F()
+file.GetObject("histos/M_JpsiPi1&M_Pi1Pi2_total",hm3)
+ply.plot_hist_2d(
+        hm3,
+        options = {
+            #"zaxis_log": True,
+            #"bin_text_smart": True,
+            "output_name": "distribution_PLOTS/dalitz_jpi1p1p2.pdf",
+            #"us_flag": True,
+            "output_ic": True,
+            #"zaxis_noexponents": True,
+            }
+        )
+
