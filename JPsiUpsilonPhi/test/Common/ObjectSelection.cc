@@ -194,8 +194,8 @@ namespace objectSelection
       ///////////////////////////////////
       /* initiating the bool variables */
       ///////////////////////////////////
-      passCosine = cosine >0.90 ;
-      std::cout << "cosine is"<<cosine << std::endl;
+      passCosine = cosine >0.95 ;
+    //  std::cout << "cosine is"<<passCosine << std::endl;
       passDeltaRJP1 = selJpsi.at(0).DeltaR(pion1) < 1.2;
       passDeltaRJP2 = selJpsi.at(0).DeltaR(pion2) < 1.2;
       passDeltaRPP  = pion1.DeltaR(pion2) <1.8;
@@ -207,9 +207,9 @@ namespace objectSelection
       passLxy = JPiPi_lxy->at(i) >0.025;
       passProb = JPiPi_Prob->at(i) >0.05 ;
       passPdgId = (Pi1_pdgId->at(i) == 211 || Pi1_pdgId->at(i) == -211) && (Pi2_pdgId->at(i) == 211 || Pi2_pdgId->at(i) == -211);
-      passPiPidxy = Pi_dxy1->at(i)/Pi_dxyerr1->at(i) >2.0 && Pi_dxy2->at(i)/Pi_dxy2->at(i) >1.0;
+      passPiPidxy = Pi_dxy1->at(i)/Pi_dxyerr1->at(i) >3.0 && Pi_dxy2->at(i)/Pi_dxyerr2->at(i) >2.0;
       passNhits = Pi_nhits1->at(i) >5 && Pi_nhits2->at(i) >5 ;
-      std::cout << "Nhits"<< passNhits <<"  PiPidxy" <<passPiPidxy << std::endl;
+     // std::cout << "Nhits"<< passNhits <<"  PiPidxy" <<passPiPidxy << std::endl;
       /////////////////////////////////////
       /*push back if pions pass all cuts */
       /////////////////////////////////////
