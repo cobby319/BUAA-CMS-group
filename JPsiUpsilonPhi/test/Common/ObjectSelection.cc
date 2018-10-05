@@ -207,7 +207,7 @@ namespace objectSelection
       passLxy = JPiPi_lxy->at(i) >0.025;
       passProb = JPiPi_Prob->at(i) >0.05 ;
       passPdgId = (Pi1_pdgId->at(i) == 211 || Pi1_pdgId->at(i) == -211) && (Pi2_pdgId->at(i) == 211 || Pi2_pdgId->at(i) == -211);
-      passPiPidxy = Pi_dxy1->at(i)/Pi_dxyerr1->at(i) >3.0 && Pi_dxy2->at(i)/Pi_dxy2->at(i) >2.0;
+      passPiPidxy = Pi_dxy1->at(i)/Pi_dxyerr1->at(i) >2.0 && Pi_dxy2->at(i)/Pi_dxy2->at(i) >1.0;
       passNhits = Pi_nhits1->at(i) >5 && Pi_nhits2->at(i) >5 ;
       std::cout << "Nhits"<< passNhits <<"  PiPidxy" <<passPiPidxy << std::endl;
       /////////////////////////////////////
