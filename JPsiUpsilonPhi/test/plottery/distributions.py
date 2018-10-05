@@ -213,7 +213,7 @@ ply.plot_hist_2d(
         hm2,
         options = {
             #"zaxis_log": True,
-            "bin_text_smart": True,
+            #"bin_text_smart": True,
             "output_name": "distribution_PLOTS/dalitz.pdf",
             #"us_flag": True,
             "output_ic": True,
