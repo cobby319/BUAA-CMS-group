@@ -192,6 +192,9 @@ private:
   std::vector<float>       *J_Prob;
   std::vector<float>       *JPi_Prob;
   std::vector<float>       *JPiPi_Prob;
+  std::vector<float>       *JPiPi_px;
+  std::vector<float>       *JPiPi_py;
+  std::vector<float>       *JPiPi_pz;
 
 
 

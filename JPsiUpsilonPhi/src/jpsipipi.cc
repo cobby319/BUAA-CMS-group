@@ -178,7 +178,10 @@ jpsipipi::jpsipipi(const edm::ParameterSet& iConfig)
   Pi2_massConstraint(0),
   J_Prob(0),
 JPi_Prob(0),
-JPiPi_Prob(0)
+JPiPi_Prob(0),
+JPiPi_px(0),
+JPiPi_py(0),
+JPiPi_pz(0)
 
 
  {
@@ -255,7 +258,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  
 	  //opposite charge 
 	  if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue;
-      if (!(iMuon1->isGlobalMuon()) && !(iMuon2->isGlobalMuon()) ) continue;
+      //if (!(iMuon1->isGlobalMuon()) && !(iMuon2->isGlobalMuon()) ) continue;
       //if (!(iMuon1->isTrackerMuon()) || !(iMuon2->isTrackerMuon()) ) continue;
 	  TrackRef glbTrackP;	  
 	  TrackRef glbTrackM;	  
@@ -272,8 +275,8 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	      continue;
 	    }
 
-	  if(iMuon1->track()->pt()<4.0) continue;
-	  if(iMuon2->track()->pt()<4.0) continue;
+	  if(iMuon1->track()->pt()<2.0) continue;
+	  if(iMuon2->track()->pt()<2.0) continue;
 
 	  if(!(glbTrackM->quality(reco::TrackBase::highPurity))) continue;
 	  if(!(glbTrackP->quality(reco::TrackBase::highPurity))) continue;	 
@@ -379,7 +382,7 @@ void jpsipipi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  float J_dxy = TMath::Sqrt(dx*dx+dy*dy);
 	  float J_dxyerr = psi_vFit_vertex_noMC->error().rerr(pvertex);
       
-	  if (J_dxy/J_dxyerr<5.0) continue;
+	  //if (J_dxy/J_dxyerr<5.0) continue;
 	  muontt1.push_back(muon1TT);
 	  muontt2.push_back(muon2TT);
 	  J_Prob->push_back(J_Prob_tmp);
@@ -444,16 +447,16 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 		
 		
   	    //if(iTrack1->pt()<0.8)continue;
-  	    if(iTrack1->eta()>2.4||iTrack1->eta()<-2.4)continue;
+  	   // if(iTrack1->eta()>2.4||iTrack1->eta()<-2.4)continue;
   	    if(!(iTrack1->bestTrack())) continue;
   	    if(iTrack1->charge() == 0) continue; //NO neutral objects
   	    //if(fabs(iTrack1->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	    
   	    //if(iTrack1->vertexNormalizedChi2()>10) continue;
   	    if(!(iTrack1->trackHighPurity())) continue;
-  	    if(iTrack1->numberOfHits()<5) continue;
-  	    if(iTrack1->numberOfPixelHits()<1) continue;
-  	    if(iTrack1->dxy(bestVtx.position())/iTrack1->dxyError() < 2.0) continue;
+  	    //if(iTrack1->numberOfHits()<5) continue;
+  	    //if(iTrack1->numberOfPixelHits()<1) continue;
+  	    //if(iTrack1->dxy(bestVtx.position())/iTrack1->dxyError() < 2.0) continue;
         if ( IsTheSame(*iTrack1, muontt1.at(i).track()) || IsTheSame(*iTrack1,muontt2.at(i).track()) ) continue;
   	    reco::TransientTrack track1TT((*theB).build(iTrack1->bestTrack()));
   	    //FreeTrajectoryState pi_trajectory = track1TT.impactPointTSCP().theState();
@@ -539,10 +542,10 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
   	        if(iTrack2->charge() == 0) continue; //NO neutral objects
   	        //if(fabs(iTrack2->pdgId()!= 211)) continue; //Due to the lack of the particle ID all the tracks for cms are pions(ID == 211)
   	        if(!(iTrack2->trackHighPurity())) continue;
-  	        if(iTrack2->numberOfHits()<5) continue;
-  	        if(iTrack2->numberOfPixelHits()<1) continue;
+  	        //if(iTrack2->numberOfHits()<5) continue;
+  	        //if(iTrack2->numberOfPixelHits()<1) continue;
   	        //if(iTrack2->vertexNormalizedChi2()>10) continue;
-  	        if(iTrack2->dxy(bestVtx.position())/iTrack2->dxyError() < 1.0) continue;
+  	        //if(iTrack2->dxy(bestVtx.position())/iTrack2->dxyError() < 1.0) continue;
   	        if ( IsTheSame(*iTrack2, muontt1.at(i).track()) || IsTheSame(*iTrack2,muontt2.at(i).track()) ) continue;
             reco::TransientTrack track2TT((*theB).build(iTrack2->bestTrack()));
   	        //begin vertex fit of Jpsi and pi1
@@ -606,10 +609,10 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
 	        float px,py,rx,ry;
 	        px = psi_vFit_noMC2->currentState().globalMomentum().x();
 	        py = psi_vFit_noMC2->currentState().globalMomentum().y();
-	        //pz = psi_vFit_noMC2->currentState().globalMomentum().z();
+	        pz = psi_vFit_noMC2->currentState().globalMomentum().z();
 	        rx = psi_vFit_vertex_noMC2->position().x()-bestVtx.x();
 	        ry = psi_vFit_vertex_noMC2->position().y()-bestVtx.y();
-	        //rz = psi_vFit_vertex_noMC2->position().z()-bestVtx.z();
+	        rz = psi_vFit_vertex_noMC2->position().z()-bestVtx.z();
 	        //float cosine = (px*rx+py*ry+pz*rz)/((px*px+py*py+pz*pz)*(rx*rx+ry*ry+rz*rz));
 	        float cosine = (px*rx+py*ry)/((px*px+py*py)*(rx*rx+ry*ry));
 	        if (cosine < 0.9 ) continue;
@@ -643,9 +646,13 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
             JPi_lxyErr->push_back(JpsiPi_dxyerr);
             JPiPi_lxy->push_back(JpsiPiPi_dxy);
             JPiPi_lxyErr->push_back(JpsiPiPi_dxyerr);
-            JPiPi_x->push_back( psi_vFit_vertex_noMC2->position().x()-bestVtx.x());
-            JPiPi_y->push_back( psi_vFit_vertex_noMC2->position().y()-bestVtx.y());
-            JPiPi_z->push_back( psi_vFit_vertex_noMC2->position().z()-bestVtx.z());
+            JPiPi_x->push_back(rx);
+            JPiPi_y->push_back(ry);
+            JPiPi_z->push_back(rz);
+            JPiPi_px->push_back(px)
+            JPiPi_py->push_back(py)
+            JPiPi_pz->push_back(pz)
+
 
             Pi1_numberOfSourceCandidatePtrs->push_back(iTrack1->numberOfSourceCandidatePtrs());
             Pi2_numberOfSourceCandidatePtrs->push_back(iTrack2->numberOfSourceCandidatePtrs());
@@ -836,6 +843,9 @@ for(unsigned int i=0; i<JpsiFTS.size(); i++)
    J_Prob->clear();
    JPi_Prob->clear();
    JPiPi_Prob->clear();
+   JPiPi_px->clear();
+   JPiPi_py->clear();
+   JPiPi_pz->clear();
 
 }
 bool jpsipipi::IsTheSame(const pat::GenericParticle& tk, const reco::Track  mu){
@@ -975,6 +985,9 @@ jpsipipi::beginJob()
   tree_->Branch("J_Prob",&J_Prob);
   tree_->Branch("JPi_Prob",&JPi_Prob);
   tree_->Branch("JPiPi_Prob",&JPiPi_Prob);
+  tree_->Branch("JPiPi_px",&JPiPi_px);
+  tree_->Branch("JPiPi_py",&JPiPi_py);
+  tree_->Branch("JPiPi_pz",&JPiPi_pz);
 
 }
 
