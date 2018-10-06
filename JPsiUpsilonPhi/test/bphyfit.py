@@ -26,7 +26,7 @@ def main():
     f =  TFile(path)
     for h in histos:
         w.factory("Voigtian::bwgauss1(mass[3.9,3.6,4.04],mean3900[3.886,3.86,3.92],width3900[0.0282],sigma3900[0.011,0.009,0.013])")
-        w.factory("Voigtian::bwgauss2(mass[3.9,3.6,4.04],mean3980[3.986,3.96,4.02],width3980[0.03,0.02,0.04],sigma3980[0.011,0.009,0.013])")
+        #w.factory("Voigtian::bwgauss2(mass[3.9,3.6,4.04],mean3980[3.986,3.96,4.02],width3980[0.03,0.02,0.04],sigma3980[0.011,0.009,0.013])")
         if '4.1-4.2' in h:
             bin =4.15
             w.var('mass').setRange(3.6,4.04)
@@ -50,7 +50,7 @@ def main():
         c3 =  RooRealVar("a3","a3",-1,1);
         c4 =  RooRealVar("a4","a4",-1,1);
         nsig = RooRealVar("nsig","signal",100,0.,1000.)
-        nsig2 = RooRealVar("nsig2","signal",100,0.,1000.)
+     #   nsig2 = RooRealVar("nsig2","signal",100,0.,1000.)
         nbkg = RooRealVar("nbkg","bkg",10000,0.,60000)
         #getattr(w,'import')(nsig)
         #a5 =  RooRealVar("a5","a5",-20000,20000);
@@ -62,7 +62,7 @@ def main():
         #esig =  RooExtendPdf('esig','esig',w.pdf('bwgauss1'),nsig)
         #ebkg =  RooExtendPdf('ebkg','ebkg',ch,nbkg)
         #getattr(w,'import')(ch)
-        model= RooAddPdf("model","model", RooArgList(w.pdf('bwgauss1'),w.pdf('bwgauss2'),ch),RooArgList(nsig,nsig2,nbkg))
+        model= RooAddPdf("model","model", RooArgList(w.pdf('bwgauss1'),ch),RooArgList(nsig,nbkg))
         getattr(w,'import')(model)
         h1 =  TH1F()
         f.GetObject('histos/'+h,h1)
@@ -96,7 +96,7 @@ def main():
         w.pdf("model").paramOn(xframe2,rt.RooFit.Layout(0.1, 0.99,0.9))
         w.pdf("model").plotOn(xframe,rt.RooFit.Components("ch"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kBlue),rt.RooFit.Name("bkg."))
         w.pdf("model").plotOn(xframe,rt.RooFit.Components("bwgauss1"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kRed),rt.RooFit.Name("sig1."))
-        w.pdf("model").plotOn(xframe,rt.RooFit.Components("bwgauss2"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kRed-2),rt.RooFit.Name("sig2."))
+      #  w.pdf("model").plotOn(xframe,rt.RooFit.Components("bwgauss2"),rt.RooFit.LineStyle(kDashed),rt.RooFit.LineColor(kRed-2),rt.RooFit.Name("sig2."))
         c1=TCanvas("c1","c1",800,400)
         c1.Divide(2)
         c1.cd(1)
