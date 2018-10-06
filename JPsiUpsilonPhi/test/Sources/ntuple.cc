@@ -61,7 +61,7 @@ void ntuple::Loop()
       std::vector<TLorentzVectorWithIndex>  selPion1;
       std::vector<TLorentzVectorWithIndex>  selPion2;
       std::vector<TLorentzVectorWithIndex>  selJpsi;
-      
+      /*
       for (int jpsiN = 0 ; jpsiN < J_mass->size() ; jpsiN++){
          for(int piN =0 ; piN <Pi_dJP->size() ; piN ++) {
             mon.fillHisto("Num_JPsi","tot",nJ,weight);;
@@ -232,7 +232,7 @@ void ntuple::Loop()
 
          }
       }
-      
+      */
       
       bool NJpsi = objectSelection::selectJpsi (selJpsi,
                    J_mass,
