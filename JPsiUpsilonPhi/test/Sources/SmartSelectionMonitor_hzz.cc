@@ -16,8 +16,8 @@ bool SmartSelectionMonitor_hzz::declareHistos_jpsipipi(){
  addHistogram( new TH1F("Num_JPsi",";N_{J/#psi};Events",5,0,5));
  addHistogram( new TH1F("M_JPsi",";M_{J/#psi};Events",100,2.8,3.3));
  addHistogram( new TH1F("pT_JPsi",";p_{T,J/#Psi};Events",200,0,100)); 
- addHistogram( new TH1F("M_JPsiPiPi3-8",";M_{J/#psi#pi+#pi-};Events",100,3,8));
- addHistogram( new TH1F("M_JPsiPiPi4-5",";M_{J/#psi#pi+#pi-};Events",20,4,5));
+ addHistogram( new TH1F("M_JPsiPiPi3-8",";M_{J/#psi#pi+#pi-};Events",500,3,8));
+ addHistogram( new TH1F("M_JPsiPiPi4-5",";M_{J/#psi#pi+#pi-};Events",200,4,5));
  addHistogram( new TH1F("cosine of P&r",";cos#alpha;Events",20,0,1)); 
  addHistogram( new TH1F("Deta_JpsiPi1",";#delta #eta;Events",80,-4,4)); 
  addHistogram( new TH1F("Deta_JpsiPi2",";#delta #eta;Events",80,-4,4)); 
