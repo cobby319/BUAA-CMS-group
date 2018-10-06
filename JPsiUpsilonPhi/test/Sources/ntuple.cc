@@ -370,7 +370,7 @@ void ntuple::Loop()
       rx = JPiPi_x->at(piN);
       ry = JPiPi_y->at(piN);  
       float cosine = (px*rx+py*ry)/(TMath::Sqrt(px*px+py*py)*TMath::Sqrt(rx*rx+ry*ry));
-      if (jpipi_mass>4.1 &&jpipi_mass<4.3 && (jpsi+pion1).M() >3.86 &&(jpsi+pion1).M() <3.92  && cosine > 0.9){
+      /*if (jpipi_mass>4.1 &&jpipi_mass<4.3 && (jpsi+pion1).M() >3.86 &&(jpsi+pion1).M() <3.92  && cosine > 0.9){
          mon.fillHisto("PiPi_mass","final",(pion1+pion2).M(),weight); 
          mon.fillHisto("Pion1_mass","final",(pion1).M(),weight); 
          mon.fillHisto("Pion2_mass","final",(pion2).M(),weight); 
@@ -500,7 +500,7 @@ void ntuple::Loop()
          if (Pi2_pdgId->at(piN)==211) mon.fillHisto("Pi2_pdgId","final",0,weight);
          if (Pi2_pdgId->at(piN)== -211) mon.fillHisto("Pi2_pdgId","final",1,weight);
          if (Pi2_pdgId->at(piN)!=211 && Pi1_pdgId->at(piN)!= -211) mon.fillHisto("Pi2_pdgId","final",2,weight);
-      }
+      } */
       jpsi.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN)); 
       pion1.SetPtEtaPhiM(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass);
       pion2.SetPtEtaPhiM(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass);
