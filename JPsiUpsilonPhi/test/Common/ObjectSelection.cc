@@ -256,7 +256,7 @@ namespace objectSelection
         
         selPion1.push_back(pion1WithIndex);
         selPion2.push_back(pion2WithIndex);
-        std::cout << "push back pion and index is" <<i  <<"JPiPi_Prob at this point is "<< JPiPi_Prob->at(i)<< std::endl; 
+       // std::cout << "push back pion and index is" <<i  <<"JPiPi_Prob at this point is "<< JPiPi_Prob->at(i)<< std::endl; 
       }
       //else { failedpoint.push_back(i);}
 
@@ -270,7 +270,7 @@ namespace objectSelection
             selPion1.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt1->at(i),Pi_eta1->at(i),Pi_phi1->at(i),Pion_mass, i));
             selPion2.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt2->at(i),Pi_eta2->at(i),Pi_phi2->at(i),Pion_mass, i));
             //std::cout << " and the best pion is at " <<piN<< std::endl; 
-            std::cout <<"push back pion and best index is" <<i <<"JPiPi_Prob at this point is " <<JPiPi_Prob->at(i) << std::endl; 
+          //  std::cout <<"push back pion and best index is" <<i <<"JPiPi_Prob at this point is " <<JPiPi_Prob->at(i) << std::endl; 
           }
           else{
             selPion1.erase(selPion1.begin()+1);
