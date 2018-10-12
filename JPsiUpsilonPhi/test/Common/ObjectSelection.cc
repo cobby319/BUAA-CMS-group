@@ -44,7 +44,7 @@ namespace objectSelection
         bool passMuonHits      = false;
         bool passMuonPixelHits = false;
         bool passMuonPt        = false;
-
+        bool passJprob         = false;
       ///////////////////////////////////
       /* define variables for selection*/
       ///////////////////////////////////
@@ -58,11 +58,12 @@ namespace objectSelection
       ///////////////////////////////////
       /* initiating the bool variables */
       ///////////////////////////////////
-        passMuonLooseID = mu1loose->at(i) && mu2loose->at(i);
+        passMuonLooseID = mu1soft->at(i) && mu2soft->at(i) //mu1loose->at(i) && mu2loose->at(i);
         passMuonPt = true; //muon1.Pt() >4 && muon2.Pt() >4;
         passJpsiPt = Jpsi.Pt() >5 ;
         passMuonHits = mupNHits->at(i) >5 && mumNHits->at(i) >5;
         passMuonPixelHits = mupNPHits->at(i) >0 &&  mumNPHits->at(i) >0;
+        passJprob = J_Prob->at(i) > 0.1
         TLorentzVectorWithIndex JpsiWithIndex = TLorentzVectorWithIndex(Jpsi,i);
         if (passMuonPt && passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits) {selJpsi.push_back(JpsiWithIndex);}
         if (selJpsi.size() >1 ) {
@@ -195,21 +196,21 @@ namespace objectSelection
       ///////////////////////////////////
       /* initiating the bool variables */
       ///////////////////////////////////
-      passCosine = cosine >0.95 ;
+      passCosine = cosine >0.8 ;
     //  std::cout << "cosine is"<<passCosine << std::endl;
-      passDeltaRJP1 = selJpsi.at(0).DeltaR(pion1) < 1.2;
-      passDeltaRJP2 = selJpsi.at(0).DeltaR(pion2) < 1.2;
-      passDeltaRPP  = pion1.DeltaR(pion2) <1.8;
+      passDeltaRJP1 = selJpsi.at(0).DeltaR(pion1) < 2;
+      passDeltaRJP2 = selJpsi.at(0).DeltaR(pion2) < 2;
+      passDeltaRPP  = pion1.DeltaR(pion2) <2;
       passVertexNormalizedChi2 = true; // Pi1_vertexNchi2->at(i) < 10.0 && Pi2_vertexNchi2->at(i) <10.0;
       passEta = Pi_eta1->at(i) <2.0 && Pi_eta1->at(i) >-2.0 && Pi_eta2->at(i) <2.0 &&Pi_eta2->at(i) >-2.0;
       passPt =  Pi_pt1->at(i) > 0.8 && Pi_pt2->at(i) >0.8;
       passIsNotOtherObject =  !(Pi1_isGlobalMuon->at(i) ||  Pi2_isGlobalMuon->at(i) );
-      passLambda = Pi1_lambda->at(i) <1.0 && Pi1_lambda->at(i) >-1.0 &&Pi2_lambda->at(i) <1.0 &&Pi2_lambda->at(i) >-1.0;
-      passLxy = JPiPi_lxy->at(i) >0.025;
-      passProb = JPiPi_Prob->at(i) >0.1 ;
+      passLambda = true; //Pi1_lambda->at(i) <1.0 && Pi1_lambda->at(i) >-1.0 &&Pi2_lambda->at(i) <1.0 &&Pi2_lambda->at(i) >-1.0;
+      passLxy =true;// JPiPi_lxy->at(i) >0.025;
+      passProb = JPiPi_Prob->at(i) >0.2 ;
       passPdgId = (Pi1_pdgId->at(i) == 211 || Pi1_pdgId->at(i) == -211) && (Pi2_pdgId->at(i) == 211 || Pi2_pdgId->at(i) == -211);
-      passPiPidxy = Pi_dxy1->at(i)/Pi_dxyerr1->at(i) >5.0 && Pi_dxy2->at(i)/Pi_dxyerr2->at(i) >3.0;
-      passNhits = Pi_nhits1->at(i) >5 && Pi_nhits2->at(i) >5 ;
+      passPiPidxy = Pi_dxy1->at(i)/Pi_dxyerr1->at(i) >3.0 && Pi_dxy2->at(i)/Pi_dxyerr2->at(i) >2.0;
+      passNhits = Pi_nhits1->at(i) >5 && Pi_nhits2->at(i) >5 && Pi_npixelhits1->at(i) >0 && Pi_npixelhits2->at(i) >0;
      // std::cout << "Nhits"<< passNhits <<"  PiPidxy" <<passPiPidxy << std::endl;
       /////////////////////////////////////
       /*push back if pions pass all cuts */
@@ -235,7 +236,7 @@ namespace objectSelection
         selPion1.push_back(pion1WithIndex);
         selPion2.push_back(pion2WithIndex);
       }
-      else { std::cout << "selection fails at "<<i<< std::endl; }
+
       if(selPion1.size()>1){
           auto maxprob = std::max_element(JPiPi_Prob->begin(), JPiPi_Prob->begin() + i);
           int piN =std::distance(JPiPi_Prob->begin(), maxprob) ;
@@ -245,7 +246,7 @@ namespace objectSelection
           selPion1.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass, piN));
           selPion2.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass, piN));
           std::cout << "pion size is "<<JPiPi_Prob->size() << " and the best pion is at " <<piN<< std::endl; 
-          std::cout <<"JPiPi_Prob at best point is" <<JPiPi_Prob->at(piN) <<"  and JPiPi_Prob at best point +1 is" <<JPiPi_Prob->at(piN+1) << std::endl; 
+          //std::cout <<"JPiPi_Prob at best point is" <<JPiPi_Prob->at(piN) <<"  and JPiPi_Prob at best point +1 is" <<JPiPi_Prob->at(piN+1) << std::endl; 
       }
     }
     return selPion1.size()>0 ;
