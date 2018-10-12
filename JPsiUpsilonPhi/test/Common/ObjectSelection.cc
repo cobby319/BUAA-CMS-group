@@ -244,6 +244,7 @@ namespace objectSelection
           selPion1.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass, piN));
           selPion2.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass, piN));
           std::cout << "pion size is "<<JPiPi_Prob->size() << " and the best pion is at " <<piN<< std::endl; 
+          std::cout <<"JPiPi_Prob at best point is" <<JPiPi_Prob->at(piN) <<"  and JPiPi_Prob at best point +1 is" <<JPiPi_Prob->at(piN+1) << std::endl; 
       }
     }
     return selPion1.size()>0 ;
