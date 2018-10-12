@@ -51,7 +51,7 @@ namespace objectSelection
                    std::vector<float>   *J_lxyErr,
                    std::vector<float>   *J_vertexchi2,
                    std::vector<float>   *J_Prob){
-      std::vector <int>  failedpoint ;
+      //std::vector <int>  failedpoint ;
       for(unsigned int i = 0 ; i<J_mass->size() ; i++){
         bool passMuonLooseID   = false;
         bool passJpsiPt        = false;
@@ -80,16 +80,20 @@ namespace objectSelection
         passJprob = J_Prob->at(i) > 0.1;
         TLorentzVectorWithIndex JpsiWithIndex = TLorentzVectorWithIndex(Jpsi,i);
         if (passMuonPt && passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits&& passJprob) {selJpsi.push_back(JpsiWithIndex);}
-        else { failedpoint.push_back(i);}
+        //else { failedpoint.push_back(i);}
         if (selJpsi.size() >1 ) {
-          auto maxprob = std::max_element(J_Prob->begin(), J_Prob->begin()+i);
-          int jpsiN =std::distance(J_Prob->begin(), maxprob) ;
-          if (!is_element_in_vector(failedpoint, jpsiN)){
+          //auto maxprob = std::max_element(J_Prob->begin(), J_Prob->begin()+i);
+          //int jpsiN =std::distance(J_Prob->begin(), maxprob) ;
+          if (J_Prob->at(selJpsi.at(0).GetIndex())< J_Prob->at(i)){
+          //if (!is_element_in_vector(failedpoint, jpsiN)){
             selJpsi.clear();
             TLorentzVector Jpsi_tmp;
-            Jpsi_tmp.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN));
-            TLorentzVectorWithIndex Jpsi_tmpWithIndex = TLorentzVectorWithIndex(Jpsi_tmp,jpsiN);
+            Jpsi_tmp.SetXYZM(J_px->at(i),J_py->at(i),J_pz->at(i),J_mass->at(i));
+            TLorentzVectorWithIndex Jpsi_tmpWithIndex = TLorentzVectorWithIndex(Jpsi_tmp,i);
             selJpsi.push_back(Jpsi_tmpWithIndex);
+          }
+          else{
+            selJpsi.erase(selJpsi.begin()+1);
           }
           //std::cout <<"push_back extrajpsi"<<std::endl;
         }
@@ -171,7 +175,7 @@ namespace objectSelection
                    std::vector<float>   *JPiPi_px,
                    std::vector<float>   *JPiPi_py,
                    std::vector<float>   *JPiPi_pz){
-    std::vector <int>  failedpoint;
+    //std::vector <int>  failedpoint;
     for(unsigned int i = 0 ; i<Pi_pt1->size() ; i++){
       bool passDeltaRJP1 = false;
       bool passDeltaRJP2 = false;
@@ -254,18 +258,23 @@ namespace objectSelection
         selPion2.push_back(pion2WithIndex);
         std::cout << "push back pion and index is" <<i  <<"JPiPi_Prob at this point is "<< JPiPi_Prob->at(i)<< std::endl; 
       }
-      else { failedpoint.push_back(i);}
+      //else { failedpoint.push_back(i);}
 
       if(selPion1.size()>1){
-          auto maxprob = std::max_element(JPiPi_Prob->begin(), JPiPi_Prob->begin() + i);
-          int piN =std::distance(JPiPi_Prob->begin(), maxprob) ;
-          if (! is_element_in_vector (failedpoint, piN)){
+         // auto maxprob = std::max_element(JPiPi_Prob->begin(), JPiPi_Prob->begin() + i);
+         // int piN =std::distance(JPiPi_Prob->begin(), maxprob) ;
+          if (JPiPi_Prob->at(selPion1.at(0).GetIndex())< JPiPi_Prob->at(i)){
+          //if (! is_element_in_vector (failedpoint, piN))
             selPion1.clear();
             selPion2.clear();
-            selPion1.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass, piN));
-            selPion2.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass, piN));
+            selPion1.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt1->at(i),Pi_eta1->at(i),Pi_phi1->at(i),Pion_mass, i));
+            selPion2.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt2->at(i),Pi_eta2->at(i),Pi_phi2->at(i),Pion_mass, i));
             //std::cout << " and the best pion is at " <<piN<< std::endl; 
-            std::cout <<"push back pion and best index is" <<piN <<"JPiPi_Prob at this point is " <<JPiPi_Prob->at(piN) << std::endl; 
+            std::cout <<"push back pion and best index is" <<i <<"JPiPi_Prob at this point is " <<JPiPi_Prob->at(i) << std::endl; 
+          }
+          else{
+            selPion1.erase(selPion1.begin()+1);
+            selPion2.erase(selPion2.begin()+1);
           }
       }
     }
