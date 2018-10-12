@@ -58,14 +58,14 @@ namespace objectSelection
       ///////////////////////////////////
       /* initiating the bool variables */
       ///////////////////////////////////
-        passMuonLooseID = mu1soft->at(i) && mu2soft->at(i) //mu1loose->at(i) && mu2loose->at(i);
+        passMuonLooseID = mu1soft->at(i) && mu2soft->at(i); //mu1loose->at(i) && mu2loose->at(i);
         passMuonPt = true; //muon1.Pt() >4 && muon2.Pt() >4;
         passJpsiPt = Jpsi.Pt() >5 ;
         passMuonHits = mupNHits->at(i) >5 && mumNHits->at(i) >5;
         passMuonPixelHits = mupNPHits->at(i) >0 &&  mumNPHits->at(i) >0;
-        passJprob = J_Prob->at(i) > 0.1
+        passJprob = J_Prob->at(i) > 0.1;
         TLorentzVectorWithIndex JpsiWithIndex = TLorentzVectorWithIndex(Jpsi,i);
-        if (passMuonPt && passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits) {selJpsi.push_back(JpsiWithIndex);}
+        if (passMuonPt && passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits&& passJprob) {selJpsi.push_back(JpsiWithIndex);}
         if (selJpsi.size() >1 ) {
           auto maxprob = std::max_element(J_Prob->begin(), J_Prob->begin()+i);
           int jpsiN =std::distance(J_Prob->begin(), maxprob) ;
