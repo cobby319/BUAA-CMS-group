@@ -73,7 +73,7 @@ namespace objectSelection
           Jpsi_tmp.SetXYZM(J_px->at(jpsiN),J_py->at(jpsiN),J_pz->at(jpsiN),J_mass->at(jpsiN));
           TLorentzVectorWithIndex Jpsi_tmpWithIndex = TLorentzVectorWithIndex(Jpsi_tmp,jpsiN);
           selJpsi.push_back(Jpsi_tmpWithIndex);
-          std::cout << "the best jpsi is at " <<Jpsi_tmpWithIndex.GetIndex() << std::endl; 
+
           //std::cout <<"push_back extrajpsi"<<std::endl;
         }
       }
@@ -243,6 +243,7 @@ namespace objectSelection
 
           selPion1.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass, piN));
           selPion2.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass, piN));
+          std::cout << "pion size is "<<JPiPi_Prob->size() << " and the best pion is at " <<piN<< std::endl; 
       }
     }
     return selPion1.size()>0 ;
