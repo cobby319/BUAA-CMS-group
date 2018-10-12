@@ -4,8 +4,8 @@ namespace objectSelection
 {
 
 
-    bool is_element_in_vector(vector<int> v,int element){
-      vector<int>::iterator it;
+    bool is_element_in_vector(std::vector<int> v,int element){
+      std::vector<int>::iterator it;
       it=find(v.begin(),v.end(),element);
       if (it!=v.end()){
         return true;
