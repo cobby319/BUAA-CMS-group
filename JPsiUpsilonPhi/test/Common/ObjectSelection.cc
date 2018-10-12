@@ -235,6 +235,7 @@ namespace objectSelection
         selPion1.push_back(pion1WithIndex);
         selPion2.push_back(pion2WithIndex);
       }
+      else { std::cout << "selection fails at "<<i<< std::endl; }
       if(selPion1.size()>1){
           auto maxprob = std::max_element(JPiPi_Prob->begin(), JPiPi_Prob->begin() + i);
           int piN =std::distance(JPiPi_Prob->begin(), maxprob) ;
