@@ -235,6 +235,7 @@ namespace objectSelection
         
         selPion1.push_back(pion1WithIndex);
         selPion2.push_back(pion2WithIndex);
+        std::cout << "push back pion and index is" <<i  <<"JPiPi_Prob at this point is "<< JPiPi_Prob->at(i)<< std::endl; 
       }
 
       if(selPion1.size()>1){
@@ -245,8 +246,8 @@ namespace objectSelection
 
           selPion1.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt1->at(piN),Pi_eta1->at(piN),Pi_phi1->at(piN),Pion_mass, piN));
           selPion2.push_back(TLorentzVectorWithIndex::PtEtaPhiMIndex(Pi_pt2->at(piN),Pi_eta2->at(piN),Pi_phi2->at(piN),Pion_mass, piN));
-          std::cout << "pion size is "<<JPiPi_Prob->size() << " and the best pion is at " <<piN<< std::endl; 
-          //std::cout <<"JPiPi_Prob at best point is" <<JPiPi_Prob->at(piN) <<"  and JPiPi_Prob at best point +1 is" <<JPiPi_Prob->at(piN+1) << std::endl; 
+          //std::cout << " and the best pion is at " <<piN<< std::endl; 
+          std::cout <<"push back pion and best index is" <<piN <<"JPiPi_Prob at this point is " <<JPiPi_Prob->at(piN) << std::endl; 
       }
     }
     return selPion1.size()>0 ;
