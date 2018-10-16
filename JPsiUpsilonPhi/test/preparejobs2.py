@@ -2,15 +2,20 @@ import sys
 import re
 import os
 
-def printPath(path):  
+def printPath(path,date = 18):  
     if not os.path.exists("OUTPUTS/"+type+"/JOBS/catalog_"+type+".txt"): 
         os.mknod("OUTPUTS/"+type+"/JOBS/catalog_"+type+".txt")
     catalogfile=open("OUTPUTS/"+type+"/JOBS/catalog_"+type+".txt",'a')
+    timecounting = 1
     for file in os.listdir(path):
         if os.path.isfile(path+'/'+file):
+            timecounting+= 1
+            if timecounting %10000 == 0:
+                print '.'，
             if '.root' in file:
-                catalogfile.write('dcap://maite.iihe.ac.be'+path+'/'+file)
-                catalogfile.write("\n")
+                if str(date) in path:
+                    catalogfile.write('dcap://maite.iihe.ac.be'+path+'/'+file)
+                    catalogfile.write("\n")
         else :
             printPath(path+'/'+file)
     catalogfile.close()
@@ -70,8 +75,8 @@ def main():
         os.makedirs('OUTPUTS/'+type+'/CONFIGS')
     if type == "testold":
         printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium1005')
-    if type == "test":
-        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium') 
+    if type == "181012":
+        printPath('/pnfs/iihe/cms/store/user/hanwen/Charmonium',181012) 
     jobsDirectory ='OUTPUTS/'+type+'/JOBS' 
     cfgDirectory = 'OUTPUTS/'+type +'/CONFIGS' 
     datasetFile = open("OUTPUTS/"+type+"/JOBS/catalog_"+type+".txt",'r')
