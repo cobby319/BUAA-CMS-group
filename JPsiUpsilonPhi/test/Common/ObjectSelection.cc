@@ -74,10 +74,10 @@ namespace objectSelection
       ///////////////////////////////////
         passMuonLooseID = mu1soft->at(i) && mu2soft->at(i); //mu1loose->at(i) && mu2loose->at(i);
         passMuonPt = true; //muon1.Pt() >4 && muon2.Pt() >4;
-        passJpsiPt = Jpsi.Pt() >5 ;
+        passJpsiPt = true;//Jpsi.Pt() >5 ;
         passMuonHits = mupNHits->at(i) >5 && mumNHits->at(i) >5;
         passMuonPixelHits = mupNPHits->at(i) >0 &&  mumNPHits->at(i) >0;
-        passJprob = J_Prob->at(i) > 0.1;
+        passJprob = J_Prob->at(i) > 0.2;
         TLorentzVectorWithIndex JpsiWithIndex = TLorentzVectorWithIndex(Jpsi,i);
         if (passMuonPt && passMuonLooseID && passJpsiPt && passMuonHits && passMuonPixelHits&& passJprob) {selJpsi.push_back(JpsiWithIndex);}
         //else { failedpoint.push_back(i);}
@@ -205,9 +205,9 @@ namespace objectSelection
       pipiInPhiMass = (pion1+pion2).M() >1.01  && (pion1+pion2).M() <1.03 ;
       pipiInXMass =  (pion1+pion2).M() >0.81  && (pion1+pion2).M() <0.97 ;
       pipiInLowMass = (pion1+pion2).M() <0.35;
-      passPiPimassregion = !pipiInXMass && !pipiInLowMass && !pipiInPhiMass;
-      pion1.SetPtEtaPhiM(Pi_pt1->at(i),Pi_eta1->at(i),Pi_phi1->at(i),Pion_mass);
-      pion2.SetPtEtaPhiM(Pi_pt2->at(i),Pi_eta2->at(i),Pi_phi2->at(i),Pion_mass);
+      passPiPimassregion = true;//!pipiInXMass && !pipiInLowMass && !pipiInPhiMass;
+      //pion1.SetPtEtaPhiM(Pi_pt1->at(i),Pi_eta1->at(i),Pi_phi1->at(i),Pion_mass);
+      //pion2.SetPtEtaPhiM(Pi_pt2->at(i),Pi_eta2->at(i),Pi_phi2->at(i),Pion_mass);
       float px = JPiPi_px->at(i);
       float py = JPiPi_py->at(i);
       float rx = JPiPi_x->at(i);
@@ -217,20 +217,20 @@ namespace objectSelection
       ///////////////////////////////////
       /* initiating the bool variables */
       ///////////////////////////////////
-      passCosine = cosine >0.8 ;
+      passCosine = cosine >0.9 ;
     //  std::cout << "cosine is"<<passCosine << std::endl;
-      passDeltaRJP1 = selJpsi.at(0).DeltaR(pion1) < 2;
-      passDeltaRJP2 = selJpsi.at(0).DeltaR(pion2) < 2;
-      passDeltaRPP  = pion1.DeltaR(pion2) <2;
+      passDeltaRJP1 = selJpsi.at(0).DeltaR(pion1) < 1.2;
+      passDeltaRJP2 = selJpsi.at(0).DeltaR(pion2) < 1.2;
+      passDeltaRPP  = pion1.DeltaR(pion2) <1.5;
       passVertexNormalizedChi2 = true; // Pi1_vertexNchi2->at(i) < 10.0 && Pi2_vertexNchi2->at(i) <10.0;
       passEta = Pi_eta1->at(i) <2.0 && Pi_eta1->at(i) >-2.0 && Pi_eta2->at(i) <2.0 &&Pi_eta2->at(i) >-2.0;
       passPt =  Pi_pt1->at(i) > 0.8 && Pi_pt2->at(i) >0.8;
       passIsNotOtherObject =  !(Pi1_isGlobalMuon->at(i) ||  Pi2_isGlobalMuon->at(i) );
       passLambda = true; //Pi1_lambda->at(i) <1.0 && Pi1_lambda->at(i) >-1.0 &&Pi2_lambda->at(i) <1.0 &&Pi2_lambda->at(i) >-1.0;
-      passLxy =true;// JPiPi_lxy->at(i) >0.025;
+      passLxy = JPiPi_lxy->at(i) >0.03;
       passProb = JPiPi_Prob->at(i) >0.2 ;
       passPdgId = (Pi1_pdgId->at(i) == 211 || Pi1_pdgId->at(i) == -211) && (Pi2_pdgId->at(i) == 211 || Pi2_pdgId->at(i) == -211);
-      passPiPidxy = Pi_dxy1->at(i)/Pi_dxyerr1->at(i) >3.0 && Pi_dxy2->at(i)/Pi_dxyerr2->at(i) >2.0;
+      passPiPidxy = Pi_dxy1->at(i)/Pi_dxyerr1->at(i) >5.0 && Pi_dxy2->at(i)/Pi_dxyerr2->at(i) >3.0;
       passNhits = Pi_nhits1->at(i) >5 && Pi_nhits2->at(i) >5 && Pi_npixelhits1->at(i) >0 && Pi_npixelhits2->at(i) >0;
      // std::cout << "Nhits"<< passNhits <<"  PiPidxy" <<passPiPidxy << std::endl;
       /////////////////////////////////////
