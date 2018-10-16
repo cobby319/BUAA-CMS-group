@@ -206,8 +206,8 @@ namespace objectSelection
       pipiInXMass =  (pion1+pion2).M() >0.81  && (pion1+pion2).M() <0.97 ;
       pipiInLowMass = (pion1+pion2).M() <0.35;
       passPiPimassregion = true;//!pipiInXMass && !pipiInLowMass && !pipiInPhiMass;
-      //pion1.SetPtEtaPhiM(Pi_pt1->at(i),Pi_eta1->at(i),Pi_phi1->at(i),Pion_mass);
-      //pion2.SetPtEtaPhiM(Pi_pt2->at(i),Pi_eta2->at(i),Pi_phi2->at(i),Pion_mass);
+      pion1.SetPtEtaPhiM(Pi_pt1->at(i),Pi_eta1->at(i),Pi_phi1->at(i),Pion_mass);
+      pion2.SetPtEtaPhiM(Pi_pt2->at(i),Pi_eta2->at(i),Pi_phi2->at(i),Pion_mass);
       float px = JPiPi_px->at(i);
       float py = JPiPi_py->at(i);
       float rx = JPiPi_x->at(i);
